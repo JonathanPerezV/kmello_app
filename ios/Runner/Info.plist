@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>KMELLO</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>kmello_app</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Play audio files</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Solicitamos el permiso de cámara para que pueda tomar fotos de: documentos, mascotas, vehículos, entre otras cosas.	Con la finalidad que pueda tener organizada su información.	</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Solicitamos permiso al FaceId para que pueda tener una mayor seguridad al momento de consultar sus datos.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Solicitamos el permiso de ubicación para que pueda registrar la ubicación: personal, trabajo, restaurante favorito, hotel favorito, entre otras cosas. Con la finalidad que pueda tener un registro de sus ubicaciones.	</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Solicitamos el permiso de ubicación para que pueda registrar la ubicación: personal, trabajo, restaurante favorito, hotel favorito, entre otras cosas. Con la finalidad que pueda tener un registro de sus ubicaciones.	</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Solicitamos el permiso de ubicación para que pueda registrar la ubicación: personal, trabajo, restaurante favorito, hotel favorito, entre otras cosas. Con la finalidad que pueda tener un registro de sus ubicaciones.	</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Solicitamos el permiso de ubicación para que pueda registrar la ubicación: personal, trabajo, restaurante favorito, hotel favorito, entre otras cosas. Con la finalidad que pueda tener un registro de sus ubicaciones.	</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Solicitamos el permiso para que pueda subir fotos de: mascotas, vehículos, entre otras cosas desde la galería de su dispositivo. Con la finalidad que pueda tener un registro de la información.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Solicitamos el permiso para que pueda subir fotos de: mascotas, vehículos, entre otras cosas desde la galería de su dispositivo. Con la finalidad que pueda tener un registro de la información.</string>
+</dict>
+</plist>

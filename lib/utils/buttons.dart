@@ -1,0 +1,40 @@
+import 'package:flutter/material.dart';
+
+//todo BOTÓN CONTINAR EN TODOS LOS APARTADOS
+Widget nextButton(
+        {required Function() onPressed,
+        required String text,
+        double? width,
+        double? fontSize,
+        double? iconSize}) =>
+    TextButton(
+        style: ButtonStyle(
+            padding: const MaterialStatePropertyAll(EdgeInsets.all(2)),
+            backgroundColor: const MaterialStatePropertyAll(Colors.black),
+            shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15)))),
+        onPressed: onPressed,
+        child: SizedBox(
+          width: width,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Center(
+                  child: Text(
+                    text,
+                    style: TextStyle(
+                        color: Colors.white, fontSize: fontSize ?? 18),
+                  ),
+                ),
+              ),
+              iconSize != null
+                  ? Icon(
+                      Icons.arrow_right_alt_outlined,
+                      color: Colors.white,
+                      size: iconSize,
+                    )
+                  : Container()
+            ],
+          ),
+        ));
