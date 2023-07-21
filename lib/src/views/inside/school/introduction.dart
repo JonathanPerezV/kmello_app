@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kmello_app/src/views/inside/home_page.dart';
 import 'package:kmello_app/src/views/inside/school/view_category.dart';
 import 'package:kmello_app/utils/deviders/divider.dart';
 import 'package:kmello_app/utils/header.dart';
@@ -88,7 +89,16 @@ class _IntroductionState extends State<Introduction> {
                       builder: (builder) => const ViewCategory())),
               text: "SIGUIENTE",
               fontSize: 30,
-              width: 220)
+              width: 220),
+          TextButton(
+              onPressed: () => Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (builder) => HomePage()),
+                  (route) => false),
+              child: const Text(
+                "Omitir",
+                style: TextStyle(fontSize: 18),
+              ))
         ],
       ),
     );

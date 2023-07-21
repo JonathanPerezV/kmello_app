@@ -70,8 +70,8 @@ class _SelectProfileState extends State<SelectProfile> {
             Row(
               children: [
                 SizedBox(
-                  height: 50,
-                  child: Image.asset("assets/test.png"),
+                  height: 70,
+                  child: Image.asset("assets/vendedor_profesional.png"),
                 ),
                 const Expanded(
                     child: Center(
@@ -89,8 +89,8 @@ class _SelectProfileState extends State<SelectProfile> {
             Row(
               children: [
                 SizedBox(
-                  height: 50,
-                  child: Image.asset("assets/test.png"),
+                  height: 70,
+                  child: Image.asset("assets/vendedor_aficionado.png"),
                 ),
                 const Expanded(
                   child: Center(
@@ -110,7 +110,7 @@ class _SelectProfileState extends State<SelectProfile> {
             Row(
               children: [
                 SizedBox(
-                  height: 50,
+                  height: 70,
                   child: Image.asset("assets/test.png"),
                 ),
                 const Expanded(
