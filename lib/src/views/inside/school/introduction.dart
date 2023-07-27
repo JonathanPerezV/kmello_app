@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/views/inside/home_page.dart';
+import 'package:kmello_app/src/views/inside/home/home_page.dart';
 import 'package:kmello_app/src/views/inside/school/view_category.dart';
 import 'package:kmello_app/utils/deviders/divider.dart';
 import 'package:kmello_app/utils/header.dart';

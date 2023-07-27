@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as image;
+import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
 import 'package:progress_border/progress_border.dart';
 
 import '../../../../../utils/deviders/divider.dart';
@@ -153,8 +154,8 @@ class _FaceWidgetState extends State<FaceWidget>
               IconButton(
                   onPressed: () => Navigator.pop(context),
                   icon: const Icon(Icons.arrow_back_ios)),
-              Row(children: const [
-                Icon(Icons.abc),
+              const Row(children: [
+                Icon(KmelloIcons.validar_identidad),
                 SizedBox(width: 5),
                 Text(
                   "Tomar foto",

@@ -30,11 +30,13 @@ environment:
 dependencies:
   another_flushbar: ^1.12.30
   camera: ^0.10.5+2
+  card_loading: ^0.3.0
   cupertino_icons: ^1.0.2
   device_info_plus: ^9.0.2
   email_validator: ^2.1.17
   flutter:
     sdk: flutter
+  flutter_swiper_tv: ^1.1.6-nullsafety
   image: ^4.0.17
   image_cropper: ^5.0.0
   image_picker: ^1.0.1
@@ -46,6 +48,7 @@ dependencies:
   pin_code_fields: ^8.0.1
   progress_border: ^0.1.0
   timelines: ^0.1.0
+  url_launcher: ^6.1.12
   webview_flutter: ^4.2.2
 
 dev_dependencies:
@@ -72,6 +75,12 @@ flutter:
     - assets/school/
     - assets/courses/
     - assets/school/questions/
+    - assets/sell/medicina/
+    - assets/sell/creditos/
+    - assets/sell/funeraria/
+    - assets/sell/internet/
+    - assets/sell/seguros/
+    - assets/sell/rastreo/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -82,10 +91,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+      - family: KmelloIcons
+        fonts:
+          - asset: fonts/KmelloIcons.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

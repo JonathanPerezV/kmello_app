@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:kmello_app/src/views/register/verificatePin/verificate_pin.dart';
 import 'package:kmello_app/utils/buttons.dart';
+import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
 import '../../../utils/paisesHabiles/paises.dart';
 import '../../../utils/paisesHabiles/retornar_resultados.dart';
 import '../../../utils/responsive.dart';
@@ -107,15 +108,12 @@ class _RegisterPageState extends State<RegisterPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                //margin: EdgeInsets.only(top: 20),
-                width: 170,
-                height: 120,
-                child: Image.asset(
-                  'assets/kmello_logo.png',
+              const SizedBox(height: 40),
+              Center(
+                child: SizedBox(
+                  width: 170,
+                  height: 60,
+                  child: Image.asset("assets/kmello_logo.png"),
                 ),
               ),
               SizedBox(
@@ -155,10 +153,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             flex: 2,
                             child: Row(
                               children: [
-                                Icon(
-                                  Icons.abc,
-                                  size: 35,
-                                ),
+                                Icon(KmelloIcons.registrarse, size: 25),
+                                SizedBox(width: 5),
                                 Text('Registrarse',
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 21)),

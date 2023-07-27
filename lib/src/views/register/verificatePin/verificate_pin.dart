@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kmello_app/src/views/register/verificatePin/phone_verificated.dart';
 import 'package:kmello_app/utils/buttons.dart';
+import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../../../utils/device_info.dart';
@@ -146,7 +147,7 @@ class _VerificationCodeState extends State<VerificationCode> {
                 const SizedBox(height: 40),
                 Center(
                   child: SizedBox(
-                    width: 150,
+                    width: 170,
                     height: 60,
                     child: Image.asset("assets/kmello_logo.png"),
                   ),
@@ -159,8 +160,8 @@ class _VerificationCodeState extends State<VerificationCode> {
                     IconButton(
                         onPressed: () => Navigator.pop(context),
                         icon: const Icon(Icons.arrow_back_ios)),
-                    Row(children: const [
-                      Icon(Icons.abc),
+                    const Row(children: [
+                      Icon(KmelloIcons.codigo_de_verifiacion),
                       SizedBox(width: 5),
                       Text(
                         "Código de verificación",
@@ -171,12 +172,12 @@ class _VerificationCodeState extends State<VerificationCode> {
                 ),
                 divider(true),
                 const SizedBox(height: 40),
-                SizedBox(
+                const SizedBox(
                     width: 350,
                     child: Text(
                       "Ingrese el pin temporal enviado por sms al 0994911674",
                       textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 18),
                     )),
                 const SizedBox(height: 40),
                 securityPin(),
@@ -330,8 +331,10 @@ class _VerificationCodeState extends State<VerificationCode> {
   Widget button() => nextButton(
         onPressed: () {
           if (pinSeguridad == "102030") {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (builder) => PhoneVerificated()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (builder) => const PhoneVerificated()));
           } else {}
           /*if (pinSeguridad.isNotEmpty) {
             if (pinSeguridad == firsPin) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kmello_app/src/views/register/recognition/identifcation/upload_identification.dart';
 import 'package:kmello_app/utils/buttons.dart';
+import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
 
 import '../../../../utils/deviders/divider.dart';
 
@@ -29,7 +30,7 @@ class _PhoneVerificatedState extends State<PhoneVerificated> {
             const SizedBox(height: 40),
             Center(
               child: SizedBox(
-                width: 150,
+                width: 170,
                 height: 60,
                 child: Image.asset("assets/kmello_logo.png"),
               ),
@@ -42,8 +43,8 @@ class _PhoneVerificatedState extends State<PhoneVerificated> {
                 IconButton(
                     onPressed: () => Navigator.pop(context),
                     icon: const Icon(Icons.arrow_back_ios)),
-                Row(children: const [
-                  Icon(Icons.abc),
+                const Row(children: [
+                  Icon(KmelloIcons.codigo_de_verifiacion),
                   SizedBox(width: 5),
                   Text(
                     "Código de verificación",
@@ -84,7 +85,7 @@ class _PhoneVerificatedState extends State<PhoneVerificated> {
 
   Widget button() => nextButton(
       onPressed: () => Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => UploadCI())),
+          context, MaterialPageRoute(builder: (builder) => const UploadCI())),
       width: 250,
       text: "CONTINUAR",
       fontSize: 25);

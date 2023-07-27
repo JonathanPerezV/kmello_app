@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
 
 import '../../../../../utils/cut_image.dart';
 import '../../../../../utils/deviders/divider.dart';
@@ -44,7 +45,7 @@ class _UploadCIState extends State<UploadCI> {
                 const SizedBox(height: 40),
                 Center(
                   child: SizedBox(
-                    width: 150,
+                    width: 170,
                     height: 60,
                     child: Image.asset("assets/kmello_logo.png"),
                   ),
@@ -58,7 +59,7 @@ class _UploadCIState extends State<UploadCI> {
                         onPressed: () => Navigator.pop(context),
                         icon: const Icon(Icons.arrow_back_ios)),
                     const Row(children: [
-                      Icon(Icons.abc),
+                      Icon(KmelloIcons.validar_identidad),
                       SizedBox(width: 5),
                       Text(
                         "Validar identidad",

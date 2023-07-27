@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
 import '../../../../../utils/deviders/divider.dart';
 
 class IdentitySuccess extends StatefulWidget {
@@ -32,8 +33,8 @@ class _IdentitySuccessState extends State<IdentitySuccess> {
                 IconButton(
                     onPressed: () => Navigator.pop(context),
                     icon: const Icon(Icons.arrow_back_ios)),
-                Row(children: const [
-                  Icon(Icons.abc),
+                const Row(children: [
+                  Icon(KmelloIcons.validar_identidad),
                   SizedBox(width: 5),
                   Text(
                     "Validar identidad",

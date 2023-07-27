@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:kmello_app/src/views/register/recognition/face/take_photo_face.dart';
+import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
 import '../../../../../utils/deviders/divider.dart';
 import '../../../../../utils/flushbar.dart';
 import 'face_advice.dart';
@@ -36,7 +37,7 @@ class _FaceValidationState extends State<FaceValidation> {
                 const SizedBox(height: 40),
                 Center(
                   child: SizedBox(
-                    width: 150,
+                    width: 170,
                     height: 60,
                     child: Image.asset("assets/kmello_logo.png"),
                   ),
@@ -50,7 +51,7 @@ class _FaceValidationState extends State<FaceValidation> {
                         onPressed: () => Navigator.pop(context),
                         icon: const Icon(Icons.arrow_back_ios)),
                     const Row(children: [
-                      Icon(Icons.abc),
+                      Icon(KmelloIcons.validar_identidad),
                       SizedBox(width: 5),
                       Text(
                         "Validar identidad",

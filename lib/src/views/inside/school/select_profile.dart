@@ -5,6 +5,7 @@ import 'package:kmello_app/src/views/inside/school/introduction.dart';
 import 'package:kmello_app/utils/buttons.dart';
 import 'package:kmello_app/utils/deviders/divider.dart';
 import 'package:kmello_app/utils/header.dart';
+import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
 
 class SelectProfile extends StatefulWidget {
   const SelectProfile({super.key});
@@ -43,7 +44,7 @@ class _SelectProfileState extends State<SelectProfile> {
           ),
         ),
         const SizedBox(height: 10),
-        header("SELECCIONAR", Icons.abc, context: context),
+        header("SELECCIONAR", KmelloIcons.validar_identidad, context: context),
         message(),
         const SizedBox(height: 40),
         profiles()
@@ -111,7 +112,7 @@ class _SelectProfileState extends State<SelectProfile> {
               children: [
                 SizedBox(
                   height: 70,
-                  child: Image.asset("assets/test.png"),
+                  child: Image.asset("assets/referidor.png"),
                 ),
                 const Expanded(
                   child: Center(

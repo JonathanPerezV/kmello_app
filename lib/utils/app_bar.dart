@@ -24,4 +24,29 @@ class MyAppBar {
           onPressed: () => key.currentState!.openDrawer(),
         ),
       );
+
+  SliverAppBar mySliverAppBar({required Widget widgethide}) => SliverAppBar(
+        elevation: 0,
+        backgroundColor: themeData.scaffoldBackgroundColor,
+        title: SizedBox(
+          width: 130,
+          child: Image.asset('assets/kmello_logo.png'),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.menu,
+            color: Colors.black,
+            size: 30,
+          ),
+          onPressed: () => key.currentState!.openDrawer(),
+        ),
+        floating: true,
+        pinned: true,
+        snap: true,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(93),
+          child: widgethide,
+        ),
+      );
 }
