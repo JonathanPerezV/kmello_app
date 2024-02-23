@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kmello_app/src/views/inside/home/consultar/consultar_opciones.dart';
 import 'package:kmello_app/src/views/inside/home/sell_page.dart';
 import 'package:kmello_app/src/views/inside/lateralMenu/drawer_menu.dart';
 import 'package:kmello_app/utils/app_bar.dart';
-import 'package:kmello_app/utils/deviders/divider.dart';
 import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
 
 class HomePage extends StatefulWidget {
@@ -75,33 +75,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           tabs: const [
             Tab(
               child: Column(
-                children: [Icon(KmelloIcons.icon_consultar), Text("Consultar")],
+                children: [Icon(KmelloIcons.consultar), Text("Consultar")],
               ),
             ),
             Tab(
               child: Column(
-                children: [Icon(KmelloIcons.icon_comprar_p_1), Text("Vender")],
+                children: [Icon(KmelloIcons.vender), Text("Vender")],
               ),
             ),
             Tab(
               child: Column(
-                children: [Icon(KmelloIcons.icon_redimir_1), Text("Redimir")],
+                children: [Icon(KmelloIcons.redimir), Text("Redimir")],
               ),
             )
           ]);
 
   TabBarView getTabBarView() =>
       TabBarView(controller: tabController, children: [
-        Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: Colors.white,
-            child: const Center(
-                child: Text(
-              "PRÓXIMAMENTE",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-            ))),
+        const ConsultarOpciones(),
         const SellPage(),
+        //const RedimirPage()
         Container(
             width: double.infinity,
             height: double.infinity,

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/views/register/recognition/identifcation/upload_identification.dart';
+import 'package:kmello_app/src/models/user_moderl.dart';
+import 'package:kmello_app/src/views/register/faceValidation/upload_ci.dart';
 import 'package:kmello_app/utils/buttons.dart';
+import 'package:kmello_app/utils/footer.dart';
 import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
 
 import '../../../../utils/deviders/divider.dart';
 
 class PhoneVerificated extends StatefulWidget {
-  const PhoneVerificated({super.key});
+  bool updateUser;
+  UserModel? usuario;
+  PhoneVerificated({super.key, this.usuario, required this.updateUser});
 
   @override
   State<PhoneVerificated> createState() => _PhoneVerificatedState();
@@ -16,12 +20,7 @@ class _PhoneVerificatedState extends State<PhoneVerificated> {
   @override
   Widget build(BuildContext context) => Scaffold(
         body: options(),
-        persistentFooterButtons: [
-          SizedBox(
-              height: 50,
-              child: Center(
-                  child: Image.asset("assets/byBaadal.png", fit: BoxFit.cover)))
-        ],
+        persistentFooterButtons: [footerBaadal()],
       );
 
   Widget options() => SingleChildScrollView(
@@ -41,10 +40,16 @@ class _PhoneVerificatedState extends State<PhoneVerificated> {
               children: [
                 const SizedBox(width: 10),
                 IconButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      if (widget.updateUser) {
+                        Navigator.pop(context, true);
+                      } else {
+                        Navigator.pop(context);
+                      }
+                    },
                     icon: const Icon(Icons.arrow_back_ios)),
                 const Row(children: [
-                  Icon(KmelloIcons.codigo_de_verifiacion),
+                  Icon(KmelloIcons.codigo_de_verificacion),
                   SizedBox(width: 5),
                   Text(
                     "Código de verificación",
@@ -84,8 +89,17 @@ class _PhoneVerificatedState extends State<PhoneVerificated> {
       );
 
   Widget button() => nextButton(
-      onPressed: () => Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => const UploadCI())),
+      onPressed: () {
+        if (widget.updateUser) {
+          Navigator.pop(context, true);
+          Navigator.pop(context, true);
+        } else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (builder) => UploadCI(usuario: widget.usuario!)));
+        }
+      },
       width: 250,
       text: "CONTINUAR",
       fontSize: 25);

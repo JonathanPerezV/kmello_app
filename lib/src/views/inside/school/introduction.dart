@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kmello_app/src/views/inside/home/home_page.dart';
-import 'package:kmello_app/src/views/inside/school/view_category.dart';
+import 'package:kmello_app/src/views/inside/school/what_sell/view_category.dart';
 import 'package:kmello_app/utils/deviders/divider.dart';
 import 'package:kmello_app/utils/header.dart';
 import 'package:kmello_app/utils/responsive.dart';
@@ -63,7 +63,7 @@ class _IntroductionState extends State<Introduction> {
                 child: Text(
                   "LA ESCUELA DE NEGOCIOS",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 35, fontStyle: FontStyle.normal),
+                  style: TextStyle(fontSize: 30, fontStyle: FontStyle.normal),
                 ),
               ),
               const SizedBox(width: 20),
@@ -74,22 +74,22 @@ class _IntroductionState extends State<Introduction> {
               height: rsp.hp(40),
               child: Image.asset("assets/school/business_school.png")),
           Container(
-            width: 250,
+            width: 300,
             margin: const EdgeInsets.only(left: 20, right: 20),
             child: const Text(
               "te ayuda a realizar ventas de una forma más efectiva.",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 20),
           nextButton(
               onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (builder) => const ViewCategory())),
               text: "SIGUIENTE",
-              fontSize: 30,
-              width: 220),
+              fontSize: 25,
+              width: 200),
           TextButton(
               onPressed: () => Navigator.pushAndRemoveUntil(
                   context,
@@ -97,7 +97,7 @@ class _IntroductionState extends State<Introduction> {
                   (route) => false),
               child: const Text(
                 "Omitir",
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 13),
               ))
         ],
       ),

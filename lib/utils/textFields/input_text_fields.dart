@@ -21,29 +21,31 @@ class InputTextFields extends StatelessWidget {
   final TextStyle? style;
   final TextCapitalization? mayuscula;
   final Widget? widgetNombreCampo;
+  final Widget? suffixIcon;
 
-  const InputTextFields(
-      {Key? key,
-      @required this.placeHolder,
-      @required this.nombreCampo,
-      @required this.accionCampo,
-      this.textInputFormatter,
-      this.widgetNombreCampo,
-      this.style,
-      this.tipoTeclado,
-      this.inputBorder,
-      this.maxLength,
-      this.onChanged,
-      this.icon,
-      this.habilitado,
-      this.controlador,
-      this.funcion,
-      this.mayuscula,
-      this.onTap,
-      this.maxLines,
-      this.align,
-      this.padding})
-      : super(key: key);
+  const InputTextFields({
+    Key? key,
+    @required this.placeHolder,
+    @required this.nombreCampo,
+    @required this.accionCampo,
+    this.textInputFormatter,
+    this.widgetNombreCampo,
+    this.style,
+    this.tipoTeclado,
+    this.inputBorder,
+    this.maxLength,
+    this.onChanged,
+    this.icon,
+    this.habilitado,
+    this.controlador,
+    this.funcion,
+    this.mayuscula,
+    this.onTap,
+    this.maxLines,
+    this.align,
+    this.padding,
+    this.suffixIcon,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,6 +68,7 @@ class InputTextFields extends StatelessWidget {
           contentPadding: padding ?? EdgeInsets.zero,
           border: inputBorder,
           prefixIcon: icon,
+          suffixIcon: suffixIcon,
           label: widgetNombreCampo,
           hintText: placeHolder,
           labelText: nombreCampo,

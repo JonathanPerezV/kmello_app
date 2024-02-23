@@ -65,6 +65,8 @@
 	<string>Solicitamos el permiso para que pueda subir fotos de: mascotas, vehículos, entre otras cosas desde la galería de su dispositivo. Con la finalidad que pueda tener un registro de la información.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Solicitamos el permiso para que pueda subir fotos de: mascotas, vehículos, entre otras cosas desde la galería de su dispositivo. Con la finalidad que pueda tener un registro de la información.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Solcitamos el permiso a contactos, para que pueda agendar reuniones, además de leer, actualizar y crear sus contactos de su dispositivo.</string>
 	<key>io.flutter.embedded_views_preview</key>
 	<string>YES</string>
 </dict>

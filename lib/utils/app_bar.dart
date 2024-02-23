@@ -8,6 +8,7 @@ class MyAppBar {
   ThemeData themeData = ThemeData();
 
   AppBar myAppBar() => AppBar(
+        scrolledUnderElevation: 0.0,
         elevation: 0,
         backgroundColor: themeData.scaffoldBackgroundColor,
         title: SizedBox(
@@ -26,6 +27,7 @@ class MyAppBar {
       );
 
   SliverAppBar mySliverAppBar({required Widget widgethide}) => SliverAppBar(
+        scrolledUnderElevation: 0.0,
         elevation: 0,
         backgroundColor: themeData.scaffoldBackgroundColor,
         title: SizedBox(

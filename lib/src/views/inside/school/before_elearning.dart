@@ -65,12 +65,12 @@ class _BeforeElearningState extends State<BeforeElearning>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      persistentFooterButtons: [
+      /*persistentFooterButtons: [
         SizedBox(
             height: 50,
             child: Center(
                 child: Image.asset("assets/byBaadal.png", fit: BoxFit.cover)))
-      ],
+      ],*/
       body: options(),
     );
   }
@@ -129,6 +129,7 @@ class _BeforeElearningState extends State<BeforeElearning>
             ),
           ),
           TabBar(
+              physics: NeverScrollableScrollPhysics(),
               onTap: (index) {
                 setState(() {
                   webController.clearCache();
@@ -159,23 +160,25 @@ class _BeforeElearningState extends State<BeforeElearning>
         ],
       );
 
-  TabBarView getTabBarView() =>
-      TabBarView(controller: tabController, children: [
-        loadingVideo
-            ? const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.black,
-                ),
-              )
-            : video(),
-        loadingVideo
-            ? const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.black,
-                ),
-              )
-            : pdf(),
-      ]);
+  TabBarView getTabBarView() => TabBarView(
+          physics: NeverScrollableScrollPhysics(),
+          controller: tabController,
+          children: [
+            loadingVideo
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                    ),
+                  )
+                : video(),
+            loadingVideo
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                    ),
+                  )
+                : pdf(),
+          ]);
 
   Widget video() => Column(
         children: [

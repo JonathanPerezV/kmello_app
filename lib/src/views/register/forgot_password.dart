@@ -115,7 +115,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       child: Row(
                         children: [
                           const Icon(
-                            KmelloIcons.contrasen_a,
+                            KmelloIcons.contrasena,
                             color: Colors.black,
                           ),
                           Container(

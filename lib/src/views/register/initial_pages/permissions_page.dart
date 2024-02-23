@@ -2,6 +2,9 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:kmello_app/src/controller/app_preferences.dart';
+import 'package:kmello_app/src/views/register/initial_pages/welcome_page.dart';
+import 'package:kmello_app/src/views/register/login.dart';
 import 'package:kmello_app/utils/buttons.dart';
 import 'package:kmello_app/utils/header_login.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -17,7 +20,11 @@ class PermissionsPage extends StatefulWidget {
 class _PermissionsPageState extends State<PermissionsPage>
     with WidgetsBindingObserver {
   bool _fromSettings = false;
-  bool location = false, camera = false, gallery = false;
+  bool location = true,
+      camera = true,
+      gallery = true,
+      storage = true,
+      contacts = true;
   @override
   void initState() {
     super.initState();
@@ -48,298 +55,215 @@ class _PermissionsPageState extends State<PermissionsPage>
     }
   }
 
-  _goToLogin() {
-    Navigator.pushReplacementNamed(context, 'welcome');
-  }
-
-  Future<void> _requestPermissionLocation() async {
-    final PermissionStatus status = await Permission.location.request();
-    //print(status);
-    switch (status) {
-      case PermissionStatus.limited:
-        setState(() {
-          location = false;
-          camera = true;
-        });
-        _requestPermissionCamera();
-        break;
-      case PermissionStatus.granted:
-        setState(() {
-          location = false;
-          camera = true;
-        });
-        _requestPermissionCamera();
-        break;
-      case PermissionStatus.denied:
-        setState(() {
-          location = false;
-          camera = true;
-        });
-        _requestPermissionCamera();
-        break;
-      case PermissionStatus.restricted:
-        setState(() {
-          location = false;
-          camera = true;
-        });
-        _requestPermissionCamera();
-        break;
-      case PermissionStatus.permanentlyDenied:
-        setState(() {
-          location = false;
-          camera = true;
-        });
-        _requestPermissionCamera();
-        _fromSettings = true;
-        break;
-      default:
-        break;
-    }
-  }
-
-  Future<void> _requestPermissionCamera() async {
-    final PermissionStatus status = await Permission.camera.request();
-    //print(status);
-    switch (status) {
-      case PermissionStatus.limited:
-        setState(() {
-          camera = false;
-          gallery = true;
-        });
-        _requestPermissionPhotos();
-        break;
-      case PermissionStatus.granted:
-        setState(() {
-          camera = false;
-          gallery = true;
-        });
-        _requestPermissionPhotos();
-        break;
-      case PermissionStatus.denied:
-        setState(() {
-          camera = false;
-          gallery = true;
-        });
-        _requestPermissionPhotos();
-        break;
-      case PermissionStatus.restricted:
-        setState(() {
-          camera = false;
-          gallery = true;
-        });
-        _requestPermissionPhotos();
-        break;
-      case PermissionStatus.permanentlyDenied:
-        setState(() {
-          camera = false;
-          gallery = true;
-        });
-        _requestPermissionPhotos();
-        _fromSettings = true;
-        break;
-      default:
-        break;
-    }
-  }
-
-  Future<void> _requestPermissionPhotos() async {
-    final PermissionStatus status = await Permission.photos.request();
-    //print(status);
-    switch (status) {
-      case PermissionStatus.limited:
-        if (Platform.isAndroid) {
-          setState(() {
-            gallery = false;
-          });
-          _requestPermissionStorage();
-        } else {
-          _goToLogin();
-        }
-
-        break;
-      case PermissionStatus.granted:
-        if (Platform.isAndroid) {
-          setState(() {
-            gallery = false;
-          });
-          _requestPermissionStorage();
-        } else {
-          _goToLogin();
-        }
-        break;
-      case PermissionStatus.denied:
-        if (Platform.isAndroid) {
-          setState(() {
-            gallery = false;
-          });
-          _requestPermissionStorage();
-        } else {
-          _goToLogin();
-        }
-        break;
-      case PermissionStatus.restricted:
-        if (Platform.isAndroid) {
-          setState(() {
-            gallery = false;
-          });
-          _requestPermissionStorage();
-        } else {
-          _goToLogin();
-        }
-        break;
-      case PermissionStatus.permanentlyDenied:
-        if (Platform.isAndroid) {
-          setState(() {
-            gallery = false;
-          });
-          _requestPermissionStorage();
-          _fromSettings = true;
-        } else {
-          _goToLogin();
-        }
-
-        break;
-      default:
-        break;
-    }
-  }
-
-  Future<void> _requestPermissionStorage() async {
-    final PermissionStatus status = await Permission.storage.request();
-    //print(status);
-    switch (status) {
-      case PermissionStatus.limited:
-        _goToLogin();
-        break;
-      case PermissionStatus.granted:
-        _goToLogin();
-        break;
-      case PermissionStatus.denied:
-        _goToLogin();
-        break;
-      case PermissionStatus.restricted:
-        _goToLogin();
-        break;
-      case PermissionStatus.permanentlyDenied:
-        _goToLogin();
-        _fromSettings = true;
-        break;
-      default:
-        break;
-    }
-  }
+  _goToLogin() => Navigator.pushReplacementNamed(context, 'welcome');
 
   @override
   Widget build(BuildContext context) {
     final rsp = Responsive.of(context);
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              customHeaderLogin("assets/kmello_logo_white.png"),
-              Container(
-                margin: const EdgeInsets.only(left: 40, right: 40),
-                color: Colors.black,
-                height: 0.5,
-                width: double.infinity,
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                  height: 250,
-                  child: Image.asset('assets/initial_pages/permisos.png')),
-              const SizedBox(height: 20),
-              const Column(
-                children: [
-                  Text(
-                    'ANTES DE CONTINUAR',
-                    style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 5),
-                  SizedBox(
-                    width: 300,
-                    child: Text(
-                      'Para que puedas utilizar en forma óptima todas las ventajas que ofrecemos, es necesario que nos permitas acceder a la siguiente información:',
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(fontSize: 17),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 30),
-              Container(
-                color: Colors.black,
-                height: 0.5,
-                width: double.infinity,
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                customHeaderLogin("assets/kmello_logo_white.png"),
+                Container(
+                  margin: const EdgeInsets.only(left: 40, right: 40),
+                  color: Colors.black,
+                  height: 0.5,
+                  width: double.infinity,
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                    height: rsp.hp(25),
+                    child: Image.asset('assets/initial_pages/permisos.png')),
+                const SizedBox(height: 20),
+                const Column(
                   children: [
                     Text(
-                      'Ubicación',
-                      style: TextStyle(
-                          fontSize: rsp.wp(4), fontWeight: FontWeight.bold),
+                      'ANTES DE CONTINUAR',
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
-                    Container(
-                      padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      height: 60,
-                      width: 0.5,
-                      child: const VerticalDivider(
-                        thickness: 0.5,
-                        color: Colors.black,
+                    SizedBox(height: 5),
+                    SizedBox(
+                      width: 300,
+                      child: Text(
+                        'Para que puedas utilizar en forma óptima todas las ventajas que ofrecemos, es necesario que nos permitas acceder a la siguiente información:',
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(fontSize: 15),
                       ),
-                    ),
-                    Text(
-                      'Galería',
-                      style: TextStyle(
-                          fontSize: rsp.wp(4), fontWeight: FontWeight.bold),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      height: 60,
-                      width: 0.5,
-                      child: const VerticalDivider(
-                        thickness: 0.5,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Text(
-                      'Almacenamiento',
-                      style: TextStyle(
-                          fontSize: rsp.wp(4), fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
-              ),
-              Container(
-                color: Colors.black,
-                height: 0.5,
-                width: double.infinity,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              nextButton(
-                  onPressed: () async {
-                    //_goToLogin();
-                    /*setState(() {
-                    location = true;
-                  });
-                  final spc = Preferences();
-                  await _requestPermissionLocation();
-                  spc.guardarSplash('confirmado');*/
-                    await _requestPermissionLocation();
-                  },
-                  text: "Permitir acceso",
-                  fontSize: 25,
-                  width: 230),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
+                const SizedBox(height: 30),
+                Container(
+                  color: Colors.black,
+                  height: 0.5,
+                  width: double.infinity,
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 5, right: 5),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            children: [
+                              const Text(
+                                'Ubicación',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              Checkbox(
+                                  value: location,
+                                  onChanged: (value) {
+                                    setState(() => location = value!);
+                                  })
+                            ],
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            height: 60,
+                            width: 0.5,
+                            child: const VerticalDivider(
+                              thickness: 0.5,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                'Galería',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              Checkbox(
+                                  value: gallery,
+                                  onChanged: (value) {
+                                    setState(() => gallery = value!);
+                                  })
+                            ],
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            height: 60,
+                            width: 0.5,
+                            child: const VerticalDivider(
+                              thickness: 0.5,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                'Contactos',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              Checkbox(
+                                  value: contacts,
+                                  onChanged: (value) {
+                                    setState(() => contacts = value!);
+                                  })
+                            ],
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            children: [
+                              const Text(
+                                'Cámara',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              Checkbox(
+                                  value: camera,
+                                  onChanged: (value) {
+                                    setState(() => camera = value!);
+                                  })
+                            ],
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            height: 60,
+                            width: 0.5,
+                            child: const VerticalDivider(
+                              thickness: 0.5,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                'Almacenamiento',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              Checkbox(
+                                  value: storage,
+                                  onChanged: (value) {
+                                    setState(() => storage = value!);
+                                  })
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  color: Colors.black,
+                  height: 0.5,
+                  width: double.infinity,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                nextButton(
+                    onPressed: () => pedirPermisos(),
+                    text: "Permitir acceso",
+                    fontSize: 25,
+                    width: 230),
+                const SizedBox(
+                  height: 15,
+                ),
+              ],
+            ),
           ),
         ));
+  }
+
+  void pedirPermisos() async {
+    final appPreferences = AppPreferences();
+
+    if (location) {
+      final data = await Permission.location.request();
+      debugPrint("location: $data");
+    }
+    if (camera) {
+      final data = await Permission.camera.request();
+      debugPrint("camera: $data");
+    }
+    if (contacts) {
+      final data = await Permission.contacts.request();
+      debugPrint("contacts: $data");
+    }
+    if (gallery) {
+      final data = await Permission.photos.request();
+      debugPrint("storage: $data");
+    }
+    if (storage) {
+      final data = await Permission.storage.request();
+      debugPrint("storage: $data");
+    }
+
+    await appPreferences.savePermissionsPage(true).then((value) =>
+        Navigator.push(
+            context, MaterialPageRoute(builder: (builder) => WelcomePage())));
   }
 }

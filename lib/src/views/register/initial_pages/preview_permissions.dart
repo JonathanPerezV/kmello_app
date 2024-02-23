@@ -24,7 +24,7 @@ class _InformativePageState extends State<InformativePage> {
           ),
         ),
         Align(
-          alignment: Alignment.bottomRight,
+          alignment: Alignment.bottomCenter,
           child: Container(
             height: 45,
             margin: const EdgeInsets.only(right: 15, bottom: 50),

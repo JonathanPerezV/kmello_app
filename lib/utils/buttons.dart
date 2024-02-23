@@ -6,13 +6,15 @@ Widget nextButton(
         required String text,
         double? width,
         double? fontSize,
-        double? iconSize}) =>
+        double? iconSize,
+        Color? background}) =>
     TextButton(
         style: ButtonStyle(
             padding: const MaterialStatePropertyAll(EdgeInsets.all(2)),
-            backgroundColor: const MaterialStatePropertyAll(Colors.black),
+            backgroundColor:
+                MaterialStatePropertyAll(background ?? Colors.black),
             shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15)))),
+                borderRadius: BorderRadius.circular(100)))),
         onPressed: onPressed,
         child: SizedBox(
           width: width,

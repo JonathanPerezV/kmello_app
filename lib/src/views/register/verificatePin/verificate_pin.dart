@@ -5,8 +5,13 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kmello_app/src/controller/sms/ws_sms.dart';
+import 'package:kmello_app/src/models/user_moderl.dart';
 import 'package:kmello_app/src/views/register/verificatePin/phone_verificated.dart';
+import 'package:kmello_app/utils/alerts/and_alert.dart';
+import 'package:kmello_app/utils/alerts/ios_alert.dart';
 import 'package:kmello_app/utils/buttons.dart';
+import 'package:kmello_app/utils/flushbar.dart';
 import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -15,8 +20,16 @@ import '../../../../utils/deviders/divider.dart';
 import '../../../models/info_device_model.dart';
 
 class VerificationCode extends StatefulWidget {
-  //String mail;
-  VerificationCode({/*required this.mail,*/ super.key});
+  UserModel? usuario;
+  String pin;
+  String phoneNumber;
+  bool updateUser;
+  VerificationCode(
+      {required this.pin,
+      required this.phoneNumber,
+      this.usuario,
+      required this.updateUser,
+      super.key});
 
   @override
   State<VerificationCode> createState() => _VerificationCodeState();
@@ -26,7 +39,7 @@ class _VerificationCodeState extends State<VerificationCode> {
   final controllerPin = TextEditingController();
   String pinSeguridad = '';
   final txtControllerDevice = TextEditingController(text: "Cargando...");
-  //final senMail = ServiceEnviarCorreo();
+  final formKey = GlobalKey<FormState>();
 
   late DeviceModel deviceModel;
 
@@ -37,13 +50,15 @@ class _VerificationCodeState extends State<VerificationCode> {
   bool countDownActive = true;
   bool loading = false;
   String? firsPin;
-  String newEmail = "";
+  String newNumber = "";
+
+  bool? verificado;
 
   Timer? countdownTimer;
 
   void startCountDownTimer() {
-    countdownTimer =
-        Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
+    setState(() => countdownTimer =
+        Timer.periodic(const Duration(seconds: 1), (_) => setCountDown()));
   }
 
   void setCountDown() {
@@ -61,63 +76,45 @@ class _VerificationCodeState extends State<VerificationCode> {
     });
   }
 
+  void replacePhoneNumber() {
+    List<String> listNumbers = [];
+    String temporalNumber = "";
+
+    final phoneNumber = widget.phoneNumber.split("");
+
+    for (var i = 0; i < phoneNumber.length; i++) {
+      if (i != 0 && i != 1 && i != 8 && i != 9) {
+        listNumbers.add("*");
+      }
+    }
+
+    for (var i = 0; i < listNumbers.length; i++) {
+      if (listNumbers.length == 6) {
+        temporalNumber = phoneNumber[0];
+        listNumbers.add(temporalNumber);
+      } else if (listNumbers.length == 7) {
+        newNumber = phoneNumber[1];
+        temporalNumber += newNumber;
+        listNumbers.add(newNumber);
+        newNumber = temporalNumber;
+      } else {
+        newNumber += listNumbers.reversed.toList()[i];
+        debugPrint("numero final: $newNumber");
+      }
+    }
+
+    setState(() => newNumber += "${phoneNumber[8]}${phoneNumber[9]}");
+  }
+
   @override
   void initState() {
     super.initState();
     setState(() => loading = false);
-    //replaceMail();
-    //sendMail();
-
+    setState(() => pinSeguridad = widget.pin);
+    replacePhoneNumber();
     getInfoDevice();
+    startCountDownTimer();
   }
-
-  /*void replaceMail() {
-    final parts = widget.mail.split("@");
-
-    final mail = parts[0];
-    final domain = parts[1];
-
-    debugPrint("mail: $mail and domain: $domain");
-
-    final replaceMail =
-        mail.replaceRange(2, mail.length, "*" * (mail.length - 3));
-
-    debugPrint("mail obscure: $replaceMail@$domain");
-
-    setState(() => newEmail = "$replaceMail@$domain");
-  }*/
-
-  /*Future<String> sendMail() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    setState(() => firsPin = (Random().nextInt(599999) + 99999).toString());
-
-    final data = await senMail.enviarCorreoClaveTemporal(firsPin!, widget.mail);
-
-    setState(() => loading = false);
-
-    if (data == 'Enviado') {
-      startCountDownTimer();
-      flushBarGlobal(
-          context,
-          "Correo enviado, revise su bandeja de entrada o correo no deseado",
-          const Icon(
-            Icons.mark_email_read_outlined,
-            color: Colors.green,
-          ),
-          seconds: 3);
-    } else {
-      flushBarGlobal(
-          context,
-          "No se pudo enviar el correo, intentelo de nuevo",
-          const Icon(
-            Icons.error,
-            color: Colors.red,
-          ));
-    }
-
-    return data;
-  }*/
 
   Future getInfoDevice() async {
     final data = await infoDevice.getDeviceModel();
@@ -125,7 +122,7 @@ class _VerificationCodeState extends State<VerificationCode> {
     setState(() {
       deviceModel = data;
       txtControllerDevice.text =
-          Platform.isAndroid ? deviceModel.model! : deviceModel.name!;
+          Platform.isAndroid ? deviceModel.model : deviceModel.name;
     });
   }
 
@@ -158,10 +155,16 @@ class _VerificationCodeState extends State<VerificationCode> {
                   children: [
                     const SizedBox(width: 10),
                     IconButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () {
+                          if (widget.updateUser) {
+                            Navigator.pop(context, verificado);
+                          } else {
+                            Navigator.pop(context);
+                          }
+                        },
                         icon: const Icon(Icons.arrow_back_ios)),
                     const Row(children: [
-                      Icon(KmelloIcons.codigo_de_verifiacion),
+                      Icon(KmelloIcons.codigo_de_verificacion),
                       SizedBox(width: 5),
                       Text(
                         "Código de verificación",
@@ -172,12 +175,12 @@ class _VerificationCodeState extends State<VerificationCode> {
                 ),
                 divider(true),
                 const SizedBox(height: 40),
-                const SizedBox(
+                SizedBox(
                     width: 350,
                     child: Text(
-                      "Ingrese el pin temporal enviado por sms al 0994911674",
+                      "Ingrese el pin temporal enviado por sms al $newNumber",
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     )),
                 const SizedBox(height: 40),
                 securityPin(),
@@ -218,51 +221,53 @@ class _VerificationCodeState extends State<VerificationCode> {
         ],
       );
 
-  Widget securityPin() => Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        child: PinCodeTextField(
-          controller: controllerPin,
-          textStyle: const TextStyle(fontSize: 30),
-          errorTextSpace: 2,
-          onCompleted: (text) {
-            pinSeguridad = text;
-            //validacion();
-          },
-          dialogConfig: DialogConfig(
-            affirmativeText: 'Aceptar',
-            negativeText: 'Cancelar',
-            dialogContent: '¿ Desea pegar este código ',
-            dialogTitle: 'Pegar código',
+  Widget securityPin() => Form(
+        key: formKey,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: PinCodeTextField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "Campo obligatorio *";
+              } else {
+                return null;
+              }
+            },
+            controller: controllerPin,
+            textStyle: const TextStyle(fontSize: 30),
+            errorTextSpace: 20,
+            dialogConfig: DialogConfig(
+              platform: PinCodePlatform.iOS,
+              //affirmativeText: 'Aceptar',
+              negativeText: 'Cancelar',
+              dialogContent: '¿ Desea pegar este código ',
+              dialogTitle: 'Pegar código',
+            ),
+            showCursor: false,
+            enableActiveFill: true,
+            animationType: AnimationType.scale,
+            cursorColor: Colors.black,
+            keyboardType: TextInputType.number,
+            backgroundColor: Colors.transparent,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            pinTheme: PinTheme(
+              selectedFillColor: Colors.grey.shade200,
+              activeFillColor: Colors.transparent,
+              inactiveFillColor: Colors.transparent,
+              activeColor: Colors.black,
+              inactiveColor: Colors.black,
+              borderWidth: 0,
+              shape: PinCodeFieldShape.box,
+              fieldHeight: 75,
+              fieldWidth: 50,
+            ),
+            pastedTextStyle: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+            appContext: context,
+            length: 6,
           ),
-          showCursor: false,
-          enableActiveFill: true,
-          animationType: AnimationType.scale,
-          cursorColor: Colors.black,
-          keyboardType: TextInputType.number,
-          backgroundColor: Colors.transparent,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          pinTheme: PinTheme(
-            selectedFillColor: Colors.grey.shade200,
-            activeFillColor: Colors.transparent,
-            inactiveFillColor: Colors.transparent,
-            activeColor: Colors.black,
-            inactiveColor: Colors.black,
-            borderWidth: 0,
-            shape: PinCodeFieldShape.box,
-            fieldHeight: 75,
-            fieldWidth: 50,
-          ),
-          pastedTextStyle: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-          appContext: context,
-          length: 6,
-          onChanged: (String value) {
-            if (value.isEmpty) {
-              setState(() => pinSeguridad = "");
-            }
-          },
         ),
       );
 
@@ -311,7 +316,29 @@ class _VerificationCodeState extends State<VerificationCode> {
               const SizedBox(height: 15),
               GestureDetector(
                   onTap: () async {
+                    final wsms = WSSms();
+
+                    final pin = (Random().nextInt(599999) + 99999).toString();
+
+                    setState(() => pinSeguridad = pin);
+
                     setState(() => loading = true);
+                    final resultsms =
+                        await wsms.enviarMensaje(widget.phoneNumber, pin);
+
+                    if (resultsms == "OK") {
+                      setState(() => loading = false);
+                      setState(() => mydDuration = const Duration(minutes: 2));
+                      startCountDownTimer();
+                      setState(() => countDownActive = true);
+                      debugPrint("pin: $pin");
+                      flushBarGlobal(context, "Pin enviado correctamente",
+                          const Icon(Icons.check, color: Colors.green));
+                    } else {
+                      setState(() => loading = false);
+                      flushBarGlobal(context, resultsms,
+                          const Icon(Icons.error, color: Colors.red));
+                    }
                     //sendMail();
                   },
                   child: const Text("SOLICITAR NUEVO PIN",
@@ -329,23 +356,31 @@ class _VerificationCodeState extends State<VerificationCode> {
   }
 
   Widget button() => nextButton(
-        onPressed: () {
-          if (pinSeguridad == "102030") {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (builder) => const PhoneVerificated()));
-          } else {}
-          /*if (pinSeguridad.isNotEmpty) {
-            if (pinSeguridad == firsPin) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (builder) => const GeneratePin()));
+        onPressed: () async {
+          if (formKey.currentState!.validate()) {
+            if (controllerPin.text == pinSeguridad) {
+              if (widget.updateUser) {
+                final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (builder) => PhoneVerificated(
+                            usuario: widget.usuario, updateUser: true)));
+                setState(() => verificado = result);
+              } else {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (builder) => PhoneVerificated(
+                            usuario: widget.usuario, updateUser: false)));
+              }
             } else {
               Platform.isAndroid
-                  ? dialogErrorPinValidationAndroid(context)
-                  : dialogErrorPinValidationIos(context);
+                  ? AndroidAlert().incorrectPin(context)
+                  : IosAlert().incorrectPin(context);
             }
-          }*/
+          } else {
+            return;
+          }
         },
         width: 300,
         text: "VERIFICAR",

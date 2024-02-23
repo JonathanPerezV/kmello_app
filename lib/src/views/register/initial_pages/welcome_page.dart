@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kmello_app/src/controller/app_preferences.dart';
 import 'package:kmello_app/src/views/register/login.dart';
 import 'package:kmello_app/utils/buttons.dart';
 import 'package:kmello_app/utils/header_login.dart';
@@ -49,14 +50,21 @@ class _WelcomePageState extends State<WelcomePage> {
         ),
         SizedBox(height: rsp.hp(5)),
         Align(
-          alignment: Alignment.centerRight,
+          alignment: Alignment.bottomCenter,
           child: Container(
             margin: const EdgeInsets.only(right: 15),
             child: nextButton(
-                onPressed: () => Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (builder) => const LoginPage()),
-                    (route) => false),
+                onPressed: () async {
+                  final appPreferences = AppPreferences();
+
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (builder) => const LoginPage()),
+                      (route) => false);
+
+                  await appPreferences.saveWelcomePage(true);
+                },
                 text: "Continuar",
                 width: 260,
                 fontSize: 26.5,
