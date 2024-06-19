@@ -10,7 +10,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 List<Map<String, dynamic>> solicitudes_ingresadas = [
-  {
+  /*{
     "id": 1,
     "fecha_solicitud": "2023-12-01",
     "establecimiento": "Red consulta med",
@@ -61,7 +61,7 @@ List<Map<String, dynamic>> solicitudes_ingresadas = [
     "detalles":
         "asduahsduaskhdjsdbgasjkdgasdjasbdhajksdasvdjgsdvkdjahsdknasdkjs",
     "comision": 20
-  },
+  },*/
 ];
 
 List<Map<String, dynamic>> options_solicitud = [

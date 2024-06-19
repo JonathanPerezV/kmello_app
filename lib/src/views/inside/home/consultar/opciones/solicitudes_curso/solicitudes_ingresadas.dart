@@ -25,29 +25,6 @@ class _SolicitudesIngresadasState extends State<SolicitudesIngresadas> {
   final _searchController = TextEditingController();
   String searchText = "";
 
-  List<bool> select_options =
-      List.generate(solicitudes_ingresadas.length, (index) => false);
-
-  void toggleOptionSelection(int index) {
-    setState(() => select_options[index] = !select_options[index]);
-  }
-
-  void toggleAllOptionsSelections() {
-    if (selectAllOptions) {
-      setState(() {
-        selectAllOptions = false;
-        select_options =
-            List.generate(select_options.length, (index) => selectAllOptions);
-      });
-    } else {
-      setState(() {
-        selectAllOptions = true;
-        select_options =
-            List.generate(select_options.length, (index) => selectAllOptions);
-      });
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -59,6 +36,7 @@ class _SolicitudesIngresadasState extends State<SolicitudesIngresadas> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: MyAppBar(key: sckey).myAppBar(),
         body: options(),
       ),
@@ -69,8 +47,10 @@ class _SolicitudesIngresadasState extends State<SolicitudesIngresadas> {
         children: [
           header("Solicitudes Ingresadas", KmelloIcons.solucitudes,
               context: context),
-          buscador(),
-          opcionesSoliciudes(),
+          if (_searchList.isNotEmpty) buscador(),
+          if (_searchList.isNotEmpty)
+            Align(
+                alignment: Alignment.centerRight, child: opcionesSoliciudes()),
           listaSolicitudes(),
           footerBaadal()
         ],
@@ -97,74 +77,78 @@ class _SolicitudesIngresadasState extends State<SolicitudesIngresadas> {
       );
 
   Expanded listaSolicitudes() => Expanded(
-      child: ListView.builder(
-          itemCount: _searchList.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (builder) =>
-                          DetalleSolicitud(id: _searchList[index]["id"]))),
-              child: Container(
-                margin: const EdgeInsets.only(top: 15, right: 10, left: 10),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          DateFormat.yMMMMEEEEd("es").format(DateTime.parse(
-                              _searchList[index]["fecha_solicitud"])),
-                          style: const TextStyle(fontSize: 15),
-                        ),
-                      ),
-                    ),
-                    ListTile(
-                      contentPadding: const EdgeInsets.only(right: 5),
-                      leading: Checkbox(
-                          onChanged: (_) => toggleOptionSelection(index),
-                          value: select_options[index]),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "\$${solicitudes_ingresadas[index]["valor"]}",
-                            style: const TextStyle(fontSize: 25),
+      child: _searchList.isEmpty
+          ? Center(
+              child: Text("No tiene solicitudes ingresadas"),
+            )
+          : ListView.builder(
+              itemCount: _searchList.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (builder) =>
+                              DetalleSolicitud(id: _searchList[index]["id"]))),
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 15, right: 10, left: 10),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              DateFormat.yMMMMEEEEd("es").format(DateTime.parse(
+                                  _searchList[index]["fecha_solicitud"])),
+                              style: const TextStyle(fontSize: 15),
+                            ),
                           ),
-                          const Icon(
-                            Icons.navigate_next_sharp,
-                            color: Colors.grey,
-                          )
-                        ],
-                      ),
-                      title: Text(_searchList[index]["establecimiento"]),
-                      subtitle: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                        ),
+                        ListTile(
+                          contentPadding:
+                              const EdgeInsets.only(right: 5, left: 10),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Container(
-                                width: double.infinity,
-                                child: Text(_searchList[index]["informacion"]),
+                              Text(
+                                "\$${solicitudes_ingresadas[index]["valor"]}",
+                                style: const TextStyle(fontSize: 25),
                               ),
-                              Container(
-                                width: double.infinity,
-                                child: Text(estadoSolicitud(
-                                    _searchList[index]["estado"])),
+                              const Icon(
+                                Icons.navigate_next_sharp,
+                                color: Colors.grey,
                               )
-                            ]),
-                      ),
-                      shape: RoundedRectangleBorder(
-                          side: const BorderSide(color: Colors.grey, width: 1),
-                          borderRadius: BorderRadius.circular(10)),
+                            ],
+                          ),
+                          title: Text(_searchList[index]["establecimiento"]),
+                          subtitle: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: double.infinity,
+                                    child:
+                                        Text(_searchList[index]["informacion"]),
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    child: Text(estadoSolicitud(
+                                        _searchList[index]["estado"])),
+                                  )
+                                ]),
+                          ),
+                          shape: RoundedRectangleBorder(
+                              side: const BorderSide(
+                                  color: Colors.grey, width: 1),
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            );
-          }));
+                  ),
+                );
+              }));
 
   String estadoSolicitud(int estado) {
     String result = "Estado: ";
@@ -184,47 +168,33 @@ class _SolicitudesIngresadasState extends State<SolicitudesIngresadas> {
   }
 
   Container opcionesSoliciudes() => Container(
-        color: Colors.white,
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: ListTile(
-                leading: Checkbox(
-                  onChanged: (_) => toggleAllOptionsSelections(),
-                  value: selectAllOptions,
-                ),
-                onTap: () => toggleAllOptionsSelections(),
-                title: const Text("Seleccionar todas"),
-              ),
-            ),
-            Expanded(
-                child: DropdownButton<Map<String, dynamic>>(
-              hint: const Text("Seleccione"),
-              value: value,
-              items: options_solicitud
-                  .map((e) => DropdownMenuItem(
-                        value: e,
-                        child: Text(e["name"]),
-                      ))
-                  .toList(),
-              onChanged: (value) {
-                setState(() => this.value = value!);
+      margin: const EdgeInsets.only(right: 15),
+      color: Colors.white,
+      width: 130,
+      child: DropdownButton<Map<String, dynamic>>(
+        dropdownColor: Colors.white,
+        hint: const Text("Seleccione"),
+        value: value,
+        items: options_solicitud
+            .map((e) => DropdownMenuItem(
+                  value: e,
+                  child: Text(e["name"]),
+                ))
+            .toList(),
+        onChanged: (value) {
+          setState(() => this.value = value!);
 
-                if (value!["value"] == 4) {
-                  setState(() => _searchList = solicitudes_ingresadas);
-                } else {
-                  setState(() {
-                    _searchList = solicitudes_ingresadas
-                        .where((element) => element["estado"] == value["value"])
-                        .toList();
-                  });
-                }
-              },
-            ))
-          ],
-        ),
-      );
+          if (value!["value"] == 4) {
+            setState(() => _searchList = solicitudes_ingresadas);
+          } else {
+            setState(() {
+              _searchList = solicitudes_ingresadas
+                  .where((element) => element["estado"] == value["value"])
+                  .toList();
+            });
+          }
+        },
+      ));
 
   List<Map<String, dynamic>> _buildSearchList() {
     //setState(() {

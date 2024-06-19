@@ -22,7 +22,7 @@ class ViewSponsors extends StatefulWidget {
 }
 
 class _ViewSponsorsState extends State<ViewSponsors> {
-  List<Map<String, dynamic>> listSubCategory = [];
+  List<Map<String, dynamic>> listSponsors = [];
   final andAlert = AndroidAlert();
   final iosAlert = IosAlert();
 
@@ -41,7 +41,7 @@ class _ViewSponsorsState extends State<ViewSponsors> {
         .where((element) => element["id_sub_category"] == widget.idSubCategory)
         .toList();
 
-    setState(() => listSubCategory = data);
+    setState(() => listSponsors = data);
   }
 
   @override
@@ -49,6 +49,7 @@ class _ViewSponsorsState extends State<ViewSponsors> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: Colors.white,
         key: sckey,
         appBar: myAppBar.myAppBar(),
         drawer: drawerMenu(context, inicio: false),
@@ -112,7 +113,7 @@ class _ViewSponsorsState extends State<ViewSponsors> {
           Expanded(
             child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount: listSubCategory.length,
+                itemCount: listSponsors.length,
                 itemBuilder: (builder, i) {
                   return InkWell(
                     onTap: () => Platform.isAndroid
@@ -137,7 +138,7 @@ class _ViewSponsorsState extends State<ViewSponsors> {
                                               alignment: Alignment.centerLeft,
                                               child: Container(
                                                 decoration: BoxDecoration(
-                                                    color: listSubCategory[i]
+                                                    color: listSponsors[i]
                                                         ["color"],
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -158,7 +159,7 @@ class _ViewSponsorsState extends State<ViewSponsors> {
                                         child: Container(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            listSubCategory[i]["name"],
+                                            listSponsors[i]["name"],
                                             style:
                                                 const TextStyle(fontSize: 22),
                                           ),

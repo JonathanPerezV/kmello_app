@@ -82,7 +82,7 @@ class _SellPageState extends State<SellPage> {
                         itemCount: loading ? 5 : listaCategorias.length,
                         itemBuilder: (context, i) {
                           return GestureDetector(
-                            onTap: () => setState(() => loading = true),
+                            //onTap: () => setState(() => loading = true),
                             child: Container(
                                 margin: const EdgeInsets.only(top: 5),
                                 child: Column(
@@ -94,8 +94,8 @@ class _SellPageState extends State<SellPage> {
                                         height:
                                             MediaQuery.of(context).size.width >
                                                     250
-                                                ? 100
-                                                : 50,
+                                                ? 175
+                                                : 125,
                                         child: SizedBox(
                                           width: double.infinity,
                                           height: 250,
@@ -114,68 +114,96 @@ class _SellPageState extends State<SellPage> {
                                       height: 5,
                                     ),
                                     Stack(children: [
-                                      SizedBox(
-                                          height: MediaQuery.of(context)
-                                                      .size
-                                                      .width >
-                                                  450
-                                              ? 325
-                                              : 200,
-                                          child: Swiper(
-                                            viewportFraction: 0.35,
-                                            scale: 0.85,
-                                            autoplay: false,
-                                            autoplayDelay: 3000,
-                                            pagination: const SwiperPagination(
-                                                alignment:
-                                                    Alignment.bottomCenter,
-                                                builder:
-                                                    DotSwiperPaginationBuilder(
-                                                        space: 5.0,
-                                                        color: Colors.white,
-                                                        activeColor:
-                                                            Colors.blue,
-                                                        size: 8),
-                                                margin:
-                                                    EdgeInsets.only(top: 50)),
-                                            itemCount: listaCategorias[i]
-                                                .subcategorias!
-                                                .length,
-                                            loop: true,
-                                            itemBuilder: (context, index) {
-                                              return GestureDetector(
-                                                onTap: () {},
-                                                child: SizedBox(
-                                                    height:
-                                                        MediaQuery.of(context)
+                                      listaCategorias[i]
+                                                  .subcategorias!
+                                                  .length ==
+                                              1
+                                          ? SizedBox(
+                                              width: double.infinity,
+                                              height: MediaQuery.of(context)
+                                                          .size
+                                                          .width >
+                                                      450
+                                                  ? 200
+                                                  : 150,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Image.asset(
+                                                  listaCategorias[i]
+                                                              .subcategorias![0]
+                                                              .fotoCompraSubCategoria !=
+                                                          ''
+                                                      ? listaCategorias[i]
+                                                          .subcategorias![0]
+                                                          .fotoCompraSubCategoria!
+                                                      : "assets/no_image_otros.jpeg",
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ))
+                                          : SizedBox(
+                                              height: MediaQuery.of(context)
+                                                          .size
+                                                          .width >
+                                                      450
+                                                  ? 325
+                                                  : 200,
+                                              child: Swiper(
+                                                viewportFraction: 0.35,
+                                                scale: 0.85,
+                                                autoplay: false,
+                                                autoplayDelay: 3000,
+                                                pagination: const SwiperPagination(
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    builder:
+                                                        DotSwiperPaginationBuilder(
+                                                            space: 5.0,
+                                                            color: Colors.white,
+                                                            activeColor:
+                                                                Colors.blue,
+                                                            size: 8),
+                                                    margin: EdgeInsets.only(
+                                                        top: 50)),
+                                                itemCount: listaCategorias[i]
+                                                    .subcategorias!
+                                                    .length,
+                                                loop: true,
+                                                itemBuilder: (context, index) {
+                                                  return GestureDetector(
+                                                    onTap: () {},
+                                                    child: SizedBox(
+                                                        height: MediaQuery.of(
+                                                                        context)
                                                                     .size
                                                                     .width >
                                                                 450
                                                             ? 300
                                                             : 20,
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      child: Image.asset(
-                                                        listaCategorias[i]
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          child: Image.asset(
+                                                            listaCategorias[i]
+                                                                        .subcategorias![
+                                                                            index]
+                                                                        .fotoCompraSubCategoria !=
+                                                                    ''
+                                                                ? listaCategorias[
+                                                                        i]
                                                                     .subcategorias![
                                                                         index]
-                                                                    .fotoCompraSubCategoria !=
-                                                                ''
-                                                            ? listaCategorias[i]
-                                                                .subcategorias![
-                                                                    index]
-                                                                .fotoCompraSubCategoria!
-                                                            : "assets/no_image_otros.jpeg",
-                                                        fit: BoxFit.fill,
-                                                      ),
-                                                    )),
-                                              );
+                                                                    .fotoCompraSubCategoria!
+                                                                : "assets/no_image_otros.jpeg",
+                                                            fit: BoxFit.fill,
+                                                          ),
+                                                        )),
+                                                  );
 
-                                              //return
-                                            },
-                                          ))
+                                                  //return
+                                                },
+                                              ))
                                     ]),
                                   ],
                                 )),
@@ -211,6 +239,7 @@ class _SellPageState extends State<SellPage> {
                                 mainAxisSpacing: 5),
                       ),
               ),
+              SizedBox(height: 15)
             ],
           );
   }
@@ -227,7 +256,7 @@ class _SellPageState extends State<SellPage> {
             CardLoading(
               animationDuration: Duration(milliseconds: 1200),
               borderRadius: BorderRadius.circular(10),
-              height: 200,
+              height: MediaQuery.of(context).size.width > 250 ? 100 : 50,
               width: double.infinity,
             ),
             const SizedBox(
@@ -270,7 +299,7 @@ class _SellPageState extends State<SellPage> {
             CardLoading(
               animationDuration: Duration(milliseconds: 1200),
               borderRadius: BorderRadius.circular(10),
-              height: 200,
+              height: MediaQuery.of(context).size.width > 250 ? 100 : 50,
               width: double.infinity,
             ),
             const SizedBox(

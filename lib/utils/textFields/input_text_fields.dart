@@ -8,7 +8,7 @@ class InputTextFields extends StatelessWidget {
   final List<TextInputFormatter>? textInputFormatter;
   final TextInputType? tipoTeclado;
   final bool? habilitado;
-  final void Function(String)? funcion;
+  final void Function(String)? onSubmitted;
   final void Function(String)? onChanged;
   final TextEditingController? controlador;
   final void Function()? onTap;
@@ -38,7 +38,7 @@ class InputTextFields extends StatelessWidget {
     this.icon,
     this.habilitado,
     this.controlador,
-    this.funcion,
+    this.onSubmitted,
     this.mayuscula,
     this.onTap,
     this.maxLines,
@@ -56,7 +56,7 @@ class InputTextFields extends StatelessWidget {
         maxLines: maxLines,
         maxLength: maxLength,
         onTap: onTap,
-        onSubmitted: funcion,
+        onSubmitted: onSubmitted,
         onChanged: onChanged,
         controller: controlador,
         textInputAction: accionCampo,

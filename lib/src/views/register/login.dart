@@ -3,10 +3,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kmello_app/src/controller/app_preferences.dart';
+import 'package:kmello_app/src/controller/preferences/app_preferences.dart';
 import 'package:kmello_app/src/controller/aws/ws_usuario.dart';
 import 'package:kmello_app/src/views/inside/home/home_page.dart';
-import 'package:kmello_app/src/views/inside/school/select_profile.dart';
 import 'package:kmello_app/utils/alerts/and_alert.dart';
 import 'package:kmello_app/utils/alerts/ios_alert.dart';
 import 'package:kmello_app/utils/buttons.dart';
@@ -101,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           HeaderFormLogin(
             widthPath: 180,
-            path: "assets/kmello_logo.png",
+            path: "assets/abi_praxis_logo.png",
             child: Form(
               key: formKey,
               child: Container(
@@ -183,35 +182,11 @@ class _LoginPageState extends State<LoginPage> {
           child: const Text(
             '¿Olvidó su contraseña?',
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 14,
             ),
           ),
         ),
         const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              '¿No posee cuenta?',
-              style: TextStyle(
-                fontSize: 12,
-              ),
-            ),
-            const SizedBox(width: 10),
-            GestureDetector(
-              //: EdgeInsets.zero,
-              onTap: () => Navigator.pushNamed(context, 'registro'),
-              child: const Text(
-                'Regístrese',
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                    color: Colors.lightBlue,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        ),
       ],
     );
   }
@@ -231,13 +206,8 @@ class _LoginPageState extends State<LoginPage> {
       if (data == "ok") {
         await appPreferences.saveLoginPage(true);
 
-        if (await appPreferences.getAcademyPage()) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (builder) => const HomePage()));
-        } else {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (builder) => const SelectProfile()));
-        }
+        Navigator.push(
+            context, MaterialPageRoute(builder: (builder) => const HomePage()));
       } else {
         final separate = data.split(",");
 

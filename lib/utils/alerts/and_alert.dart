@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kmello_app/src/views/register/login.dart';
 import 'package:kmello_app/utils/buttons.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -173,8 +174,10 @@ class AndroidAlert {
                   final pfrc = await SharedPreferences.getInstance();
 
                   await pfrc.remove("login");
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (builder) => LoginPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (builder) => const LoginPage()));
                 },
               ),
             ],
@@ -204,6 +207,59 @@ class AndroidAlert {
                 child: const Text('Iniciar'),
                 onPressed: () async {},
               ),
+            ],
+          );
+        });
+  }
+
+  void alertaAgregarEvento(context, DateTime date, Function()? onpressed) {
+    showDialog(
+        context: context,
+        builder: (builder) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+            title: const Text("Agregar evento"),
+            content: Text(
+                "Agregara un evento a la siguiente fecha: \n ${DateFormat.MMMEd("es").format(date)}"),
+            actions: [
+              TextButton(
+                child: const Text(
+                  'Cancelar',
+                  style: TextStyle(color: Colors.red),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              TextButton(
+                onPressed: onpressed,
+                child: const Text('Continuar'),
+              ),
+            ],
+          );
+        });
+  }
+
+  void agendaAgregada(BuildContext context, Function() onPressed) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (builder) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+            title: const Text("Evento creado"),
+            content: const Text(
+                "Evento creado. ¿Desea agregar documentos al evento?"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  child: const Text("No")),
+              TextButton(onPressed: onPressed, child: const Text("Si")),
             ],
           );
         });

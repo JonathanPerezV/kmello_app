@@ -38,7 +38,7 @@ class _IntroductionState extends State<Introduction> {
             child: SizedBox(
               width: 170,
               height: 60,
-              child: Image.asset("assets/kmello_logo.png"),
+              child: Image.asset("assets/abi_praxis_logo.png"),
             ),
           ),
           const SizedBox(height: 10),
@@ -83,10 +83,8 @@ class _IntroductionState extends State<Introduction> {
           ),
           const SizedBox(height: 20),
           nextButton(
-              onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (builder) => const ViewCategory())),
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (builder) => ViewCategory())),
               text: "SIGUIENTE",
               fontSize: 25,
               width: 200),

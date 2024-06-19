@@ -36,6 +36,7 @@ class _DetalleSolicitudState extends State<DetalleSolicitud> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       key: scKey,
       appBar: MyAppBar(key: scKey).myAppBar(),
       body: options(),

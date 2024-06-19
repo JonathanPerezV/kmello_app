@@ -145,7 +145,7 @@ class _FaceWidgetState extends State<FaceWidget>
             child: SizedBox(
               width: 170,
               height: 60,
-              child: Image.asset("assets/kmello_logo.png"),
+              child: Image.asset("assets/abi_praxis_logo.png"),
             ),
           ),
           const SizedBox(height: 10),

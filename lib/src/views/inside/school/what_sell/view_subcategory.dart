@@ -43,6 +43,7 @@ class _ViewSubCategoryState extends State<ViewSubCategory> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: Colors.white,
         key: sckey,
         appBar: myAppBar.myAppBar(),
         drawer: drawerMenu(context, inicio: false),
@@ -111,7 +112,8 @@ class _ViewSubCategoryState extends State<ViewSubCategory> {
                         MaterialPageRoute(
                             builder: (builder) => ViewSponsors(
                                 subCatName: listSubCategory[i]["name"],
-                                idSubCategory: listSubCategory[i]["id_sub_category"]))),
+                                idSubCategory: listSubCategory[i]
+                                    ["id_sub_category"]))),
                     child: Container(
                       padding: const EdgeInsets.only(top: 5, bottom: 5),
                       child: Column(

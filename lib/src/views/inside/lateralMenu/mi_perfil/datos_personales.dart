@@ -2,17 +2,15 @@
 
 import 'dart:io';
 import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+//import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:kmello_app/src/controller/aws/recognition/upload_image_s3.dart';
 import 'package:kmello_app/src/controller/aws/ws_usuario.dart';
-import 'package:kmello_app/src/controller/user_preferences.dart';
+import 'package:kmello_app/src/controller/preferences/user_preferences.dart';
 import 'package:kmello_app/src/models/user_moderl.dart';
 import 'package:kmello_app/src/views/inside/lateralMenu/drawer_menu.dart';
 import 'package:kmello_app/src/views/register/verificatePin/verificate_pin.dart';
@@ -135,9 +133,10 @@ class _DatosPersonalesState extends State<DatosPersonales> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        backgroundColor: Colors.white,
         key: sckey,
         appBar: MyAppBar(key: sckey).myAppBar(),
-        drawer: drawerMenu(context),
+        drawer: drawerMenu(context, inicio: false),
         body: options(),
       ),
     );
@@ -177,7 +176,7 @@ class _DatosPersonalesState extends State<DatosPersonales> {
               borderRadius: BorderRadius.circular(100),
               onLongPress: () {
                 if (pathImage != null) {
-                  onLongPressPhoto(dotenv.env["ws_dominio"]! + pathImage!);
+                  //onLongPressPhoto(dotenv.env["ws_dominio"]! + pathImage!);
                 }
               },
               onTap: () => showModal(),
@@ -835,7 +834,7 @@ class _DatosPersonalesState extends State<DatosPersonales> {
     setState(() => updating = false);
   }
 
-  void onLongPressPhoto(String imagePath) {
+  /*void onLongPressPhoto(String imagePath) {
     showAnimatedDialog(
         axis: Axis.vertical,
         alignment: Alignment.center,
@@ -853,5 +852,5 @@ class _DatosPersonalesState extends State<DatosPersonales> {
         },
         animationType: DialogTransitionType.scale,
         duration: const Duration(milliseconds: 300));
-  }
+  }*/
 }

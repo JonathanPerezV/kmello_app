@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:kmello_app/src/controller/app_preferences.dart';
+import 'package:kmello_app/src/controller/preferences/app_preferences.dart';
+import 'package:kmello_app/src/controller/dataBase/operations.dart';
 import 'package:kmello_app/src/views/inside/home/home_page.dart';
-import 'package:kmello_app/src/views/inside/school/select_profile.dart';
 import 'package:kmello_app/src/views/register/forgot_password.dart';
 import 'package:kmello_app/src/views/register/initial_pages/permissions_page.dart';
 import 'package:kmello_app/src/views/register/initial_pages/preview_permissions.dart';
@@ -10,9 +10,13 @@ import 'package:kmello_app/src/views/register/initial_pages/welcome_page.dart';
 import 'package:kmello_app/src/views/register/login.dart';
 import 'package:kmello_app/src/views/register/register.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:workmanager/workmanager.dart';
+
+import 'src/controller/background_fetch.dart';
 
 String routePage = "preview";
 final appPreferences = AppPreferences();
+final op = Operations();
 
 void getCurrentPage() async {
   final permissions = await appPreferences.getPermissionPage();
@@ -26,11 +30,7 @@ void getCurrentPage() async {
     if (welcome) {
       routePage = "login";
       if (login) {
-        if (profile) {
-          routePage = "home";
-        } else {
-          routePage = "profile";
-        }
+        routePage = "home";
       }
     } else {
       routePage = "login";
@@ -44,8 +44,25 @@ void getCurrentPage() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeWorkManager();
   await dotenv.load(fileName: '.env');
   getCurrentPage();
+  await op.insertarCategoriasYproductos();
+}
+
+Future<void> initializeWorkManager() async {
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  Workmanager().registerPeriodicTask(
+    "2",
+    fetchBackground,
+    frequency: const Duration(minutes: 15),
+    /*constraints: Constraints(
+      // connected or metered mark the task as requiring internet
+      networkType: NetworkType.connected,
+      // require external power
+      requiresCharging: false,
+    ),*/
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -62,9 +79,8 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('es', 'ES'),
-        Locale('en', 'EN'),
-        Locale('fr', 'FR'),
+        Locale('es'),
+        Locale('en'),
       ],
       title: 'Material App',
       debugShowCheckedModeBanner: false,
@@ -74,7 +90,6 @@ class MyApp extends StatelessWidget {
         "registro": (_) => const RegisterPage(),
         "forgot_password": (_) => const ForgotPassword(),
         "preview": (_) => const InformativePage(),
-        "profile": (_) => const SelectProfile(),
         "home": (_) => const HomePage(),
         "login": (_) => const LoginPage(),
       },

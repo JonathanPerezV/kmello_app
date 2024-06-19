@@ -31,6 +31,17 @@ class _RegisterPageState extends State<RegisterPage> {
   final formKey = GlobalKey<FormState>();
   final wsUsuario = WSUsuario();
 //= DateTime.utc(1950, 1, 1);
+  final focusName = FocusNode();
+  final focusLastName = FocusNode();
+  final focusId = FocusNode();
+  final focusCountry = FocusNode();
+  final focusProv = FocusNode();
+  final focusCity = FocusNode();
+  final focusPhone = FocusNode();
+  final focusMail = FocusNode();
+  final focsPass1 = FocusNode();
+  final focusPass2 = FocusNode();
+
   var fechaActual = DateTime.now();
   var edad;
   var mesNacimiento;
@@ -105,15 +116,6 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Theme(
           data: ThemeData.light(),
           child: Scaffold(
-            /*persistentFooterButtons: [
-              SizedBox(
-                height: 50,
-                width: double.infinity,
-                child: Image.asset(
-                  'assets/byBaadalColor.png',
-                ),
-              )
-            ],*/
             body: body(),
           ),
         ));
@@ -127,7 +129,7 @@ class _RegisterPageState extends State<RegisterPage> {
           child: SizedBox(
             width: 170,
             height: 60,
-            child: Image.asset("assets/kmello_logo.png"),
+            child: Image.asset("assets/abi_praxis_logo.png"),
           ),
         ),
         SizedBox(
@@ -221,8 +223,10 @@ class _RegisterPageState extends State<RegisterPage> {
       child: Column(
         children: [
           InputTextFormFields(
+              focus: focusName,
               validacion: (value) {
                 if (value!.isEmpty) {
+                  focusName.requestFocus();
                   return 'Campo obligatorio *';
                 } else {
                   return null;
@@ -238,8 +242,10 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           //todo APELLIDOS
           InputTextFormFields(
+              focus: focusLastName,
               validacion: (value) {
                 if (value!.isEmpty) {
+                  focusLastName.requestFocus();
                   return 'Campo obligatorio *';
                 } else {
                   return null;
@@ -255,9 +261,11 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           //todo CÉDULA DE IDENTIDAD
           InputTextFormFields(
+            focus: focusId,
             controlador: txtCedula,
             validacion: (value) {
               if (value!.isEmpty) {
+                focusId.requestFocus();
                 return 'Campo obligatorio *';
               } else {
                 return null;
@@ -369,9 +377,11 @@ class _RegisterPageState extends State<RegisterPage> {
           Container(
             margin: const EdgeInsets.only(left: 10, right: 10),
             child: DropdownButtonFormField<String>(
+                focusNode: focusCountry,
                 value: pais,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
+                    focusCountry.requestFocus();
                     return 'Campo obligatorio *';
                   } else {
                     return null;
@@ -416,9 +426,11 @@ class _RegisterPageState extends State<RegisterPage> {
               child: AbsorbPointer(
                 absorbing: hintTextProvincia != 'cargando...' ? false : true,
                 child: DropdownButtonFormField<String>(
+                    focusNode: focusProv,
                     validator: (value) {
                       if (pais != null) {
                         if (value == null || value.isEmpty) {
+                          focusProv.requestFocus();
                           return 'Llene este campo para continuar';
                         } else {
                           return null;
@@ -466,9 +478,11 @@ class _RegisterPageState extends State<RegisterPage> {
               child: AbsorbPointer(
                 absorbing: hintTextCiudad != 'cargando...' ? false : true,
                 child: DropdownButtonFormField<String>(
+                    focusNode: focusCity,
                     validator: (value) {
                       if (provincia != null) {
                         if (value == null || value.isEmpty) {
+                          focusCity.requestFocus();
                           return 'Llene este campo para continuar';
                         } else {
                           return null;
@@ -549,11 +563,18 @@ class _RegisterPageState extends State<RegisterPage> {
               Expanded(
                 flex: 3,
                 child: InputTextFormFields(
+                  focus: focusPhone,
                   validacion: (value) {
                     if (value!.isEmpty) {
+                      focusPhone.requestFocus();
                       return 'Campo obligatorio *';
                     } else {
-                      return null;
+                      if (value.length == 10) {
+                        return null;
+                      } else {
+                        focusPhone.requestFocus();
+                        return "Complete los 10 dígitos*";
+                      }
                     }
                   },
                   controlador: txtCelular,
@@ -575,8 +596,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
           //todo CORREO ELECTRÓNICO
           InputTextFormFields(
+              focus: focusMail,
               validacion: (value) {
                 if (value!.isEmpty) {
+                  focusMail.requestFocus();
                   return 'Campo obligatorio *';
                 } else {
                   return null;
@@ -600,6 +623,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           //todo INGRESAR CONTRASEÑA
           InputTextFormFields(
+            focus: focsPass1,
             accionCampo: TextInputAction.next,
             nombreCampo: 'Contraseña',
             placeHolder: 'Ingrese una contraseña',
@@ -621,6 +645,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           //todo CONFIRMAR CONTRASEÑA
           InputTextFormFields(
+            focus: focusPass2,
             accionCampo: TextInputAction.go,
             nombreCampo: 'Confirmar contraseña',
             placeHolder: 'Repita la contraseña',

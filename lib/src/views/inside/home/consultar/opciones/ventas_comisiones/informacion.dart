@@ -30,14 +30,19 @@ class _InformacionComisionesState extends State<InformacionComisiones> {
 
   List<Map<String, dynamic>> categories = [
     {"name": "Todas", "value": 1},
-    {"name": "Suscripciones", "value": 2},
+    {"name": "Créditos", "value": 2},
+    {"name": "Seguros", "value": 3},
+    {"name": "Asistencias", "value": 4},
   ];
 
   final _sckey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _sckey, appBar: MyAppBar(key: _sckey).myAppBar(), body: options());
+        backgroundColor: Colors.white,
+        key: _sckey,
+        appBar: MyAppBar(key: _sckey).myAppBar(),
+        body: options());
   }
 
   Widget options() {
@@ -337,7 +342,7 @@ class _InformacionComisionesState extends State<InformacionComisiones> {
                     "Ventas",
                     style: TextStyle(fontSize: 20),
                   ),
-                  Text("\$ 1,456,023", style: TextStyle(fontSize: 23))
+                  Text("\$ 0.0", style: TextStyle(fontSize: 23))
                 ],
               ),
             ),
@@ -347,7 +352,7 @@ class _InformacionComisionesState extends State<InformacionComisiones> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("Comisiones", style: TextStyle(fontSize: 20)),
-                    Text("\$ 800,00", style: TextStyle(fontSize: 23))
+                    Text("\$ 0.0", style: TextStyle(fontSize: 23))
                   ]),
             )
           ],
@@ -382,7 +387,7 @@ class _InformacionComisionesState extends State<InformacionComisiones> {
                 ),
                 body: const Center(
                   child: Text(
-                    "10",
+                    "0",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                   ),
                 )),
@@ -413,7 +418,7 @@ class _InformacionComisionesState extends State<InformacionComisiones> {
                 ),
                 body: const Center(
                   child: Text(
-                    "33",
+                    "0",
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                 )),
@@ -445,33 +450,33 @@ class _InformacionComisionesState extends State<InformacionComisiones> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("Créditos", style: TextStyle(fontSize: 17)),
-                        Text("5", style: TextStyle(fontSize: 25)),
+                        Text("0", style: TextStyle(fontSize: 25)),
                         Text("Comisiones"),
-                        Text("\$ 300,0")
+                        Text("\$ 0.0")
                       ],
                     ),
                     Container(width: 1, color: Colors.black, height: 130),
                     const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Seguros \n De Vehículos",
+                        Text("Seguros",
                             textAlign: TextAlign.center,
                             style: TextStyle(fontSize: 17)),
-                        Text("2", style: TextStyle(fontSize: 25)),
+                        Text("0", style: TextStyle(fontSize: 25)),
                         Text("Comisiones"),
-                        Text("\$ 300,0")
+                        Text("\$ 0.0")
                       ],
                     ),
                     Container(width: 1, color: Colors.black, height: 130),
                     const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Seguros \nMédicos",
+                        Text("Asistencias",
                             textAlign: TextAlign.center,
                             style: TextStyle(fontSize: 17)),
-                        Text("5", style: TextStyle(fontSize: 25)),
+                        Text("0", style: TextStyle(fontSize: 25)),
                         Text("Comisiones"),
-                        Text("\$ 300,0")
+                        Text("\$ 0.0")
                       ],
                     ),
                   ],

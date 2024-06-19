@@ -5,6 +5,7 @@ Widget nextButton(
         {required Function() onPressed,
         required String text,
         double? width,
+        BorderRadiusGeometry? radius,
         double? fontSize,
         double? iconSize,
         Color? background}) =>
@@ -14,7 +15,7 @@ Widget nextButton(
             backgroundColor:
                 MaterialStatePropertyAll(background ?? Colors.black),
             shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100)))),
+                borderRadius: radius ?? BorderRadius.circular(100)))),
         onPressed: onPressed,
         child: SizedBox(
           width: width,

@@ -3,55 +3,51 @@ import '../../src/models/categorias_model.dart';
 List<CategoriasModelo> listaCategorias = [
   //todo CRÉDITOS
   CategoriasModelo(
-    fotoCategoria: "assets/sell/creditos/credito.jpg",
+    fotoCategoria: "assets/sell/creditos/credito.png",
     idCompraCategoria: 1,
     nombreCompraCategoria: "Créditos",
     subcategorias: [
       SubCategoriaModelo(
-        fotoCompraSubCategoria: "assets/sell/creditos/credito_hipotecario.jpg",
+        fotoCompraSubCategoria: "assets/sell/creditos/microcredito_consumo.jpg",
         idCategoria: 1,
         idCompraSubCategoria: 1,
-        nombreCompraSubCategoria: "Crédito Hipotecario",
+        nombreCompraSubCategoria: "Microcredito consumo",
       ),
       SubCategoriaModelo(
-        fotoCompraSubCategoria: "assets/sell/creditos/credito_vehiculo.jpg",
+        fotoCompraSubCategoria:
+            "assets/sell/creditos/microcredito_productivo.jpg",
         idCategoria: 1,
         idCompraSubCategoria: 2,
-        nombreCompraSubCategoria: "Crédito Vehículo",
-      ),
-      SubCategoriaModelo(
-        fotoCompraSubCategoria: "assets/sell/creditos/microcredito.jpg",
-        idCategoria: 1,
-        idCompraSubCategoria: 3,
-        nombreCompraSubCategoria: "Microcrédito",
+        nombreCompraSubCategoria: "Microcredito productivo",
       ),
     ],
   ),
-  //todo HOGAR
+  //todo SEEGUROS
   CategoriasModelo(
     fotoCategoria: "assets/sell/seguros/seguros.png",
     idCompraCategoria: 2,
     nombreCompraCategoria: "Seguros",
     subcategorias: [
       SubCategoriaModelo(
-        fotoCompraSubCategoria:
-            "assets/sell/seguros/seguro_medicina_prepagada.jpg",
+        fotoCompraSubCategoria: "assets/sell/seguros/seguro_desgravamen.png",
         idCategoria: 2,
-        idCompraSubCategoria: 8,
-        nombreCompraSubCategoria: "Seguro de medicina prepagada",
-      ),
-      SubCategoriaModelo(
-        fotoCompraSubCategoria: "assets/sell/seguros/seguro_social.jpg",
-        idCategoria: 2,
-        idCompraSubCategoria: 9,
-        nombreCompraSubCategoria: "Seguro social",
-      ),
-      SubCategoriaModelo(
-        fotoCompraSubCategoria: "assets/sell/seguros/seguro_vehiculos.jpg",
-        idCategoria: 2,
-        idCompraSubCategoria: 10,
-        nombreCompraSubCategoria: "Seguro de vehículos",
+        idCompraSubCategoria: 3,
+        nombreCompraSubCategoria: "Seguro desgravamen",
       ),
     ],
   ),
+  //todo ASISTENCIAS
+  CategoriasModelo(
+      fotoCategoria: "assets/sell/asistencia/asistencias.jpg",
+      idCompraCategoria: 3,
+      nombreCompraCategoria: "Asistencias",
+      subcategorias: [
+        SubCategoriaModelo(
+          fotoCompraSubCategoria:
+              "assets/sell/asistencia/asistencia_microempresario.png",
+          idCategoria: 3,
+          idCompraSubCategoria: 4,
+          nombreCompraSubCategoria: "Asistencia microempresario",
+        ),
+      ])
 ];

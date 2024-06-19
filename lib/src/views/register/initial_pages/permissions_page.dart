@@ -2,7 +2,7 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/controller/app_preferences.dart';
+import 'package:kmello_app/src/controller/preferences/app_preferences.dart';
 import 'package:kmello_app/src/views/register/initial_pages/welcome_page.dart';
 import 'package:kmello_app/src/views/register/login.dart';
 import 'package:kmello_app/utils/buttons.dart';
@@ -20,11 +20,7 @@ class PermissionsPage extends StatefulWidget {
 class _PermissionsPageState extends State<PermissionsPage>
     with WidgetsBindingObserver {
   bool _fromSettings = false;
-  bool location = true,
-      camera = true,
-      gallery = true,
-      storage = true,
-      contacts = true;
+  bool location = true, camera = true, gallery = true, contacts = true;
   @override
   void initState() {
     super.initState();
@@ -66,7 +62,7 @@ class _PermissionsPageState extends State<PermissionsPage>
           child: Center(
             child: Column(
               children: <Widget>[
-                customHeaderLogin("assets/kmello_logo_white.png"),
+                customHeaderLogin("assets/abi_praxis_logo_white.png"),
                 Container(
                   margin: const EdgeInsets.only(left: 40, right: 40),
                   color: Colors.black,
@@ -132,7 +128,7 @@ class _PermissionsPageState extends State<PermissionsPage>
                               color: Colors.black,
                             ),
                           ),
-                          Row(
+                          /*Row(
                             children: [
                               const Text(
                                 'Galería',
@@ -154,7 +150,7 @@ class _PermissionsPageState extends State<PermissionsPage>
                               thickness: 0.5,
                               color: Colors.black,
                             ),
-                          ),
+                          ),*/
                           Row(
                             children: [
                               const Text(
@@ -200,14 +196,14 @@ class _PermissionsPageState extends State<PermissionsPage>
                           Row(
                             children: [
                               const Text(
-                                'Almacenamiento',
+                                'Archivos',
                                 style: TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.bold),
                               ),
                               Checkbox(
-                                  value: storage,
+                                  value: gallery,
                                   onChanged: (value) {
-                                    setState(() => storage = value!);
+                                    setState(() => gallery = value!);
                                   })
                             ],
                           ),
@@ -254,13 +250,18 @@ class _PermissionsPageState extends State<PermissionsPage>
       debugPrint("contacts: $data");
     }
     if (gallery) {
-      final data = await Permission.photos.request();
-      debugPrint("storage: $data");
+      if (Platform.isIOS) {
+        final data = await Permission.photos.request();
+        debugPrint("storage: $data");
+      } else {
+        final data = await Permission.storage.request();
+        debugPrint("storage: $data");
+      }
     }
-    if (storage) {
+    /*if (storage) {
       final data = await Permission.storage.request();
       debugPrint("storage: $data");
-    }
+    }*/
 
     await appPreferences.savePermissionsPage(true).then((value) =>
         Navigator.push(

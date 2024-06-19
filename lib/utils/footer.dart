@@ -5,10 +5,11 @@ Widget footerBaadal() => Column(
       children: [
         divider(true),
         Container(
+          color: Colors.white,
           width: double.infinity,
-          height: 70,
+          height: 60,
           child: Image.asset("assets/byBaadal.png"),
         ),
-        const SizedBox(height: 10)
+        //const SizedBox(height: 10)
       ],
     );

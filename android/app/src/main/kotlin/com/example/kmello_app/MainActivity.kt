@@ -1,4 +1,4 @@
-package com.example.kmello_app
+package com.baadalcorp.abi_praxis
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:kmello_app/src/controller/user_preferences.dart';
+import 'package:kmello_app/src/controller/preferences/user_preferences.dart';
 import 'package:kmello_app/src/views/inside/home/home_page.dart';
 import 'package:kmello_app/src/views/inside/lateralMenu/mi_perfil/datos_cta_banco.dart';
 import 'package:kmello_app/src/views/inside/lateralMenu/mi_perfil/datos_personales.dart';
@@ -94,7 +94,7 @@ Drawer drawerMenu(context, {bool? inicio}) {
           ),
           leading: const Icon(Icons.person),
           children: [
-            //dividerMenuLateral(),
+            dividerMenuLateral(),
             ListTile(
               onTap: () => Navigator.push(
                   context,
@@ -119,7 +119,7 @@ Drawer drawerMenu(context, {bool? inicio}) {
               ),
             ),
 
-            dividerMenuLateral(),
+            /* dividerMenuLateral(),
             ListTile(
               onTap: () => Navigator.push(
                   context,
@@ -139,31 +139,10 @@ Drawer drawerMenu(context, {bool? inicio}) {
                   ),
                 ),
               ),
-            ),
+            ),*/
           ],
         )
       ]);
-
-  Widget vendedor(context) => Column(
-        children: [
-          ListTile(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            leading: const Icon(
-              KmelloIcons.estado_de_cuenta,
-              color: Colors.black,
-            ),
-            title: const Text(
-              "Actualizar tipo de vendedor",
-              style: TextStyle(
-                fontSize: 19,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ],
-      );
 
   Widget terminosCondiciones(context) => Column(
         children: [
@@ -202,11 +181,13 @@ Drawer drawerMenu(context, {bool? inicio}) {
             //const SizedBox(height: 30),
             Container(
               width: double.infinity,
-              height: 120,
+              height: 110,
               color: Colors.black,
-              padding: const EdgeInsets.only(
-                  left: 55, right: 55, top: 30, bottom: 15),
-              child: Image.asset("assets/kmello_logo_white.png"),
+              padding: const EdgeInsets.only(left: 55, right: 55),
+              child: Image.asset(
+                "assets/abi_praxis_logo_white.png",
+                fit: BoxFit.fitHeight,
+              ),
             ),
             header(context),
             Expanded(
@@ -219,7 +200,7 @@ Drawer drawerMenu(context, {bool? inicio}) {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (builder) => HomePage()));
+                                builder: (builder) => const HomePage()));
                       },
                       leading: const Icon(
                         Icons.home,
@@ -236,14 +217,12 @@ Drawer drawerMenu(context, {bool? inicio}) {
                   divider(false),
                   miPerfil(context),
                   divider(false),
-                  vendedor(context),
-                  divider(false),
+                  /*vendedor(context),
+                  divider(false),*/
                   terminosCondiciones(context),
                   divider(false),
                   ListTile(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
+                    onTap: () => showModal(context),
                     leading: const Icon(
                       Icons.settings,
                       color: Colors.black,
@@ -294,4 +273,46 @@ Drawer drawerMenu(context, {bool? inicio}) {
       ),
     ]),
   );
+}
+
+void showModal(BuildContext context) {
+  showModalBottomSheet(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+      showDragHandle: false,
+      context: context,
+      builder: (builder) {
+        return Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 15),
+              const ListTile(
+                  leading: Icon(Icons.settings, color: Colors.black),
+                  title: Text(
+                    "Configuración",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                  )),
+              divider(false),
+              const SizedBox(height: 15),
+              const ListTile(
+                  leading: Icon(KmelloIcons.contrasena, color: Colors.black),
+                  title: Text(
+                    "Actualizar contraseña",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                  )),
+              const ListTile(
+                leading: Icon(Icons.delete, color: Colors.black),
+                title: Text(
+                  "Eliminar cuenta",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      color: Colors.red),
+                ),
+              ),
+              const SizedBox(height: 25),
+            ],
+          ),
+        );
+      });
 }

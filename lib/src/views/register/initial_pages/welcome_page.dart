@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/controller/app_preferences.dart';
+import 'package:kmello_app/src/controller/preferences/app_preferences.dart';
 import 'package:kmello_app/src/views/register/login.dart';
 import 'package:kmello_app/utils/buttons.dart';
 import 'package:kmello_app/utils/header_login.dart';
@@ -24,7 +24,7 @@ class _WelcomePageState extends State<WelcomePage> {
     final rsp = Responsive.of(context);
     return Column(
       children: [
-        customHeaderLogin("assets/kmello_logo_white.png"),
+        customHeaderLogin("assets/abi_praxis_logo_white.png"),
         Container(
             width: double.infinity,
             margin: EdgeInsets.only(left: 5, right: 5),
@@ -68,7 +68,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 text: "Continuar",
                 width: 260,
                 fontSize: 26.5,
-                iconSize: 30),
+                iconSize: null),
           ),
         )
       ],

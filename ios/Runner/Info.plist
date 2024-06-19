@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>KMELLO</string>
+	<string>ABI PRAXIS</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>kmello_app</string>
+	<string>abi_praxis_app</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -24,6 +26,34 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Play audio files</string>
+	<key>NSCameraUsageDescription</key>
+	<string>¿Permitir que ABI PRAXIS tome fotos y grabe vidos?	</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Solcitamos el permiso a contactos, para que pueda agendar reuniones, además de leer, actualizar y crear sus contactos de su dispositivo.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Solicitamos permiso al FaceId para que pueda tener una mayor seguridad al momento de consultar sus datos.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>¿Permitir que ABI PRAXIS acceda a la ubicación de este dispositivo?	</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>¿Permitir que ABI PRAXIS acceda a la ubicación de este dispositivo?</string>
+	<key>NSLocationUsageDescription</key>
+	<string>¿Permitir que ABI PRAXIS acceda a la ubicación de este dispositivo?	</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>¿Permitir que ABI PRAXIS acceda a la ubicación de este dispositivo?	</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>¿Permitir que ABI PRAXIS acceda a las fotos y contenido multimedia del dispositivo?</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>¿Permitir que ABI PRAXIS acceda a las fotos y contenido multimedia del dispositivo?</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>processing</string>
+		<string>location</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -43,30 +73,6 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Play audio files</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Solicitamos el permiso de cámara para que pueda tomar fotos de: documentos, mascotas, vehículos, entre otras cosas.	Con la finalidad que pueda tener organizada su información.	</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Solicitamos permiso al FaceId para que pueda tener una mayor seguridad al momento de consultar sus datos.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Solicitamos el permiso de ubicación para que pueda registrar la ubicación: personal, trabajo, restaurante favorito, hotel favorito, entre otras cosas. Con la finalidad que pueda tener un registro de sus ubicaciones.	</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Solicitamos el permiso de ubicación para que pueda registrar la ubicación: personal, trabajo, restaurante favorito, hotel favorito, entre otras cosas. Con la finalidad que pueda tener un registro de sus ubicaciones.	</string>
-	<key>NSLocationUsageDescription</key>
-	<string>Solicitamos el permiso de ubicación para que pueda registrar la ubicación: personal, trabajo, restaurante favorito, hotel favorito, entre otras cosas. Con la finalidad que pueda tener un registro de sus ubicaciones.	</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Solicitamos el permiso de ubicación para que pueda registrar la ubicación: personal, trabajo, restaurante favorito, hotel favorito, entre otras cosas. Con la finalidad que pueda tener un registro de sus ubicaciones.	</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Solicitamos el permiso para que pueda subir fotos de: mascotas, vehículos, entre otras cosas desde la galería de su dispositivo. Con la finalidad que pueda tener un registro de la información.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Solicitamos el permiso para que pueda subir fotos de: mascotas, vehículos, entre otras cosas desde la galería de su dispositivo. Con la finalidad que pueda tener un registro de la información.</string>
-	<key>NSContactsUsageDescription</key>
-	<string>Solcitamos el permiso a contactos, para que pueda agendar reuniones, además de leer, actualizar y crear sus contactos de su dispositivo.</string>
 	<key>io.flutter.embedded_views_preview</key>
 	<string>YES</string>
 </dict>

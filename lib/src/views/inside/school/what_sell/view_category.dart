@@ -12,7 +12,8 @@ import 'package:kmello_app/utils/header.dart';
 import 'package:kmello_app/utils/list/category.dart';
 
 class ViewCategory extends StatefulWidget {
-  const ViewCategory({super.key});
+  bool? inside;
+  ViewCategory({super.key, this.inside});
 
   @override
   State<ViewCategory> createState() => _ViewCategoryState();
@@ -33,6 +34,7 @@ class _ViewCategoryState extends State<ViewCategory> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: Colors.white,
         key: sckey,
         appBar: myAppBar.myAppBar(),
         drawer: drawerMenu(context, inicio: false),
@@ -43,7 +45,9 @@ class _ViewCategoryState extends State<ViewCategory> {
 
   Widget options() => Column(
         children: [
-          header("¿Qué deseas vender?", null, context: context, back: true),
+          header("¿Qué deseas vender?", null,
+              context: context,
+              back: widget.inside != null && widget.inside! ? false : true),
           const SizedBox(height: 5),
           Align(
             alignment: Alignment.centerRight,

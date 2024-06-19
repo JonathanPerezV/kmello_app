@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:kmello_app/src/controller/app_preferences.dart';
-import 'package:kmello_app/src/controller/user_preferences.dart';
+import 'package:kmello_app/src/controller/preferences/app_preferences.dart';
+import 'package:kmello_app/src/controller/preferences/user_preferences.dart';
 import 'dart:convert';
 
 import 'package:kmello_app/src/models/user_moderl.dart';
@@ -159,6 +159,37 @@ class WSUsuario {
     }
   }
 
+  Future<Map<String, dynamic>?> obtenerPerfil() async {
+    try {
+      final pfrc = UserPreferences();
+      final idPerson = await pfrc.getIdPerson();
+
+      final profile = await http.post(Uri.parse(_url),
+          body: jsonEncode({
+            "operacion": "get-profile",
+            "info": {"id_usuario": idPerson}
+          }));
+
+      if (profile.statusCode > 199 && profile.statusCode < 300) {
+        final decode = jsonDecode(profile.body);
+
+        if (decode["status"] == "ok") {
+          return {
+            "id_tipo": decode["result"]["id_tipo_vendedor"],
+            "id_reg": decode["result"]["id"]
+          };
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    } catch (e) {
+      debugPrint(e.toString()); 
+      rethrow;
+    }
+  }
+
   Future<String> insertarPerfil(int idVendedor) async {
     try {
       final pfrc = UserPreferences();
@@ -173,6 +204,31 @@ class WSUsuario {
 
       if (user.statusCode > 199 && user.statusCode < 300) {
         await pfrcApp.saveProfile(true);
+        return "si";
+      } else {
+        return "no";
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<String> actualizarPerfil(int idVendedor, int idReg) async {
+    try {
+      final pfrc = UserPreferences();
+      final id = await pfrc.getIdPerson();
+
+      final profile = await http.post(Uri.parse(_url),
+          body: jsonEncode({
+            "operacion": "update-profile",
+            "info": {
+              "id_usuario": id,
+              "id_vendedor": idVendedor,
+              "id_registro": idReg
+            }
+          }));
+      if (profile.statusCode > 199 && profile.statusCode < 300) {
         return "si";
       } else {
         return "no";

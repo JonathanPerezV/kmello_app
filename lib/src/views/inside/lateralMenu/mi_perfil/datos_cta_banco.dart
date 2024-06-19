@@ -1,9 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:kmello_app/src/controller/aws/ws_banks.dart';
-import 'package:kmello_app/src/controller/user_preferences.dart';
+import 'package:kmello_app/src/controller/preferences/user_preferences.dart';
 import 'package:kmello_app/src/models/account_model.dart';
 import 'package:kmello_app/src/models/bank_model.dart';
 import 'package:kmello_app/src/views/inside/lateralMenu/drawer_menu.dart';
@@ -85,9 +84,10 @@ class _DatosCuentaBancoState extends State<DatosCuentaBanco> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        backgroundColor: Colors.white,
         key: sckey,
         appBar: MyAppBar(key: sckey).myAppBar(),
-        drawer: drawerMenu(context),
+        drawer: drawerMenu(context, inicio: false),
         body: options(),
       ),
     );

@@ -22,56 +22,58 @@ class _FaceAdviceState extends State<FaceAdvice> {
     );
   }
 
-  Widget options() => Column(
-        children: [
-          const SizedBox(height: 40),
-          Center(
-            child: SizedBox(
-              width: 170,
-              height: 60,
-              child: Image.asset("assets/kmello_logo.png"),
-            ),
-          ),
-          const SizedBox(height: 10),
-          divider(true),
-          Row(
-            children: [
-              const SizedBox(width: 10),
-              IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.arrow_back_ios)),
-              const Row(children: [
-                Icon(KmelloIcons.validar_identidad),
-                SizedBox(width: 5),
-                Text(
-                  "Validar identidad",
-                  style: TextStyle(fontSize: 23.5),
-                )
-              ])
-            ],
-          ),
-          divider(true),
-          const SizedBox(height: 20),
-          Container(
-            width: double.infinity,
-            height: 120,
-            color: Colors.black,
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: const Center(
-              child: Text(
-                "Antes de continuar, asegúrese de que su rostro esté dentro del recuadro.",
-                style: TextStyle(color: Colors.white, fontSize: 22),
+  Widget options() => SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 40),
+            Center(
+              child: SizedBox(
+                width: 170,
+                height: 60,
+                child: Image.asset("assets/abi_praxis_logo.png"),
               ),
             ),
-          ),
-          const SizedBox(height: 60),
-          SizedBox(
-            width: 220,
-            child: Image.asset("assets/ejemplo_face_id.png"),
-          ),
-          const SizedBox(height: 60),
-          button()
-        ],
+            const SizedBox(height: 10),
+            divider(true),
+            Row(
+              children: [
+                const SizedBox(width: 10),
+                IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.arrow_back_ios)),
+                const Row(children: [
+                  Icon(KmelloIcons.validar_identidad),
+                  SizedBox(width: 5),
+                  Text(
+                    "Validar identidad",
+                    style: TextStyle(fontSize: 23.5),
+                  )
+                ])
+              ],
+            ),
+            divider(true),
+            const SizedBox(height: 20),
+            Container(
+              width: double.infinity,
+              height: 120,
+              color: Colors.black,
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: const Center(
+                child: Text(
+                  "Antes de continuar, asegúrese de que su rostro esté dentro del recuadro.",
+                  style: TextStyle(color: Colors.white, fontSize: 22),
+                ),
+              ),
+            ),
+            const SizedBox(height: 60),
+            SizedBox(
+              width: 220,
+              child: Image.asset("assets/ejemplo_face_id.png"),
+            ),
+            const SizedBox(height: 60),
+            button()
+          ],
+        ),
       );
   Widget button() => TextButton(
         onPressed: () => Navigator.push(

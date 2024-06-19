@@ -4,7 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:kmello_app/src/controller/user_preferences.dart';
+import 'package:kmello_app/src/controller/preferences/user_preferences.dart';
 
 class AmazonRecognitionUpload {
   final String _url = dotenv.env["ws_recognition"]!;

@@ -24,6 +24,7 @@ class InputTextFormFields extends StatelessWidget {
   final void Function()? onTap;
   final Widget? widgetNombreCampo;
   final FocusNode? focus;
+  final void Function(String)? onSubmitted;
 
   const InputTextFormFields(
       {Key? key,
@@ -31,6 +32,7 @@ class InputTextFormFields extends StatelessWidget {
       @required this.accionCampo,
       @required this.nombreCampo,
       @required this.placeHolder,
+      this.onSubmitted,
       this.labelStyle,
       this.oscurecerTexto,
       this.controlador,
@@ -69,6 +71,7 @@ class InputTextFormFields extends StatelessWidget {
         inputFormatters: listaFormato,
         enabled: habilitado ?? true,
         style: estilo,
+        onFieldSubmitted: onSubmitted,
         maxLines: maxLines ?? 1,
         textCapitalization: capitalization ?? TextCapitalization.none,
         keyboardType: tipoTeclado,

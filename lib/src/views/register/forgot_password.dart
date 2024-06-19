@@ -83,7 +83,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 width: 170,
                 height: 120,
                 child: Image.asset(
-                  'assets/kmello_logo.png',
+                  'assets/abi_praxis_logo.png',
                 ),
               ),
               divider(false),
@@ -285,7 +285,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 alignment: Alignment.center,
                 width: 350,
                 child: const Text(
-                    'Ingrese el número que está asociado a su cuenta KMELLO para poder realizar el cambio de contraseña.'),
+                    'Ingrese el número que está asociado a su cuenta de ABI PRAXIS para poder realizar el cambio de contraseña.'),
               ),
               const SizedBox(
                 height: 20,
