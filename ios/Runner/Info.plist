@@ -54,6 +54,11 @@
 		<string>processing</string>
 		<string>location</string>
 	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<!-- Register a periodic task in iOS 13+ -->
+		<string>current_location</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

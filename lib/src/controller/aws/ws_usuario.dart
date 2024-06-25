@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:kmello_app/src/controller/preferences/app_preferences.dart';
@@ -6,6 +7,8 @@ import 'package:kmello_app/src/controller/preferences/user_preferences.dart';
 import 'dart:convert';
 
 import 'package:kmello_app/src/models/user_moderl.dart';
+
+import '../background_service.dart';
 
 class WSUsuario {
   final String _url = dotenv.env["ws_usuario_dev"]!;
@@ -144,6 +147,10 @@ class WSUsuario {
           await apppfrc.saveAcademyPage(false);
         }
 
+        //await initializeWorkManager(); if (data != 0) {
+        await initializeService()
+            .then((_) => FlutterBackgroundService().invoke("setAsForeground"));
+
         return "ok";
       } else {
         final decode = jsonDecode(user.body);
@@ -185,7 +192,7 @@ class WSUsuario {
         return null;
       }
     } catch (e) {
-      debugPrint(e.toString()); 
+      debugPrint(e.toString());
       rethrow;
     }
   }

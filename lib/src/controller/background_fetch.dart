@@ -1,21 +1,24 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:workmanager/workmanager.dart';
 
-const fetchBackground = "fetchBackground";
+const fetchBackground = "current_location";
 
 @pragma('vm:entry-point')
 void callbackDispatcher() async {
-  Workmanager().executeTask((task, inputDate) async {
-    if (task == fetchBackground) {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
+  Workmanager().executeTask((task, inputData) async {
+    switch (task) {
+      case "current_location":
+        Position position = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high);
 
-      debugPrint(
-          "BackgroundFetch/Ubicación actual: ${position.latitude},${position.longitude}");
-
-      return Future.value(true);
+        print(
+            "BackgroundFetch/Ubicación actual: ${position.latitude},${position.longitude}");
+        break;
+      default:
     }
-    return Future.value(false);
+    return Future.value(true);
   });
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:kmello_app/src/controller/background_service.dart';
 import 'package:kmello_app/src/controller/preferences/app_preferences.dart';
 import 'package:kmello_app/src/controller/dataBase/operations.dart';
+import 'package:kmello_app/src/controller/preferences/user_preferences.dart';
 import 'package:kmello_app/src/views/inside/home/home_page.dart';
 import 'package:kmello_app/src/views/register/forgot_password.dart';
 import 'package:kmello_app/src/views/register/initial_pages/permissions_page.dart';
@@ -16,6 +19,7 @@ import 'src/controller/background_fetch.dart';
 
 String routePage = "preview";
 final appPreferences = AppPreferences();
+final userpfrc = UserPreferences();
 final op = Operations();
 
 void getCurrentPage() async {
@@ -44,25 +48,34 @@ void getCurrentPage() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initializeWorkManager();
+  final data = await userpfrc.getIdPerson();
+
+  if (data != 0) {
+    await initializeService()
+        .then((_) => FlutterBackgroundService().invoke("setAsForeground"));
+  }
+
+  //await initializeWorkManager();
   await dotenv.load(fileName: '.env');
   getCurrentPage();
   await op.insertarCategoriasYproductos();
 }
 
 Future<void> initializeWorkManager() async {
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
-  Workmanager().registerPeriodicTask(
-    "2",
-    fetchBackground,
-    frequency: const Duration(minutes: 15),
-    /*constraints: Constraints(
-      // connected or metered mark the task as requiring internet
-      networkType: NetworkType.connected,
-      // require external power
-      requiresCharging: false,
-    ),*/
-  );
+  await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  final data = await userpfrc.getIdPerson();
+
+  if (data != 0) {
+    await Workmanager().registerPeriodicTask(
+      DateTime.now().toString(),
+      fetchBackground,
+      frequency: const Duration(seconds: 5),
+      initialDelay: const Duration(seconds: 5),
+      constraints: Constraints(
+        networkType: NetworkType.connected,
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
