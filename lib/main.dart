@@ -48,7 +48,11 @@ void getCurrentPage() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: '.env');
+
   final data = await userpfrc.getIdPerson();
+
+  await Future.delayed(const Duration(seconds: 2));
 
   if (data != 0) {
     await initializeService()
@@ -56,7 +60,6 @@ void main() async {
   }
 
   //await initializeWorkManager();
-  await dotenv.load(fileName: '.env');
   getCurrentPage();
   await op.insertarCategoriasYproductos();
 }

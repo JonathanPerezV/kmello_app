@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kmello_app/src/views/inside/home/consultar/opciones/prospectos/mis_clientes.dart';
 import 'package:kmello_app/src/views/inside/home/consultar/opciones/prospectos/mis_prospectos.dart';
 import 'package:kmello_app/utils/header.dart';
 import 'package:timelines/timelines.dart';
@@ -76,6 +77,6 @@ class _OptionsProspState extends State<OptionsProsp>
     return TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: _tabController,
-        children: [const MisProspectos(), Container(color: Colors.white)]);
+        children: const [MisProspectos(), MisClientes()]);
   }
 }

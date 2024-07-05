@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:intl/intl.dart';
+import 'package:kmello_app/main.dart';
 import 'package:kmello_app/src/views/register/login.dart';
 import 'package:kmello_app/utils/buttons.dart';
+import 'package:kmello_app/utils/flushbar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../src/controller/dataBase/operations.dart';
 
 class AndroidAlert {
   void acceptTermCondsAnd(context) {
@@ -173,7 +178,10 @@ class AndroidAlert {
                 onPressed: () async {
                   final pfrc = await SharedPreferences.getInstance();
 
+                  await op.deleteProspectos();
+
                   await pfrc.remove("login");
+                  FlutterBackgroundService().invoke("stopService");
                   Navigator.push(
                       context,
                       MaterialPageRoute(

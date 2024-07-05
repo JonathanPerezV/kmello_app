@@ -34,6 +34,9 @@ class _InfoContactoState extends State<InfoContacto> {
   String latitud = "";
   String longitud = "";
 
+  String latitudTrabajo = "";
+  String longitudTrabajo = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -215,6 +218,7 @@ class _InfoContactoState extends State<InfoContacto> {
                     Center(
                       child: Text(
                         widget.prospecto.nombres,
+                        textAlign: TextAlign.center,
                         style: const TextStyle(fontSize: 30),
                       ),
                     ),
@@ -247,7 +251,7 @@ class _InfoContactoState extends State<InfoContacto> {
                                   fontSize: 27, fontWeight: FontWeight.bold),
                             ),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           InkWell(
                             borderRadius: BorderRadius.circular(15),
                             onTap: () async {
@@ -259,7 +263,7 @@ class _InfoContactoState extends State<InfoContacto> {
                                 flushBarGlobal(
                                     context,
                                     "No se pudo llamar al prospecto",
-                                    Icon(Icons.error, color: Colors.red));
+                                    const Icon(Icons.error, color: Colors.red));
                               }
                             },
                             child: Container(
@@ -269,7 +273,7 @@ class _InfoContactoState extends State<InfoContacto> {
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.black,
                               ),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.phone,
                                 color: Colors.white,
                                 size: 15,
@@ -436,7 +440,7 @@ class _InfoContactoState extends State<InfoContacto> {
                               alignment: Alignment.centerLeft,
                               child: Container(
                                 //alignment: Alignment.center,
-                                width: 115,
+                                width: 175,
                                 color: Colors.white,
                                 margin: const EdgeInsets.only(left: 25, top: 8),
                                 child: const Row(
@@ -444,7 +448,7 @@ class _InfoContactoState extends State<InfoContacto> {
                                   children: [
                                     Icon(Icons.person),
                                     Text(
-                                      "Dirección:",
+                                      "Dirección domicilio:",
                                       style: TextStyle(
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold),
@@ -475,7 +479,8 @@ class _InfoContactoState extends State<InfoContacto> {
                                             color: Colors.red));
                                   }
                                 },
-                                icon: Icon(Icons.map_sharp))
+                                icon: const Icon(Icons.map_sharp,
+                                    color: Colors.green))
                             : IconButton(
                                 onPressed: () async {
                                   setState(() => loading = true);
@@ -521,6 +526,127 @@ class _InfoContactoState extends State<InfoContacto> {
                                             longitud != "") &&
                                         (widget.prospecto.latitud != "" ||
                                             latitud != "")
+                                    ? const Icon(
+                                        Icons.location_on,
+                                        color: Colors.green,
+                                      )
+                                    : const Icon(Icons.add_location_alt)),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: HeaderContainer(
+                            margin_container: const EdgeInsets.only(left: 20),
+                            height_container: 100,
+                            body: Text(
+                              widget.prospecto.direccionTrabajo.isNotEmpty
+                                  ? widget.prospecto.direccionTrabajo
+                                      .replaceAll("  ", " ")
+                                  : "No se ha agregado una dirección",
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            has_header: false,
+                            has_title: true,
+                            title: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                //alignment: Alignment.center,
+                                width: 175,
+                                color: Colors.white,
+                                margin: const EdgeInsets.only(left: 25, top: 8),
+                                child: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Icons.person),
+                                    Text(
+                                      "Dirección trabajo:",
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        //
+                        (widget.prospecto.longitudTrabajo != "" ||
+                                    longitudTrabajo != "") &&
+                                (widget.prospecto.latitudTrabajo != "" ||
+                                    latitudTrabajo != "")
+                            ? IconButton(
+                                onPressed: () async {
+                                  var url =
+                                      "https://maps.google.com/maps?q=loc:${widget.prospecto.latitudTrabajo},${widget.prospecto.longitudTrabajo}";
+                                  /*var url =
+                                      "https://www.google.com/maps/@$latitud,$longitud,6z";*/
+                                  if (await canLaunchUrl(Uri.parse(url))) {
+                                    await launchUrl(Uri.parse(url));
+                                  } else {
+                                    flushBarGlobal(
+                                        context,
+                                        "No se pudo ejecutar la acción",
+                                        const Icon(Icons.error,
+                                            color: Colors.red));
+                                  }
+                                },
+                                icon: const Icon(Icons.map_sharp,
+                                    color: Colors.green))
+                            : IconButton(
+                                onPressed: () async {
+                                  setState(() => loading = true);
+
+                                  var res = await GeolocatorConfig()
+                                      .requestPermission(context);
+
+                                  if (res != null) {
+                                    var loc =
+                                        await Geolocator.getCurrentPosition();
+
+                                    setState(() {
+                                      latitudTrabajo = loc.latitude.toString();
+                                      longitudTrabajo =
+                                          loc.longitude.toString();
+                                      widget.prospecto.latitudTrabajo =
+                                          latitudTrabajo;
+                                      widget.prospecto.longitudTrabajo =
+                                          longitudTrabajo;
+                                    });
+
+                                    debugPrint(
+                                        "$latitudTrabajo, $longitudTrabajo");
+
+                                    flushBarGlobal(
+                                        context,
+                                        "Se han guardado las coordenadas de tu ubicación actual.",
+                                        const Icon(Icons.check,
+                                            color: Colors.green));
+
+                                    await op.actualizarProspecto(
+                                        widget.prospecto.idProspecto!,
+                                        widget.prospecto);
+
+                                    setState(() {});
+                                  } else {
+                                    flushBarGlobal(
+                                        context,
+                                        "Ocurrió un error, no hemos podido guardar tu ubicación actual",
+                                        const Icon(Icons.error,
+                                            color: Colors.red));
+                                  }
+
+                                  setState(() => loading = false);
+                                },
+                                icon: (widget.prospecto.longitudTrabajo != "" ||
+                                            longitudTrabajo != "") &&
+                                        (widget.prospecto.latitudTrabajo !=
+                                                "" ||
+                                            latitudTrabajo != "")
                                     ? const Icon(
                                         Icons.location_on,
                                         color: Colors.green,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:kmello_app/src/controller/dataBase/operations.dart';
 import 'package:kmello_app/src/controller/preferences/app_preferences.dart';
 import 'package:kmello_app/src/controller/preferences/user_preferences.dart';
 import 'dart:convert';
@@ -123,6 +124,7 @@ class WSUsuario {
         debugPrint("data: ${user.body}");
         final decode = jsonDecode(user.body);
 
+        await Operations().insertClientesProspectos();
         await pfrc.saveIdPerson(decode[0]["id_usuario"]);
         await pfrc.saveUserIdentification(decode[0]["cedula"]);
         if (decode[0]["nombres"].contains(" ")) {

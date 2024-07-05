@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:custom_pop_up_menu/custom_pop_up_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -57,6 +59,7 @@ class _DetallesEventoState extends State<DetallesEvento> {
   final txtAditionalMail = TextEditingController();
   final _controller = CustomPopupMenuController();
   final txtObservacion = TextEditingController();
+  DateTime? horaLlegada;
 
   List<ProspectosModel> contactos = [];
 
@@ -72,6 +75,8 @@ class _DetallesEventoState extends State<DetallesEvento> {
   List<AgendaProductModel> productos = [];
   AgendaProductModel? productSelected;
   int idProduct = 0;
+
+  late int estado;
 
   int minMax = 30;
   int hourMax = 0;
@@ -133,6 +138,10 @@ class _DetallesEventoState extends State<DetallesEvento> {
     setState(() => calendario = res!);
 
     setState(() {
+      estado = calendario.estado;
+      if (calendario.asistio != "") {
+        horaLlegada = DateTime.parse(calendario.asistio!);
+      }
       txtPersonController.text = calendario.nombreProspecto;
       txtEmpresaController.text = calendario.empresa;
       categorySelected = calendario.categoriaProducto == ""
@@ -213,6 +222,14 @@ class _DetallesEventoState extends State<DetallesEvento> {
             SingleChildScrollView(
               child: Column(
                 children: [
+                  const SizedBox(height: 15),
+                  if (horaLlegada != null)
+                    Container(
+                      margin: const EdgeInsets.only(left: 20),
+                      width: double.infinity,
+                      child: Text(
+                          "Llegada confirmada: ${DateFormat("dd/MM").format(horaLlegada!)} a las ${DateFormat("HH:mm").format(horaLlegada!)}"),
+                    ),
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () {
@@ -504,7 +521,7 @@ class _DetallesEventoState extends State<DetallesEvento> {
                                                     color: Colors.red));
                                           }
                                         },
-                                        icon: Icon(Icons.map,
+                                        icon: const Icon(Icons.map,
                                             color: Colors.green))
                                 : IconButton(
                                     onPressed: () async {
@@ -622,11 +639,25 @@ class _DetallesEventoState extends State<DetallesEvento> {
                                 }),
                           ),*/
                   const SizedBox(height: 25),
-                  if (edit)
-                    nextButton(
-                        onPressed: () => validateButton(),
-                        text: "Actualizar evento",
-                        width: 150),
+                  if (estado == 0)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        nextButton(
+                            width: 100,
+                            onPressed: () => Platform.isAndroid
+                                ? cancelarReunionAnd()
+                                : cancelarReunionIos(),
+                            text: "Cancelar",
+                            background: Colors.red),
+                        if (edit) const SizedBox(width: 10),
+                        if (edit)
+                          nextButton(
+                              onPressed: () => validateButton(),
+                              text: "Actualizar",
+                              width: 100),
+                      ],
+                    ),
                   const SizedBox(height: 25),
                 ],
               ),
@@ -714,21 +745,22 @@ class _DetallesEventoState extends State<DetallesEvento> {
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Container(
-                margin: EdgeInsets.only(right: 15, bottom: 25),
-                child: FloatingActionButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100)),
-                    backgroundColor: edit ? Colors.red : Colors.black,
-                    child: Icon(edit ? Icons.clear : Icons.edit,
-                        color: Colors.white),
-                    onPressed: () => setState(() {
-                          edit = !edit;
-                        })),
-              ),
-            )
+            if (estado == 0)
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Container(
+                  margin: const EdgeInsets.only(right: 15, bottom: 25),
+                  child: FloatingActionButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100)),
+                      backgroundColor: edit ? Colors.red : Colors.black,
+                      child: Icon(edit ? Icons.clear : Icons.edit,
+                          color: Colors.white),
+                      onPressed: () => setState(() {
+                            edit = !edit;
+                          })),
+                ),
+              )
           ],
         ),
       );
@@ -740,6 +772,8 @@ class _DetallesEventoState extends State<DetallesEvento> {
       return;
     } else {
       final agenda = CalendarModel(
+        estado: 0,
+        fotoReferencia: calendario.fotoReferencia,
         categoriaProducto:
             categorySelected != null ? categorySelected!.nombreCategoria : "",
         empresa: txtEmpresaController.text,
@@ -841,7 +875,8 @@ class _DetallesEventoState extends State<DetallesEvento> {
                               onTap: () => setState(() {
                                 minMax = 15;
                                 _controller.hideMenu();
-                                configurationTime();
+                                configurationTime(
+                                    range: true, isFromDate: true);
                               }),
                               child: Container(
                                 height: 45,
@@ -857,7 +892,8 @@ class _DetallesEventoState extends State<DetallesEvento> {
                               onTap: () => setState(() {
                                 minMax = 30;
                                 _controller.hideMenu();
-                                configurationTime();
+                                configurationTime(
+                                    range: true, isFromDate: true);
                               }),
                               child: Container(
                                 height: 45,
@@ -874,7 +910,8 @@ class _DetallesEventoState extends State<DetallesEvento> {
                                 minMax = 0;
                                 hourMax = 1;
                                 _controller.hideMenu();
-                                configurationTime();
+                                configurationTime(
+                                    range: true, isFromDate: true);
                               }),
                               child: Container(
                                 height: 45,
@@ -924,7 +961,8 @@ class _DetallesEventoState extends State<DetallesEvento> {
                                 final newList = eventList;
                                 if (newDate != null) {
                                   setState(() => fromDate = newDate);
-                                  configurationTime();
+                                  configurationTime(
+                                      range: true, isFromDate: true);
                                   final timeDay = newList
                                       .where((element) =>
                                           DateTime.parse(element.fechaReunion)
@@ -973,10 +1011,15 @@ class _DetallesEventoState extends State<DetallesEvento> {
                               key: UniqueKey(),
                               use24hFormat: true,
                               showDayOfWeek: false,
-                              initialDateTime: toDate,
+                              initialDateTime: toDate ??
+                                  DateTime.parse(calendario.fechaReunion),
                               mode: CupertinoDatePickerMode.time,
-                              onDateTimeChanged: (date) {
-                                print("fecha: ${date.day}");
+                              onDateTimeChanged: (DateTime? date) {
+                                if (date != null) {
+                                  setState(() => toDate = date);
+                                  configurationTime(
+                                      range: false, isFromDate: false);
+                                }
                               }),
                         ),
                       ),
@@ -1163,16 +1206,129 @@ class _DetallesEventoState extends State<DetallesEvento> {
     });
   }
 
-  void configurationTime() {
-    if (fromDate != null) {
-      DateTime newDate = fromDate!
-          .add(Duration(minutes: minMax, hours: minMax == 0 ? hourMax : 0));
+  void configurationTime({required bool range, required bool isFromDate}) {
+    if (isFromDate) {
+      if (fromDate != null) {
+        if (range) {
+          DateTime newDate = fromDate!
+              .add(Duration(minutes: minMax, hours: minMax == 0 ? hourMax : 0));
 
-      debugPrint("NEW TIME: ${newDate.hour}:${newDate.minute}");
+          debugPrint("NEW TIME: ${newDate.hour}:${newDate.minute}");
 
-      setState(() => toDate = newDate);
-      setState(() {});
+          setState(() => toDate = newDate);
+        } else {
+          setState(() => toDate = toDate);
+        }
+
+        setState(() {});
+      }
+    } else {
+      if (toDate != null) {
+        //setState(() => toDate = newToDate);
+        setState(() {});
+      }
+
+      /*DateTime newDate = fromDate!
+          .add(Duration(minutes: newToDate!.minute, hours: newToDate.hour));*/
+      /*setState(() => fromDate!.add(Duration(
+          minutes: newToDate!.minute, hours: newToDate.hour - fromDate!.hour)));
+      setState(() => toDate = newToDate);*/
     }
+  }
+
+  void cancelarReunionIos() async {
+    showDialog(
+        context: context,
+        builder: (builder) {
+          return CupertinoAlertDialog(
+            title: const Text("Cancelar evento"),
+            content: const Text("¿Está seguro que desea cancelar el evento?"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("No")),
+              TextButton(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+
+                    setState(() => loading = true);
+                    final res =
+                        await op.actualizarEstadoReunion(1, widget.idAgenda);
+
+                    if (res == 1) {
+                      flushBarGlobal(
+                          context,
+                          "Reunión cancelada",
+                          const Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          ));
+                    } else {
+                      flushBarGlobal(
+                          context,
+                          "No se pudo cancelar la reunión",
+                          const Icon(
+                            Icons.error,
+                            color: Colors.red,
+                          ));
+                    }
+                    setState(() => loading = false);
+                  },
+                  child: const Text("Si")),
+            ],
+          );
+        });
+  }
+
+  void cancelarReunionAnd() async {
+    showDialog(
+        context: context,
+        builder: (builder) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+            title: const Text("Cancelar evento"),
+            content: const Text("¿Está seguro que desea cancelar el evento?"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("No")),
+              TextButton(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    setState(() => loading = true);
+                    final res =
+                        await op.actualizarEstadoReunion(1, widget.idAgenda);
+
+                    if (res == 1) {
+                      flushBarGlobal(
+                          context,
+                          "Reunión cancelada",
+                          const Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          ));
+                    } else {
+                      flushBarGlobal(
+                          context,
+                          "No se pudo cancelar la reunión",
+                          const Icon(
+                            Icons.error,
+                            color: Colors.red,
+                          ));
+                    }
+                    setState(() => loading = false);
+                  },
+                  child: const Text("Si")),
+            ],
+          );
+        });
   }
 
   void buildSearchList(text) {

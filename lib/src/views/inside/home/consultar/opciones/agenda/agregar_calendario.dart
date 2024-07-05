@@ -137,7 +137,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
   Future<void> validateProspecto() async {
     final db = Operations();
 
-    final res = await db.obtenerProspectos();
+    final res = await db.obtenerAllProspectos();
 
     if (res.isNotEmpty) {
       setState(() => enable = true);
@@ -147,7 +147,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
   }
 
   void requestPermissionContacts() async {
-    final allContacts = await op.obtenerProspectos();
+    final allContacts = await op.obtenerAllProspectos();
 
     setState(() => contactos = allContacts);
     setState(() => _searchList = allContacts);
@@ -637,7 +637,10 @@ class _EventEditingPageState extends State<EventEditingPage> {
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(5),
-                                            color: Colors.white,
+                                            color: /*_searchList[i].cliente == 1
+                                                ? Colors.green.shade100
+                                                : */
+                                                Colors.white,
                                           ),
                                           height: 45,
                                           padding: const EdgeInsets.only(
@@ -645,9 +648,9 @@ class _EventEditingPageState extends State<EventEditingPage> {
                                           child: Row(
                                             children: [
                                               Text(
-                                                _searchList[i].nombres,
+                                                "${_searchList[i].nombres.split(" ")[0]} ${_searchList[i].nombres.split(" ")[2]}",
                                                 style: const TextStyle(
-                                                    fontSize: 17,
+                                                    fontSize: 15,
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),
@@ -873,8 +876,8 @@ class _EventEditingPageState extends State<EventEditingPage> {
                               onDateTimeChanged: (DateTime? newDate) {
                                 final newList = widget.eventList;
                                 if (newDate != null) {
-                                  setState(() => fromDate = newDate);
                                   configurationTime();
+                                  setState(() => fromDate = newDate);
                                   final timeDay = newList!
                                       .where((element) =>
                                           element.appointmentStartDate.hour ==
@@ -940,6 +943,8 @@ class _EventEditingPageState extends State<EventEditingPage> {
       return;
     } else {
       final agenda = CalendarModel(
+          fotoReferencia: "",
+          estado: 0,
           categoriaProducto:
               categorySelected != null ? categorySelected!.nombreCategoria : "",
           empresa: txtEmpresaController.text,
@@ -987,7 +992,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
                     context,
                     MaterialPageRoute(
                         builder: (builder) =>
-                            InfoEvento(idEvento: res, index: 1)));
+                            InfoEvento(idEvento: res, index: 2)));
               })
             : iosAlert.agendaAgregada(context, () {
                 Navigator.pop(context);
@@ -996,7 +1001,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
                     context,
                     MaterialPageRoute(
                         builder: (builder) =>
-                            InfoEvento(idEvento: res, index: 1)));
+                            InfoEvento(idEvento: res, index: 2)));
               });
       } else {
         flushBarGlobal(context, "No se pudo crear el evento",

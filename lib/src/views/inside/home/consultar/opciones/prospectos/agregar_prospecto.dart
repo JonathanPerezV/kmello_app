@@ -48,9 +48,13 @@ class _AgregarEditarProspectoState extends State<AgregarEditarProspecto> {
   final txtCelular2 = TextEditingController();
   final txtMail = TextEditingController();
   final txtReference = TextEditingController();
+  final txtDireccionTrabajo = TextEditingController();
 
   String latitud = "";
   String longitud = "";
+
+  String latitudTrabajo = "";
+  String longitudTrabajo = "";
 
   final op = Operations();
 
@@ -80,12 +84,15 @@ class _AgregarEditarProspectoState extends State<AgregarEditarProspecto> {
         txtCelular.text = res.celular;
         txtCelular2.text = res.celular2;
         txtDireccion.text = res.direccion;
+        txtDireccionTrabajo.text = res.direccionTrabajo;
         txtEmpresa.text = res.empresa;
         txtMail.text = res.mail;
         txtNombres.text = res.nombres;
         txtReference.text = res.referencia;
         latitud = res.latitud;
         longitud = res.longitud;
+        latitudTrabajo = res.latitudTrabajo;
+        longitudTrabajo = res.longitudTrabajo;
       });
     }
     setState(() => loading = false);
@@ -268,6 +275,58 @@ class _AgregarEditarProspectoState extends State<AgregarEditarProspecto> {
                   ],
                 ),
                 const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: InputTextFormFields(
+                          controlador: txtDireccionTrabajo,
+                          capitalization: TextCapitalization.sentences,
+                          prefixIcon: const Icon(Icons.house),
+                          inputBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(0)),
+                          accionCampo: TextInputAction.next,
+                          nombreCampo: "Dirección trabajo",
+                          placeHolder: "Ingrese la dirección del cliente"),
+                    ),
+                    IconButton(
+                        onPressed: () async {
+                          setState(() => loading = true);
+
+                          var res = await GeolocatorConfig()
+                              .requestPermission(context);
+
+                          if (res != null) {
+                            var loc = await Geolocator.getCurrentPosition();
+
+                            setState(() {
+                              latitudTrabajo = loc.latitude.toString();
+                              longitudTrabajo = loc.longitude.toString();
+                            });
+
+                            debugPrint("$latitudTrabajo, $longitudTrabajo");
+
+                            flushBarGlobal(
+                                context,
+                                "Se han guardado las coordenadas de tu ubicación actual.",
+                                const Icon(Icons.check, color: Colors.green));
+                          } else {
+                            flushBarGlobal(
+                                context,
+                                "Ocurrió un error, no hemos podido guardar tu ubicación actual",
+                                const Icon(Icons.error, color: Colors.red));
+                          }
+
+                          setState(() => loading = false);
+                        },
+                        icon: latitudTrabajo != "" && longitudTrabajo != ""
+                            ? const Icon(
+                                Icons.location_on,
+                                color: Colors.green,
+                              )
+                            : const Icon(Icons.add_location_alt)),
+                  ],
+                ),
+                const SizedBox(height: 20),
                 InputTextFormFields(
                     controlador: txtReference,
                     prefixIcon: const Icon(Icons.add_home_work_outlined),
@@ -349,6 +408,8 @@ class _AgregarEditarProspectoState extends State<AgregarEditarProspecto> {
                                 _searchList[i].organizations[0].company;
                             txtDireccion.text =
                                 _searchList[i].addresses[0].address;
+                            txtDireccionTrabajo.text =
+                                _searchList[i].addresses[1].address;
                             txtCelular.text = _searchList[i].phones[0].number;
                           }),
                           child: Card(
@@ -412,6 +473,7 @@ class _AgregarEditarProspectoState extends State<AgregarEditarProspecto> {
     if (_formkey.currentState!.validate()) {
       FocusScope.of(context).unfocus();
       final prospecto = ProspectosModel(
+          direccionTrabajo: txtDireccionTrabajo.text,
           celular2: txtCelular2.text,
           latitud: latitud,
           longitud: longitud,
@@ -421,7 +483,10 @@ class _AgregarEditarProspectoState extends State<AgregarEditarProspecto> {
           celular: txtCelular.text,
           direccion: txtDireccion.text,
           nombres: txtNombres.text,
-          empresa: txtEmpresa.text);
+          empresa: txtEmpresa.text,
+          latitudTrabajo: latitudTrabajo,
+          longitudTrabajo: longitudTrabajo,
+          cliente: 0);
 
       if (!widget.edit) {
         final res = await op.insertarProspecto(prospecto);

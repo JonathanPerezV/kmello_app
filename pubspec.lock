@@ -1086,6 +1086,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  simple_tooltip:
+    dependency: "direct main"
+    description:
+      name: simple_tooltip
+      sha256: c0a1076c0f173fbd7ba08098ca8523888308f311c87447882866c220681a4e86
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   sky_engine:
     dependency: transitive
     description: flutter

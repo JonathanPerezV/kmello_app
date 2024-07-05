@@ -61,17 +61,17 @@ class _InfoEventoState extends State<InfoEvento> with TickerProviderStateMixin {
                 controller: _controller,
                 tabs: [
                   Tab(child: Text("Evento")),
-                  Tab(child: Text("Documentos")),
                   Tab(child: Text("Resultado")),
+                  Tab(child: Text("Documentos")),
                 ]),
           ),
           Expanded(
               child: TabBarView(controller: _controller, children: [
             DetallesEvento(idAgenda: widget.idEvento),
-            DocumentosEvento(idAgenda: widget.idEvento),
             Align(
                 alignment: Alignment.topCenter,
                 child: ResultadoAgenda(idAgenda: widget.idEvento)),
+            DocumentosEvento(idAgenda: widget.idEvento),
           ]))
         ],
       );

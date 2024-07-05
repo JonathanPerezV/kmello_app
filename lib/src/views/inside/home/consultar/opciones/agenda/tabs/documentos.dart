@@ -24,12 +24,14 @@ class _DocumentosEventoState extends State<DocumentosEvento> {
   final op = Operations();
   List<DocsModel> documentos = [];
   final docs = SeleccionArchivos();
+  late int estado;
 
   Future<void> obtenerDocumentos() async {
     setState(() => loading = true);
     setState(() => documentos.clear());
     final res = await op.obtenerDocumentosAgenda(widget.idAgenda);
-
+    final res2 = await op.obtenerAgenda(widget.idAgenda);
+    setState(() => estado = res2!.estado);
     if (res.isNotEmpty) {
       setState(() => documentos = res);
     }
@@ -99,19 +101,20 @@ class _DocumentosEventoState extends State<DocumentosEvento> {
                   }),
         ),
         if (loading) loadingWidget(text: "Cargando..."),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Container(
-            margin: const EdgeInsets.only(right: 15, bottom: 25),
-            child: FloatingActionButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100)),
-              backgroundColor: Colors.black,
-              onPressed: () => seleccionarArchivo(),
-              child: const Icon(Icons.add, color: Colors.white),
+        if (estado == 0)
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Container(
+              margin: const EdgeInsets.only(right: 15, bottom: 25),
+              child: FloatingActionButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100)),
+                backgroundColor: Colors.black,
+                onPressed: () => seleccionarArchivo(),
+                child: const Icon(Icons.add, color: Colors.white),
+              ),
             ),
-          ),
-        )
+          )
       ],
     );
   }

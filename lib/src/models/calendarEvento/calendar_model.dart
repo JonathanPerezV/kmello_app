@@ -16,7 +16,16 @@ class CalendarModel {
   String observacion;
   String latitud;
   String longitud;
+  String? latitudLlegada;
+  String? longitudLlegada;
   String correo;
+  String? asistio;
+  String fotoReferencia;
+
+  ///
+  ///0: ACTIVA - 1: CANCELADA
+  ///
+  int estado;
 
   CalendarModel(
       {this.idAgenda,
@@ -36,7 +45,12 @@ class CalendarModel {
       required this.observacion,
       required this.latitud,
       required this.longitud,
-      required this.correo});
+      required this.correo,
+      required this.estado,
+      required this.fotoReferencia,
+      this.asistio,
+      this.latitudLlegada,
+      this.longitudLlegada});
 
   Map<String, dynamic> toJson() => {
         "id_prospecto": idProspecto,
@@ -56,6 +70,11 @@ class CalendarModel {
         "latitud": latitud,
         "longitud": longitud,
         "correo": correo,
+        "longitud_llegada": "",
+        "latitud_llegada": "",
+        "asistio": "",
+        "foto_referencia": "",
+        "estado": estado
       };
 
   factory CalendarModel.fromJson(Map<String, dynamic> json) => CalendarModel(
@@ -76,5 +95,10 @@ class CalendarModel {
       observacion: json["observacion"],
       latitud: json["latitud"],
       longitud: json["longitud"],
-      correo: json["correo"]);
+      correo: json["correo"],
+      latitudLlegada: json["latitud_llegada"],
+      longitudLlegada: json["longitud_llegada"],
+      asistio: json["asistio"],
+      estado: json["estado"],
+      fotoReferencia: json["foto_referencia"]);
 }

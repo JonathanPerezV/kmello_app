@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kmello_app/src/controller/preferences/user_preferences.dart';
 import 'package:kmello_app/src/views/inside/home/home_page.dart';
-import 'package:kmello_app/src/views/inside/lateralMenu/mi_perfil/datos_cta_banco.dart';
 import 'package:kmello_app/src/views/inside/lateralMenu/mi_perfil/datos_personales.dart';
 import 'package:kmello_app/utils/alerts/and_alert.dart';
 import 'package:kmello_app/utils/alerts/ios_alert.dart';

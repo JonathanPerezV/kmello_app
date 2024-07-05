@@ -3,7 +3,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:kmello_app/src/controller/aws/ws_coordenadas.dart';
+import 'package:kmello_app/src/models/coordenadas_model.dart';
+
+import 'preferences/user_preferences.dart';
 
 Future<void> initializeService() async {
   final service = FlutterBackgroundService();
@@ -13,21 +18,32 @@ Future<void> initializeService() async {
           autoStart: true,
           onForeground: onStart,
           onBackground: onBackGroundIos),
-      androidConfiguration:
-          AndroidConfiguration(onStart: onStart, isForegroundMode: true));
+      androidConfiguration: AndroidConfiguration(
+        onStart: onStart,
+        isForegroundMode: true,
+      ));
 }
 
 @pragma('vm:entry-point')
 Future<bool> onBackGroundIos(ServiceInstance service) async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: '.env');
   DartPluginRegistrant.ensureInitialized();
 
-  await logicToServer(service);
+  Timer.periodic(const Duration(minutes: 10), (timer) async {
+    if (DateTime.now().hour > 09 && DateTime.now().hour < 23) {
+      await logicToServer(service, enable: true, cancel: false);
+    } else {
+      await logicToServer(service, enable: false, cancel: false);
+    }
+  });
+
   return true;
 }
 
 @pragma('vm:entry-point')
-void onStart(ServiceInstance service) {
+void onStart(ServiceInstance service) async {
+  await dotenv.load(fileName: '.env');
   DartPluginRegistrant.ensureInitialized();
 
   if (service is AndroidServiceInstance) {
@@ -43,36 +59,68 @@ void onStart(ServiceInstance service) {
     service.stopSelf();
   });
 
-  Timer.periodic(const Duration(minutes: 1), (timer) async {
-    if (DateTime.now().hour > 09) {
-      await logicToServer(service);
+  Timer.periodic(const Duration(minutes: 10), (timer) async {
+    if (DateTime.now().hour > 09 && DateTime.now().hour < 23) {
+      await logicToServer(service, enable: true, cancel: false);
     } else {
-      service.stopSelf();
+      await logicToServer(service, enable: false, cancel: false);
     }
   });
 }
 
-Future<void> logicToServer(ServiceInstance service) async {
-  Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high);
+//Future<void> cancelProcess()
 
-  if (service is AndroidServiceInstance) {
-    if (await service.isForegroundService()) {
-      service.setForegroundNotificationInfo(
-          title: "Estado", content: "Actualizando ubicación...");
+Future<void> logicToServer(ServiceInstance service,
+    {bool? enable, required bool cancel}) async {
+  final wsCoor = WsCoordenadas();
+  final userpfrc = UserPreferences();
+  if (cancel) {
+  } else {
+    if (enable != null && enable) {
+      final id = await userpfrc.getIdPerson();
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
 
-      await Future.delayed(const Duration(seconds: 5));
+      if (service is AndroidServiceInstance) {
+        if (await service.isForegroundService()) {
+          service.setForegroundNotificationInfo(
+              title: "Actualizando...",
+              content: "Las coordenadas se están enviando");
 
-      service.setForegroundNotificationInfo(
-          title: "Estado", content: "Ubicación actualizada");
+          final res = await wsCoor.insertarCoordenada(CoordenadasModel(
+              idUser: id,
+              latitud: position.latitude.toString(),
+              longitud: position.longitude.toString()));
+
+          print("COORDENADAS: $res");
+
+          service.setForegroundNotificationInfo(
+              title: "Actualizado",
+              content:
+                  "Ubicación actualizada: ${position.latitude},${position.longitude}");
+        }
+      } else {
+        await iosLogic(id, position);
+      }
       debugPrint(
           "envío de latitud y longitud: ${position.latitude},${position.longitude}");
+      service.invoke('update');
+    } else {
+      if (service is AndroidServiceInstance) {
+        service.setForegroundNotificationInfo(
+            title: "Hasta mañana",
+            content: "Es momento de descansar, nos vemos mañana.");
+      }
     }
-  } else {
-    debugPrint(
-        "envío de latitud y longitud: ${position.latitude},${position.longitude}");
   }
-  debugPrint(
-      "envío de latitud y longitud: ${position.latitude},${position.longitude}");
-  service.invoke('update');
+}
+
+Future<void> iosLogic(int id, Position position) async {
+  final wsCoor = WsCoordenadas();
+  final res = await wsCoor.insertarCoordenada(CoordenadasModel(
+      idUser: id,
+      latitud: position.latitude.toString(),
+      longitud: position.longitude.toString()));
+
+  print("COORDENADAS: $res");
 }

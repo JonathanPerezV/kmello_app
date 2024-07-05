@@ -6,16 +6,17 @@ import 'package:kmello_app/src/models/prospectos_model.dart';
 import 'package:kmello_app/src/views/inside/home/consultar/opciones/prospectos/agregar_prospecto.dart';
 import 'package:kmello_app/src/views/inside/home/consultar/opciones/prospectos/info_contacto.dart';
 import 'package:kmello_app/utils/flushbar.dart';
-import 'package:kmello_app/utils/textFields/input_text_fields.dart';
 
-class MisProspectos extends StatefulWidget {
-  const MisProspectos({super.key});
+import '../../../../../../../utils/textFields/input_text_fields.dart';
+
+class MisClientes extends StatefulWidget {
+  const MisClientes({super.key});
 
   @override
-  State<MisProspectos> createState() => _MisProspectosState();
+  State<MisClientes> createState() => _MisClientesState();
 }
 
-class _MisProspectosState extends State<MisProspectos> {
+class _MisClientesState extends State<MisClientes> {
   final op = Operations();
   final _searchController = TextEditingController();
 
@@ -27,13 +28,13 @@ class _MisProspectosState extends State<MisProspectos> {
   bool showSector = false;
 
   Future<void> getData() async {
-    var data = await op.obtenerProspectos();
+    var data = await op.obtenerClientes();
 
     setState(() => contacts = data);
     setState(() => cacheContacts = contacts);
   }
 
-  Future<void> permissionContacts() async {
+  /*Future<void> permissionContacts() async {
     var res = await FlutterContacts.requestPermission();
 
     setState(() => hasPermission = res);
@@ -46,45 +47,18 @@ class _MisProspectosState extends State<MisProspectos> {
         phoneContacts = allContacts;
       });
     }
-  }
+  }*/
 
   @override
   void initState() {
     super.initState();
     getData();
-    permissionContacts();
+    //permissionContacts();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          child: options(),
-        ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Container(
-            margin: const EdgeInsets.only(right: 15, bottom: 15),
-            child: FloatingActionButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100)),
-              onPressed: () async => await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (builder) =>
-                              AgregarEditarProspecto(edit: false)))
-                  .then((_) async => getData()),
-              backgroundColor: Colors.black,
-              child: const Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
+    return options();
   }
 
   Widget options() => Column(
@@ -192,7 +166,7 @@ class _MisProspectosState extends State<MisProspectos> {
                                                             .empresa)
                                               ],
                                                   emails: [
-                                                Email(cacheContacts[index].mail)
+                                                Email(contacts[index].mail)
                                               ]));
                                           flushBarGlobal(
                                               context,
@@ -204,33 +178,33 @@ class _MisProspectosState extends State<MisProspectos> {
                                       icon: Icons.save_alt_rounded,
                                       backgroundColor: Colors.blue,
                                     ),
-                                  SlidableAction(
-                                    backgroundColor: Colors.red,
-                                    onPressed: (_) async {
-                                      await op
-                                          .eliminarProspecto(
-                                              cacheContacts[index].idProspecto!)
-                                          .then((value) {
-                                        debugPrint("eliminado?: $value");
-                                        if (value == 1) {
-                                          flushBarGlobal(
-                                              context,
-                                              "Prospecto eliminado correctamente",
-                                              const Icon(Icons.check,
-                                                  color: Colors.green));
-                                        } else {
-                                          flushBarGlobal(
-                                              context,
-                                              "No se eliminó el prospecto, inténtelo más tarde",
-                                              const Icon(Icons.error,
-                                                  color: Colors.red));
-                                        }
-                                        getData();
-                                      });
-                                    },
-                                    icon: Icons.delete,
-                                    foregroundColor: Colors.white,
-                                  )
+                                  // SlidableAction(
+                                  //   backgroundColor: Colors.red,
+                                  //   onPressed: (_) async {
+                                  //     await op
+                                  //         .eliminarProspecto(
+                                  //             contacts[index].idProspecto!)
+                                  //         .then((value) {
+                                  //       debugPrint("eliminado?: $value");
+                                  //       if (value == 1) {
+                                  //         flushBarGlobal(
+                                  //             context,
+                                  //             "Prospecto eliminado correctamente",
+                                  //             const Icon(Icons.check,
+                                  //                 color: Colors.green));
+                                  //       } else {
+                                  //         flushBarGlobal(
+                                  //             context,
+                                  //             "No se eliminó el prospecto, inténtelo más tarde",
+                                  //             const Icon(Icons.error,
+                                  //                 color: Colors.red));
+                                  //       }
+                                  //       getData();
+                                  //     });
+                                  //   },
+                                  //   icon: Icons.delete,
+                                  //   foregroundColor: Colors.white,
+                                  // )
                                 ]),
                             child: InkWell(
                               onTap: () async => await Navigator.push(
@@ -301,8 +275,8 @@ class _MisProspectosState extends State<MisProspectos> {
                                     /*Container(
                                         height: 10,
                                         width: 0.5,
-                                        color: Colors.black),*/
-                                    /*Expanded(
+                                        color: Colors.black),
+                                    Expanded(
                                       flex: 2,
                                       child: Center(
                                         child: Text(
@@ -327,6 +301,7 @@ class _MisProspectosState extends State<MisProspectos> {
                       }))
         ],
       );
+
   List<ProspectosModel> buildSearchList(String value) {
     List<ProspectosModel> newList = [];
 

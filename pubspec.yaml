@@ -68,6 +68,7 @@ dependencies:
   progress_border: ^0.1.0
   selectable_list: ^0.1.1
   shared_preferences: ^2.2.2
+  simple_tooltip: ^1.2.0
   sqflite: ^2.3.3+1
   syncfusion_flutter_pdfviewer: ^26.1.35
   textfield_search: ^0.10.0
@@ -104,13 +105,9 @@ flutter:
     - assets/school/
     - assets/courses/
     - assets/school/questions/
-    - assets/sell/medicina/
     - assets/sell/creditos/
-    - assets/sell/funeraria/
-    - assets/sell/internet/
     - assets/sell/seguros/
     - assets/sell/asistencia/
-    - assets/sell/rastreo/
     - assets/vendedor/
     - assets/plan/
   #   - images/a_dot_ham.jpeg

@@ -25,11 +25,19 @@ class DBProvider {
   static const String celular = "celular_prospecto";
   static const String celular2 = "celular2_prospecto";
   static const String direccion = "direccion_prospecto";
+  static const String direccionTrabajo = "direccion_prospecto_trabajo";
   static const String empresa = "empresa_prospecto";
   static const String mail = "mail_prospecto";
   static const String latitud = "latitud_prospecto";
+  static const String latitudTrabajo = "latitud_prospecto_trabajo";
   static const String longitud = "longitud_prospecto";
+  static const String longitudTrabajo = "longitud_prospecto_trabajo";
   static const String referencia = "referencia_prospecto";
+  static const String ciudad = "ciudad";
+  static const String provincia = "provincia";
+  static const String pais = "pais";
+  static const String sector = "sector";
+  static const String cliente = "cliente";
   //todo VARIABLES AGENDA
   static const String idAgenda = "id_agenda";
   static const String categoriaProducto = "categoria_producto";
@@ -45,7 +53,12 @@ class DBProvider {
   static const String medioContacto = "medio_contacto";
   static const String observacion = "observacion";
   static const String latitudA = "latitud";
+  static const String latitudLlegada = "latitud_llegada";
   static const String longitudA = "longitud";
+  static const String longitudLlegada = "longitud_llegada";
+  static const String asistio = "asistio";
+  static const String estado = "estado";
+  static const String fotoReferencia = "foto_referencia";
   //todo VARIABLES CATEGORIAS - AGENDA
   static const String idCategoria = "id_categoria";
   static const String nombreCategoria = "nombre_categoria";
@@ -67,7 +80,7 @@ class DBProvider {
   }
 
   static Future<Database> databaseConfig(String path) async {
-    return await openDatabase(path, version: 2, onOpen: (db) {},
+    return await openDatabase(path, version: 4, onOpen: (db) {},
         onCreate: (db, version) async {
       await db.execute("""
       CREATE TABLE IF NOT EXISTS prospectos(
@@ -80,7 +93,15 @@ class DBProvider {
         $mail TEXT,
         $latitud TEXT,
         $longitud TEXT,
-        $referencia TEXT
+        $referencia TEXT,
+        $latitudTrabajo TEXT,
+        $longitudTrabajo TEXT,
+        $direccionTrabajo TEXT,
+        $pais TEXT,
+        $provincia TEXT,
+        $ciudad TEXT,
+        $sector TEXT,
+        $cliente INTEGER
       )""");
       await db.execute("""
       CREATE TABLE IF NOT EXISTS agenda(
@@ -101,7 +122,12 @@ class DBProvider {
         $observacion TEXT,
         $medioContacto TEXT,
         $latitudA TEXT,
-        $longitudA TEXT
+        $longitudA TEXT,
+        $asistio TEXT,
+        $latitudLlegada TEXT,
+        $longitudLlegada TEXT,
+        $estado INTEGER,
+        $fotoReferencia BLOB
       )""");
       await db.execute("""
       CREATE TABLE IF NOT EXISTS categorias_agenda(
