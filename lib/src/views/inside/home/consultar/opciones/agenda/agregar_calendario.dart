@@ -1,8 +1,9 @@
 // ignore_for_file: must_be_immutable, missing_required_param, use_build_context_synchronously
+import 'dart:async';
 import 'dart:io';
-
 import 'package:custom_pop_up_menu/custom_pop_up_menu.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
@@ -23,7 +24,6 @@ import 'package:kmello_app/utils/deviders/divider.dart';
 import 'package:kmello_app/utils/flushbar.dart';
 import 'package:kmello_app/utils/loading.dart';
 import 'package:mobkit_calendar/mobkit_calendar.dart';
-
 import '../../../../../../../utils/geolocator/geolocator.dart';
 import '../../../../../../../utils/responsive.dart';
 import '../../../../../../models/calendarEvento/event.dart' as evn;
@@ -54,11 +54,12 @@ class _EventEditingPageState extends State<EventEditingPage> {
   GlobalKey personKey = GlobalKey();
   final formKey = GlobalKey<FormState>();
   bool loading = false;
+  late Timer _timer;
 
   //final webServiceEventos = WebServiceEventos();
 
   DateTime? fromDate;
-  DateTime? toDate;
+  late ValueNotifier<DateTime?> toDate;
 
   final iosAlert = IosAlert();
   final andAlert = AndroidAlert();
@@ -170,7 +171,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
             : DateTime(startDate!.year, startDate.month, startDate.day,
                 DateTime.now().add(const Duration(hours: 1)).hour, 00);
 
-        toDate = fromDate!.add(Duration(minutes: minMax));
+        toDate = ValueNotifier(fromDate!.add(Duration(minutes: minMax)));
       });
     } else {
       var date = DateTime.now();
@@ -182,7 +183,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
             date.add(const Duration(hours: 1)).hour, 00));
       }
 
-      toDate = fromDate!.add(Duration(minutes: minMax));
+      toDate = ValueNotifier(fromDate!.add(Duration(minutes: minMax)));
     }
     setState(() => loading = false);
   }
@@ -197,6 +198,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
   @override
   void dispose() {
     controllerTitulo.dispose();
+    toDate.dispose();
     super.dispose();
   }
 
@@ -716,7 +718,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
                                     onChanged: (value) {
                                       setState(() => allDay = value);
                                       fromDate = null;
-                                      toDate = null;
+                                      toDate.value = null;
                                     }),
                               ),
                             )
@@ -725,7 +727,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
               allDay
                   ? InkWell(
                       onTap: () => setState(() => allDay = !allDay),
-                      child: Icon(Icons.arrow_drop_down))
+                      child: const Icon(Icons.arrow_drop_down))
                   : AbsorbPointer(
                       absorbing: allDay,
                       child: CustomPopupMenu(
@@ -739,8 +741,10 @@ class _EventEditingPageState extends State<EventEditingPage> {
                                   InkWell(
                                     onTap: () => setState(() {
                                       minMax = 15;
+                                      hourMax = 0;
                                       _controller.hideMenu();
-                                      configurationTime();
+                                      //configurationTime();
+                                      _updateEndTime(Duration(minutes: minMax));
                                     }),
                                     child: Container(
                                       height: 45,
@@ -755,8 +759,10 @@ class _EventEditingPageState extends State<EventEditingPage> {
                                   InkWell(
                                     onTap: () => setState(() {
                                       minMax = 30;
+                                      hourMax = 0;
                                       _controller.hideMenu();
-                                      configurationTime();
+                                      //configurationTime();\
+                                      _updateEndTime(Duration(minutes: minMax));
                                     }),
                                     child: Container(
                                       height: 45,
@@ -773,7 +779,9 @@ class _EventEditingPageState extends State<EventEditingPage> {
                                       minMax = 0;
                                       hourMax = 1;
                                       _controller.hideMenu();
-                                      configurationTime();
+                                      //configurationTime();
+                                      _updateEndTime(
+                                          const Duration(minutes: 60));
                                     }),
                                     child: Container(
                                       height: 45,
@@ -800,7 +808,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
                     ),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           allDay
               ? Container()
               : Row(
@@ -827,13 +835,13 @@ class _EventEditingPageState extends State<EventEditingPage> {
                                           onChanged: (value) {
                                             setState(() => allDay = value);
                                             fromDate = null;
-                                            toDate = null;
+                                            toDate.value = null;
                                           }),
                                     ),
                                   )
                                 ],
                               )),
-                          Expanded(
+                          const Expanded(
                               flex: 1,
                               child: Center(
                                   child: Text(
@@ -874,27 +882,30 @@ class _EventEditingPageState extends State<EventEditingPage> {
                               use24hFormat: true,
                               showDayOfWeek: false,
                               onDateTimeChanged: (DateTime? newDate) {
-                                final newList = widget.eventList;
+                                //final newList = widget.eventList;
                                 if (newDate != null) {
-                                  configurationTime();
+                                  //configurationTime();
                                   setState(() => fromDate = newDate);
-                                  final timeDay = newList!
-                                      .where((element) =>
-                                          element.appointmentStartDate.hour ==
-                                              newDate.hour &&
-                                          element.appointmentStartDate.minute ==
-                                              newDate.minute &&
-                                          element.appointmentStartDate.day ==
-                                              newDate.day)
-                                      .toList();
+                                  setState(() => _updateEndTime(Duration(
+                                      minutes: minMax,
+                                      hours: hourMax != 0 ? hourMax : 0)));
+                                  // final timeDay = newList!
+                                  //     .where((element) =>
+                                  //         element.appointmentStartDate.hour ==
+                                  //             newDate.hour &&
+                                  //         element.appointmentStartDate.minute ==
+                                  //             newDate.minute &&
+                                  //         element.appointmentStartDate.day ==
+                                  //             newDate.day)
+                                  //     .toList();
 
-                                  if (timeDay.isNotEmpty) {
-                                    flushBarGlobal(
-                                        context,
-                                        "Esta hora ya ha sido registrada en otra reunión",
-                                        const Icon(Icons.error,
-                                            color: Colors.red));
-                                  }
+                                  // if (timeDay.isNotEmpty) {
+                                  //   flushBarGlobal(
+                                  //       context,
+                                  //       "Esta hora ya ha sido registrada en otra reunión",
+                                  //       const Icon(Icons.error,
+                                  //           color: Colors.red));
+                                  // }
                                 } else {}
                               },
                             ),
@@ -917,23 +928,43 @@ class _EventEditingPageState extends State<EventEditingPage> {
                               textTheme: CupertinoTextThemeData(
                                   dateTimePickerTextStyle: TextStyle(
                                       fontSize: 14, color: Colors.black))),
-                          child: CupertinoDatePicker(
-                              key: UniqueKey(),
-                              use24hFormat: true,
-                              showDayOfWeek: false,
-                              initialDateTime: toDate,
-                              mode: CupertinoDatePickerMode.time,
-                              onDateTimeChanged: (date) {
-                                print("fecha: ${date.day}");
-                              }),
+                          child: ValueListenableBuilder(
+                            valueListenable: toDate,
+                            builder: (context, endTime, child) {
+                              return CupertinoDatePicker(
+                                  key: UniqueKey(),
+                                  use24hFormat: true,
+                                  showDayOfWeek: false,
+                                  initialDateTime: endTime,
+                                  mode: CupertinoDatePickerMode.time,
+                                  onDateTimeChanged: (date) {
+                                    print("fecha: ${date.minute}");
+                                    setState(() {
+                                      toDate.value = DateTime(
+                                        fromDate!.year,
+                                        fromDate!.month,
+                                        fromDate!.day,
+                                        date.hour,
+                                        date.minute,
+                                      );
+                                    });
+                                  });
+                            },
+                          ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
         ],
       ),
     );
+  }
+
+  void _updateEndTime(Duration duration) {
+    setState(() {
+      toDate!.value = fromDate!.add(duration);
+    });
   }
 
   void validateButton() async {
@@ -958,7 +989,8 @@ class _EventEditingPageState extends State<EventEditingPage> {
           resultadoReunion: "",
           allDay: allDay ? "T" : "N",
           fechaReunion: fromDate.toString(),
-          horaFin: toDate != null ? DateFormat("HH:mm").format(toDate!) : "",
+          horaFin:
+              toDate != null ? DateFormat("HH:mm").format(toDate.value!) : "",
           horaInicio:
               fromDate != null ? DateFormat("HH:mm").format(fromDate!) : "",
           observacion: txtObservacion.text,
@@ -1018,7 +1050,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
 
       debugPrint("NEW TIME: ${newDate.hour}:${newDate.minute}");
 
-      setState(() => toDate = newDate);
+      setState(() => toDate.value = newDate);
       setState(() {});
     }
   }
