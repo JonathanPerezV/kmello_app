@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:kmello_app/src/controller/aws/ws_coordenadas.dart';
-import 'package:kmello_app/src/models/coordenadas_model.dart';
+import 'package:abi_praxis/src/controller/aws/ws_coordenadas.dart';
+import 'package:abi_praxis/src/models/coordenadas_model.dart';
 
 import 'preferences/user_preferences.dart';
 

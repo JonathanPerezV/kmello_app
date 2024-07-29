@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:kmello_app/src/controller/preferences/user_preferences.dart';
-import 'package:kmello_app/src/views/inside/home/home_page.dart';
-import 'package:kmello_app/src/views/inside/lateralMenu/mi_perfil/datos_personales.dart';
-import 'package:kmello_app/utils/alerts/and_alert.dart';
-import 'package:kmello_app/utils/alerts/ios_alert.dart';
-import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
+import 'package:abi_praxis/src/controller/preferences/user_preferences.dart';
+import 'package:abi_praxis/src/views/inside/home/home_page.dart';
+import 'package:abi_praxis/src/views/inside/lateralMenu/mi_perfil/datos_personales.dart';
+import 'package:abi_praxis/utils/alerts/and_alert.dart';
+import 'package:abi_praxis/utils/alerts/ios_alert.dart';
+import 'package:abi_praxis/utils/icons/kmello_icons_icons.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../../utils/deviders/divider.dart';
 
@@ -173,104 +173,125 @@ Drawer drawerMenu(context, {bool? inicio}) {
     elevation: 50,
     surfaceTintColor: Colors.white,
     shadowColor: Colors.black,
-    child: Column(children: [
-      Expanded(
-        child: Column(
-          children: [
-            //const SizedBox(height: 30),
-            Container(
-              width: double.infinity,
-              height: 110,
-              color: Colors.black,
-              padding: const EdgeInsets.only(left: 55, right: 55),
-              child: Image.asset(
-                "assets/abi_praxis_logo_white.png",
-                fit: BoxFit.fitHeight,
+    child: Column(
+      children: [
+        Expanded(
+          child: Column(
+            children: [
+              //const SizedBox(height: 30),
+              Container(
+                width: double.infinity,
+                height: 110,
+                color: Colors.black,
+                padding: const EdgeInsets.only(left: 55, right: 55),
+                child: Image.asset(
+                  "assets/abi_praxis_logo_white.png",
+                  fit: BoxFit.fitHeight,
+                ),
               ),
-            ),
-            header(context),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(children: [
-                  if (inicio != null && !inicio) divider(false),
-                  if (inicio != null && !inicio)
+              header(context),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(children: [
+                    if (inicio != null && !inicio) divider(false),
+                    if (inicio != null && !inicio)
+                      ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (builder) => const HomePage()));
+                        },
+                        leading: const Icon(
+                          Icons.home,
+                          color: Colors.black,
+                        ),
+                        title: const Text(
+                          "Inicio",
+                          style: TextStyle(
+                            fontSize: 19,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    divider(false),
+                    miPerfil(context),
+                    divider(false),
+                    /*vendedor(context),
+                  divider(false),*/
+                    terminosCondiciones(context),
+                    divider(false),
                     ListTile(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) => const HomePage()));
-                      },
+                      onTap: () => showModal(context),
                       leading: const Icon(
-                        Icons.home,
+                        Icons.settings,
                         color: Colors.black,
                       ),
                       title: const Text(
-                        "Inicio",
+                        "Configuración",
                         style: TextStyle(
                           fontSize: 19,
                           color: Colors.black,
                         ),
                       ),
                     ),
-                  divider(false),
-                  miPerfil(context),
-                  divider(false),
-                  /*vendedor(context),
-                  divider(false),*/
-                  terminosCondiciones(context),
-                  divider(false),
-                  ListTile(
-                    onTap: () => showModal(context),
-                    leading: const Icon(
-                      Icons.settings,
-                      color: Colors.black,
-                    ),
-                    title: const Text(
-                      "Configuración",
-                      style: TextStyle(
-                        fontSize: 19,
-                        color: Colors.black,
+                    divider(false),
+                  ]),
+                ),
+              )
+            ],
+          ),
+        ),
+        InkWell(
+          onTap: () => Platform.isAndroid
+              ? AndroidAlert().cerrarSesion(context)
+              : IosAlert().cerrarSesion(context),
+          child: Container(
+              height: Platform.isIOS ? 60 : 50,
+              color: Colors.black,
+              width: double.infinity,
+              child: Container(
+                padding: const EdgeInsets.only(bottom: 15),
+                //margin: const EdgeInsets.only(left: 150),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: IconButton(
+                            tooltip: "Sincronizar datos",
+                            onPressed: () => Platform.isAndroid
+                                ? AndroidAlert().alertSync(context)
+                                : IosAlert().alertSync(context),
+                            icon: const Icon(Icons.cloud_sync,
+                                size: 35, color: Colors.green))),
+                    Expanded(
+                      flex: 3,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              'CERRAR SESIÓN',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            Container(
+                                margin: const EdgeInsets.only(left: 10),
+                                child: const Icon(
+                                  Icons.logout,
+                                  color: Colors.white,
+                                ))
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  divider(false),
-                ]),
-              ),
-            )
-          ],
+                  ],
+                ),
+              )),
         ),
-      ),
-      InkWell(
-        onTap: () => Platform.isAndroid
-            ? AndroidAlert().cerrarSesion(context)
-            : IosAlert().cerrarSesion(context),
-        child: Container(
-            height: Platform.isIOS ? 60 : 50,
-            color: Colors.black,
-            width: double.infinity,
-            child: Container(
-              padding: const EdgeInsets.only(bottom: 15),
-              margin: const EdgeInsets.only(left: 150),
-              child: Row(
-                children: [
-                  const Text(
-                    'CERRAR SESIÓN',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      child: const Icon(
-                        Icons.logout,
-                        color: Colors.white,
-                      ))
-                ],
-              ),
-            )),
-      ),
-    ]),
+      ],
+    ),
   );
 }
 

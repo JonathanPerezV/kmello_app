@@ -3,6 +3,7 @@ class ProspectosModel {
   String nombres;
   String direccion;
   String direccionTrabajo;
+  String? referenciaTrabajo;
   String celular;
   String celular2;
   String empresa;
@@ -16,6 +17,8 @@ class ProspectosModel {
   String? ciudad;
   String? sector;
   String referencia;
+  String? fotoRefCasa;
+  String? fotoRefTrabajo;
   int cliente;
 
   ProspectosModel({
@@ -32,6 +35,9 @@ class ProspectosModel {
     required this.latitudTrabajo,
     required this.longitudTrabajo,
     required this.cliente,
+    this.fotoRefCasa,
+    this.fotoRefTrabajo,
+    this.referenciaTrabajo,
     this.sector,
     this.ciudad,
     this.pais,
@@ -57,6 +63,9 @@ class ProspectosModel {
         "provincia": provincia ?? "Guayas",
         "pais": pais ?? "Ecuador",
         "sector": sector ?? "",
+        "foto_ref_casa": fotoRefCasa,
+        "foto_ref_trabajo": fotoRefTrabajo,
+        "referencia_trabajo": referenciaTrabajo ?? ""
       };
 
   factory ProspectosModel.fromJson(Map<String, dynamic> json) =>
@@ -78,5 +87,8 @@ class ProspectosModel {
           pais: json["pais"] ?? "Ecuador",
           provincia: json["provincia"] ?? "Guayas",
           cliente: json["cliente"] ?? 1,
+          referenciaTrabajo: json["referencia_trabajo"],
+          fotoRefCasa: json["foto_ref_casa"],
+          fotoRefTrabajo: json["foto_ref_trabajo"],
           sector: json["sector"]);
 }

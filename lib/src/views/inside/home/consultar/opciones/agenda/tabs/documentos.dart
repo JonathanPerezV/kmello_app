@@ -2,11 +2,11 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/controller/dataBase/operations.dart';
-import 'package:kmello_app/src/models/calendarEvento/documentos_model.dart';
-import 'package:kmello_app/utils/flushbar.dart';
-import 'package:kmello_app/utils/loading.dart';
-import 'package:kmello_app/utils/selectFile/select_file.dart';
+import 'package:abi_praxis/src/controller/dataBase/operations.dart';
+import 'package:abi_praxis/src/models/calendarEvento/documentos_model.dart';
+import 'package:abi_praxis/utils/flushbar.dart';
+import 'package:abi_praxis/utils/loading.dart';
+import 'package:abi_praxis/utils/selectFile/select_file.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../../../../../../../utils/responsive.dart';

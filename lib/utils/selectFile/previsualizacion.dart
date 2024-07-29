@@ -2,8 +2,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:kmello_app/src/views/inside/lateralMenu/drawer_menu.dart';
-import 'package:kmello_app/utils/app_bar.dart';
+import 'package:abi_praxis/src/views/inside/lateralMenu/drawer_menu.dart';
+import 'package:abi_praxis/utils/app_bar.dart';
 
 class PreVisualizacion extends StatefulWidget {
   String? path;

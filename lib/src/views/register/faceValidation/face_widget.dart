@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as image;
-import 'package:kmello_app/src/models/user_moderl.dart';
-import 'package:kmello_app/utils/deviders/divider.dart';
-import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
+import 'package:abi_praxis/src/models/user_moderl.dart';
+import 'package:abi_praxis/utils/deviders/divider.dart';
+import 'package:abi_praxis/utils/icons/kmello_icons_icons.dart';
 import 'package:progress_border/progress_border.dart';
 
 /// CameraApp is the Main Application.

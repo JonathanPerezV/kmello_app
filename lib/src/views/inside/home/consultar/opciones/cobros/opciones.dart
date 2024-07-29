@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/views/inside/home/consultar/opciones/cobros/solAprobada/solicitudes_aprobadas.dart';
-import 'package:kmello_app/src/views/inside/lateralMenu/drawer_menu.dart';
-import 'package:kmello_app/utils/app_bar.dart';
-import 'package:kmello_app/utils/deviders/divider.dart';
-import 'package:kmello_app/utils/footer.dart';
-import 'package:kmello_app/utils/header.dart';
-import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
+import 'package:abi_praxis/src/views/inside/home/consultar/opciones/cobros/solAprobada/solicitudes_aprobadas.dart';
+import 'package:abi_praxis/src/views/inside/lateralMenu/drawer_menu.dart';
+import 'package:abi_praxis/utils/app_bar.dart';
+import 'package:abi_praxis/utils/deviders/divider.dart';
+import 'package:abi_praxis/utils/footer.dart';
+import 'package:abi_praxis/utils/header.dart';
+import 'package:abi_praxis/utils/icons/kmello_icons_icons.dart';
 
 class OpcionesCobros extends StatefulWidget {
   const OpcionesCobros({super.key});

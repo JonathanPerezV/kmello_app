@@ -26,6 +26,7 @@ class DBProvider {
   static const String celular2 = "celular2_prospecto";
   static const String direccion = "direccion_prospecto";
   static const String direccionTrabajo = "direccion_prospecto_trabajo";
+  static const String referenciaTrabajo = "referencia_trabajo";
   static const String empresa = "empresa_prospecto";
   static const String mail = "mail_prospecto";
   static const String latitud = "latitud_prospecto";
@@ -38,6 +39,8 @@ class DBProvider {
   static const String pais = "pais";
   static const String sector = "sector";
   static const String cliente = "cliente";
+  static const String fotoRefCasa = "foto_ref_casa";
+  static const String fotoRefTrabajo = "foto_ref_trabajo";
   //todo VARIABLES AGENDA
   static const String idAgenda = "id_agenda";
   static const String categoriaProducto = "categoria_producto";
@@ -94,6 +97,7 @@ class DBProvider {
         $latitud TEXT,
         $longitud TEXT,
         $referencia TEXT,
+        $referenciaTrabajo TEXT,
         $latitudTrabajo TEXT,
         $longitudTrabajo TEXT,
         $direccionTrabajo TEXT,
@@ -101,6 +105,8 @@ class DBProvider {
         $provincia TEXT,
         $ciudad TEXT,
         $sector TEXT,
+        $fotoRefCasa BLOB,
+        $fotoRefTrabajo BLOB,
         $cliente INTEGER
       )""");
       await db.execute("""

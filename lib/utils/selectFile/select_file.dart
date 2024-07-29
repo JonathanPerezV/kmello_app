@@ -6,10 +6,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:kmello_app/utils/alerts/and_alert.dart';
-import 'package:kmello_app/utils/alerts/ios_alert.dart';
-import 'package:kmello_app/utils/flushbar.dart';
-import 'package:kmello_app/utils/selectFile/previsualizacion.dart';
+import 'package:abi_praxis/utils/alerts/and_alert.dart';
+import 'package:abi_praxis/utils/alerts/ios_alert.dart';
+import 'package:abi_praxis/utils/flushbar.dart';
+import 'package:abi_praxis/utils/selectFile/previsualizacion.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class SeleccionArchivos {

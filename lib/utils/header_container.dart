@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 
 class HeaderContainer extends StatelessWidget {
+  ///color del borde del header container
+  Color? borderColor;
+
   /// variable de tipo width_container, especifíca el ancho del contenedor
   double? width_container;
 
@@ -57,7 +60,8 @@ class HeaderContainer extends StatelessWidget {
       this.title,
       this.width_container,
       this.color_header,
-      this.header});
+      this.header,
+      this.borderColor});
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +82,7 @@ class HeaderContainer extends StatelessWidget {
             height: height_container ?? 100.0,
             decoration: BoxDecoration(
                 borderRadius: radius ?? BorderRadius.circular(0.0),
-                border: Border.all()),
+                border: Border.all(color: borderColor ?? Colors.black)),
             child: Column(
               mainAxisAlignment: has_header
                   ? MainAxisAlignment.start

@@ -2,9 +2,9 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kmello_app/utils/buttons.dart';
-import 'package:kmello_app/utils/deviders/divider.dart';
-import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
+import 'package:abi_praxis/utils/buttons.dart';
+import 'package:abi_praxis/utils/deviders/divider.dart';
+import 'package:abi_praxis/utils/icons/kmello_icons_icons.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:timelines/timelines.dart';
 import '../../../utils/bezie_painter.dart';

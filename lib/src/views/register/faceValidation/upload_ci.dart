@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:kmello_app/src/controller/aws/recognition/upload_image_s3.dart';
-import 'package:kmello_app/src/models/user_moderl.dart';
-import 'package:kmello_app/src/views/register/faceValidation/face_validation.dart';
-import 'package:kmello_app/utils/cut_image.dart';
-import 'package:kmello_app/utils/deviders/divider.dart';
-import 'package:kmello_app/utils/flushbar.dart';
-import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
-import 'package:kmello_app/utils/loading.dart';
+import 'package:abi_praxis/src/controller/aws/recognition/upload_image_s3.dart';
+import 'package:abi_praxis/src/models/user_moderl.dart';
+import 'package:abi_praxis/src/views/register/faceValidation/face_validation.dart';
+import 'package:abi_praxis/utils/cut_image.dart';
+import 'package:abi_praxis/utils/deviders/divider.dart';
+import 'package:abi_praxis/utils/flushbar.dart';
+import 'package:abi_praxis/utils/icons/kmello_icons_icons.dart';
+import 'package:abi_praxis/utils/loading.dart';
 
 class UploadCI extends StatefulWidget {
   UserModel usuario;

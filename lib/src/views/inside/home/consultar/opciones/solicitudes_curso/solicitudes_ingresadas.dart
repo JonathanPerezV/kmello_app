@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:kmello_app/src/controller/data_prueba/solicitudes_ingresadas.dart';
-import 'package:kmello_app/src/views/inside/home/consultar/opciones/solicitudes_curso/detalle_solicitud.dart';
-import 'package:kmello_app/utils/app_bar.dart';
-import 'package:kmello_app/utils/footer.dart';
-import 'package:kmello_app/utils/header.dart';
-import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
-import 'package:kmello_app/utils/textFields/input_text_fields.dart';
+import 'package:abi_praxis/src/controller/data_prueba/solicitudes_ingresadas.dart';
+import 'package:abi_praxis/src/views/inside/home/consultar/opciones/solicitudes_curso/detalle_solicitud.dart';
+import 'package:abi_praxis/utils/app_bar.dart';
+import 'package:abi_praxis/utils/footer.dart';
+import 'package:abi_praxis/utils/header.dart';
+import 'package:abi_praxis/utils/icons/kmello_icons_icons.dart';
+import 'package:abi_praxis/utils/textFields/input_text_fields.dart';
 
 class SolicitudesIngresadas extends StatefulWidget {
   const SolicitudesIngresadas({super.key});

@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:kmello_app/main.dart';
-import 'package:kmello_app/src/controller/dataBase/operations.dart';
-import 'package:kmello_app/src/views/inside/home/consultar/opciones/agenda/agregar_calendario.dart';
-import 'package:kmello_app/src/views/inside/home/consultar/opciones/agenda/tabs/info_evento.dart';
-import 'package:kmello_app/src/views/inside/lateralMenu/drawer_menu.dart';
-import 'package:kmello_app/utils/alerts/and_alert.dart';
-import 'package:kmello_app/utils/alerts/ios_alert.dart';
-import 'package:kmello_app/utils/app_bar.dart';
-import 'package:kmello_app/utils/deviders/divider.dart';
-import 'package:kmello_app/utils/flushbar.dart';
-import 'package:kmello_app/utils/header.dart';
-import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
-import 'package:kmello_app/utils/loading.dart';
-import 'package:kmello_app/utils/selectFile/select_file.dart';
+import 'package:abi_praxis/main.dart';
+import 'package:abi_praxis/src/controller/dataBase/operations.dart';
+import 'package:abi_praxis/src/views/inside/home/consultar/opciones/agenda/agregar_calendario.dart';
+import 'package:abi_praxis/src/views/inside/home/consultar/opciones/agenda/tabs/info_evento.dart';
+import 'package:abi_praxis/src/views/inside/lateralMenu/drawer_menu.dart';
+import 'package:abi_praxis/utils/alerts/and_alert.dart';
+import 'package:abi_praxis/utils/alerts/ios_alert.dart';
+import 'package:abi_praxis/utils/app_bar.dart';
+import 'package:abi_praxis/utils/deviders/divider.dart';
+import 'package:abi_praxis/utils/flushbar.dart';
+import 'package:abi_praxis/utils/header.dart';
+import 'package:abi_praxis/utils/icons/kmello_icons_icons.dart';
+import 'package:abi_praxis/utils/loading.dart';
+import 'package:abi_praxis/utils/selectFile/select_file.dart';
 import 'package:mobkit_calendar/mobkit_calendar.dart';
 import 'package:simple_tooltip/simple_tooltip.dart';
 
@@ -148,8 +148,8 @@ class _MyAppState extends State<Agenda> {
               detail: "${evento.categoriaProducto} | ${evento.producto}",
               recurrenceModel: null));
 
-          eventList.sort(
-              (a, b) => a.appointmentStartDate.compareTo(b.appointmentEndDate));
+          eventList.sort((a, b) =>
+              a.appointmentStartDate.compareTo(b.appointmentStartDate));
         });
       }
     }
@@ -324,7 +324,7 @@ class _MyAppState extends State<Agenda> {
                                                 padding: EdgeInsets.zero,
                                                 label: foto
                                                     ? "Foto Cargada"
-                                                    : "Subir Foto",
+                                                    : "Tomar Foto",
                                                 foregroundColor: Colors.white,
                                               ),
 

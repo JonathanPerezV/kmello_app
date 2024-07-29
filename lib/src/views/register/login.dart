@@ -1,19 +1,16 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:kmello_app/src/controller/preferences/app_preferences.dart';
-import 'package:kmello_app/src/controller/aws/ws_usuario.dart';
-import 'package:kmello_app/src/views/inside/home/home_page.dart';
-import 'package:kmello_app/utils/alerts/and_alert.dart';
-import 'package:kmello_app/utils/alerts/ios_alert.dart';
-import 'package:kmello_app/utils/buttons.dart';
-import 'package:kmello_app/utils/header_form_login.dart';
-import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
-import 'package:kmello_app/utils/loading.dart';
-
-import '../../../utils/header_login.dart';
+import 'package:abi_praxis/src/controller/preferences/app_preferences.dart';
+import 'package:abi_praxis/src/controller/aws/ws_usuario.dart';
+import 'package:abi_praxis/src/views/inside/home/home_page.dart';
+import 'package:abi_praxis/utils/alerts/and_alert.dart';
+import 'package:abi_praxis/utils/alerts/ios_alert.dart';
+import 'package:abi_praxis/utils/buttons.dart';
+import 'package:abi_praxis/utils/flushbar.dart';
+import 'package:abi_praxis/utils/header_form_login.dart';
+import 'package:abi_praxis/utils/loading.dart';
+import '../../../utils/internal_web_view.dart';
 import '../../../utils/responsive.dart';
 
 class LoginPage extends StatefulWidget {
@@ -169,10 +166,107 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           const SizedBox(height: 15),
+          autorizationData(),
+          const SizedBox(height: 15),
           aditionaslButtons(),
           //const SizedBox(height: 10),
         ],
       );
+
+  Widget autorizationData() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          children: [
+            Checkbox(
+                activeColor: Colors.grey,
+                checkColor: Colors.white,
+                value: conditions,
+                onChanged: (value) async {
+                  setState(() => conditions = value!);
+                  //if (value!) await pfrc.saveTermsAcepted(value);
+                }),
+            const Text("Aceptar los", style: TextStyle(fontSize: 15)),
+            GestureDetector(
+              onTap: () async {
+                String url =
+                    "https://abi-aws.s3.amazonaws.com/abi-pos/teminos_condiciones.pdf";
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (builder) => InternalWebView(
+                              title: "Términos y condiciones",
+                              url: url,
+                              pdf: true,
+                            )));
+              },
+              child: const Text(
+                " Términos y condiciones",
+                style: TextStyle(color: Colors.blue, fontSize: 15),
+              ),
+            )
+          ],
+        ),
+        Row(
+          children: [
+            Checkbox(
+                activeColor: Colors.grey,
+                checkColor: Colors.white,
+                value: autorization,
+                onChanged: (value) async {
+                  setState(() => autorization = value!);
+
+                  autorization
+                      ? setState(() => autorizationDate = DateTime.now())
+                      : setState(() => autorizationDate = null);
+
+                  debugPrint(
+                      "date autorization: " + autorizationDate.toString());
+                }),
+            GestureDetector(
+              onTap: () async {
+                String url =
+                    "https://abi-aws.s3.amazonaws.com/abi-pos/teminos_condiciones.pdf";
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (builder) => InternalWebView(
+                              title: "Autorización de datos(Pag. 2)",
+                              url: url,
+                              pdf: true,
+                            )));
+              },
+              child: const Text(
+                "Autorización de datos",
+                style: TextStyle(color: Colors.blue, fontSize: 15),
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                String url =
+                    "https://abi-aws.s3.amazonaws.com/abi-pos/teminos_condiciones.pdf";
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (builder) => InternalWebView(
+                              title: "Autorización de datos(Pag. 2)",
+                              url: url,
+                              pdf: true,
+                            )));
+              },
+              icon: const Icon(
+                Icons.info_outline,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 
   Widget aditionaslButtons() {
     return Column(
@@ -197,29 +291,37 @@ class _LoginPageState extends State<LoginPage> {
     if (formKey.currentState!.validate()) {
       FocusScope.of(context).unfocus();
 
-      setState(() => loading = true);
+      if (conditions && autorization) {
+        setState(() => loading = true);
 
-      final data = await wsUser.autenticarUser(
-          identification: txtControllerCI.text,
-          password: txtControllerPassword.text);
+        final data = await wsUser.autenticarUser(
+            identification: txtControllerCI.text,
+            password: txtControllerPassword.text);
 
-      if (data == "ok") {
-        await appPreferences.saveLoginPage(true);
+        if (data == "ok") {
+          await appPreferences.saveLoginPage(true);
 
-        Navigator.push(
-            context, MaterialPageRoute(builder: (builder) => const HomePage()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (builder) => const HomePage()));
+        } else {
+          final separate = data.split(",");
+
+          final title = separate[0];
+          final error = separate[1];
+
+          Platform.isAndroid
+              ? alertAnd.errorLogin(context, title, error)
+              : alertIos.errorLogin(context, title, error);
+        }
+
+        setState(() => loading = false);
       } else {
-        final separate = data.split(",");
-
-        final title = separate[0];
-        final error = separate[1];
-
-        Platform.isAndroid
-            ? alertAnd.errorLogin(context, title, error)
-            : alertIos.errorLogin(context, title, error);
+        flushBarGlobal(
+            context,
+            "Marcar la casilla de autorización de datos y aceptar los términos y condiciones son necesarios para continar.",
+            const Icon(Icons.error, color: Colors.red),
+            seconds: 3);
       }
-
-      setState(() => loading = false);
     } else {
       return;
     }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/controller/dataBase/operations.dart';
-import 'package:kmello_app/utils/flushbar.dart';
+import 'package:abi_praxis/src/controller/dataBase/operations.dart';
+import 'package:abi_praxis/utils/flushbar.dart';
 
 class ResultadoAgenda extends StatefulWidget {
   int idAgenda;

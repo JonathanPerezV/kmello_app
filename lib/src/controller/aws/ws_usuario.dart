@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:kmello_app/src/controller/dataBase/operations.dart';
-import 'package:kmello_app/src/controller/preferences/app_preferences.dart';
-import 'package:kmello_app/src/controller/preferences/user_preferences.dart';
+import 'package:abi_praxis/src/controller/dataBase/operations.dart';
+import 'package:abi_praxis/src/controller/preferences/app_preferences.dart';
+import 'package:abi_praxis/src/controller/preferences/user_preferences.dart';
 import 'dart:convert';
 
-import 'package:kmello_app/src/models/user_moderl.dart';
+import 'package:abi_praxis/src/models/user_moderl.dart';
 
 import '../background_service.dart';
 

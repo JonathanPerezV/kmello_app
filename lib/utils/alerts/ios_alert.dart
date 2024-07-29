@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:intl/intl.dart';
-import 'package:kmello_app/main.dart';
-import 'package:kmello_app/src/controller/dataBase/operations.dart';
-import 'package:kmello_app/src/views/register/login.dart';
-import 'package:kmello_app/utils/buttons.dart';
-import 'package:kmello_app/utils/flushbar.dart';
+import 'package:abi_praxis/main.dart';
+import 'package:abi_praxis/src/controller/dataBase/operations.dart';
+import 'package:abi_praxis/src/views/register/login.dart';
+import 'package:abi_praxis/utils/buttons.dart';
+import 'package:abi_praxis/utils/flushbar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -248,6 +248,28 @@ class IosAlert {
                   },
                   child: const Text("No")),
               TextButton(onPressed: onPressed, child: const Text("Si")),
+            ],
+          );
+        });
+  }
+
+  void alertSync(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (builder) {
+          return CupertinoAlertDialog(
+            title: const Text("Sincronización"),
+            content: const Text(
+                "Para sincronizar su dispositivo, debe tener acceso a internet. Caso contrario, puede perder su información. ¿Está seguro que desea proceder?"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("NO"),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("SI"),
+              )
             ],
           );
         });

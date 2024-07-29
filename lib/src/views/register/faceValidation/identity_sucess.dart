@@ -1,14 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/controller/aws/ws_usuario.dart';
-import 'package:kmello_app/src/models/user_moderl.dart';
-import 'package:kmello_app/src/views/register/login.dart';
-import 'package:kmello_app/utils/deviders/divider.dart';
-import 'package:kmello_app/utils/flushbar.dart';
-import 'package:kmello_app/utils/header.dart';
-import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
-import 'package:kmello_app/utils/loading.dart';
+import 'package:abi_praxis/src/controller/aws/ws_usuario.dart';
+import 'package:abi_praxis/src/models/user_moderl.dart';
+import 'package:abi_praxis/src/views/register/login.dart';
+import 'package:abi_praxis/utils/deviders/divider.dart';
+import 'package:abi_praxis/utils/flushbar.dart';
+import 'package:abi_praxis/utils/header.dart';
+import 'package:abi_praxis/utils/icons/kmello_icons_icons.dart';
+import 'package:abi_praxis/utils/loading.dart';
 
 class IdentitySuccess extends StatefulWidget {
   UserModel usuario;

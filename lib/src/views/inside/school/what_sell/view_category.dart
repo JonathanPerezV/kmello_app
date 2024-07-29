@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/views/inside/lateralMenu/drawer_menu.dart';
-import 'package:kmello_app/src/views/inside/school/what_sell/view_courses.dart';
-import 'package:kmello_app/src/views/inside/school/what_sell/view_subcategory.dart';
-import 'package:kmello_app/utils/app_bar.dart';
-import 'package:kmello_app/utils/buttons.dart';
-import 'package:kmello_app/utils/cut/diagonal_cuts.dart';
-import 'package:kmello_app/utils/deviders/divider.dart';
-import 'package:kmello_app/utils/flushbar.dart';
-import 'package:kmello_app/utils/footer.dart';
-import 'package:kmello_app/utils/header.dart';
-import 'package:kmello_app/utils/list/category.dart';
+import 'package:abi_praxis/src/views/inside/lateralMenu/drawer_menu.dart';
+import 'package:abi_praxis/src/views/inside/school/what_sell/view_courses.dart';
+import 'package:abi_praxis/src/views/inside/school/what_sell/view_subcategory.dart';
+import 'package:abi_praxis/utils/app_bar.dart';
+import 'package:abi_praxis/utils/buttons.dart';
+import 'package:abi_praxis/utils/cut/diagonal_cuts.dart';
+import 'package:abi_praxis/utils/deviders/divider.dart';
+import 'package:abi_praxis/utils/flushbar.dart';
+import 'package:abi_praxis/utils/footer.dart';
+import 'package:abi_praxis/utils/header.dart';
+import 'package:abi_praxis/utils/list/category.dart';
 
 class ViewCategory extends StatefulWidget {
   bool? inside;

@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
-import 'package:kmello_app/src/controller/dataBase/operations.dart';
-import 'package:kmello_app/src/models/calendarEvento/calendar_model.dart';
-import 'package:kmello_app/utils/loading.dart';
+import 'package:abi_praxis/src/controller/dataBase/operations.dart';
+import 'package:abi_praxis/src/models/calendarEvento/calendar_model.dart';
+import 'package:abi_praxis/utils/loading.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../../../../utils/buttons.dart';
@@ -96,6 +96,7 @@ class _DetallesEventoState extends State<DetallesEvento> {
     {"nombre": "Venta", "id": 1},
     {"nombre": "Cobranza", "id": 2},
     {"nombre": "Recolectar documentación", "id": 3},
+    {"nombre": "Renovación", "id": 4},
   ];
   Map<String, dynamic>? gestionSelected;
   int idGestion = 0;
@@ -474,19 +475,48 @@ class _DetallesEventoState extends State<DetallesEvento> {
                                               setState(() => loading = false);
                                               break;
                                             case "2":
-                                              var url =
-                                                  "https://maps.google.com/maps?q=loc:$latitud,$longitud";
+                                              final coor = await Geolocator
+                                                  .getCurrentPosition();
+
+                                              String url =
+                                                  'comgooglemaps://?q=$latitud,$longitud';
                                               /*var url =
                                             "https://www.google.com/maps/@$latitud,$longitud,6z";*/
                                               if (await canLaunchUrl(
                                                   Uri.parse(url))) {
                                                 await launchUrl(Uri.parse(url));
                                               } else {
-                                                flushBarGlobal(
-                                                    context,
-                                                    "No se pudo ejecutar la acción",
-                                                    const Icon(Icons.error,
-                                                        color: Colors.red));
+                                                const String playStoreUrl =
+                                                    'https://play.google.com/store/apps/details?id=com.google.android.apps.maps';
+                                                const String appStoreUrl =
+                                                    'https://apps.apple.com/us/app/google-maps/id585027354';
+
+                                                if (Platform.isAndroid) {
+                                                  if (await canLaunchUrl(
+                                                      Uri.parse(
+                                                          playStoreUrl))) {
+                                                    await launchUrl(Uri.parse(
+                                                        playStoreUrl));
+                                                  } else {
+                                                    flushBarGlobal(
+                                                        context,
+                                                        "No se pudo ejecutar la acción",
+                                                        const Icon(
+                                                            Icons.error));
+                                                  }
+                                                } else if (Platform.isIOS) {
+                                                  if (await canLaunchUrl(
+                                                      Uri.parse(appStoreUrl))) {
+                                                    await launchUrl(
+                                                        Uri.parse(appStoreUrl));
+                                                  } else {
+                                                    flushBarGlobal(
+                                                        context,
+                                                        "No se pudo ejecutar la acción",
+                                                        const Icon(
+                                                            Icons.error));
+                                                  }
+                                                }
                                               }
                                               break;
                                             default:
@@ -506,19 +536,44 @@ class _DetallesEventoState extends State<DetallesEvento> {
                                         })
                                     : IconButton(
                                         onPressed: () async {
-                                          var url =
-                                              "https://maps.google.com/maps?q=loc:$latitud,$longitud";
+                                          final coor = await Geolocator
+                                              .getCurrentPosition();
+                                          String url =
+                                              'comgooglemaps://?q=$latitud,$longitud';
                                           /*var url =
                                             "https://www.google.com/maps/@$latitud,$longitud,6z";*/
                                           if (await canLaunchUrl(
                                               Uri.parse(url))) {
                                             await launchUrl(Uri.parse(url));
                                           } else {
-                                            flushBarGlobal(
-                                                context,
-                                                "No se pudo ejecutar la acción",
-                                                const Icon(Icons.error,
-                                                    color: Colors.red));
+                                            const String playStoreUrl =
+                                                'https://play.google.com/store/apps/details?id=com.google.android.apps.maps';
+                                            const String appStoreUrl =
+                                                'https://apps.apple.com/us/app/google-maps/id585027354';
+
+                                            if (Platform.isAndroid) {
+                                              if (await canLaunchUrl(
+                                                  Uri.parse(playStoreUrl))) {
+                                                await launchUrl(
+                                                    Uri.parse(playStoreUrl));
+                                              } else {
+                                                flushBarGlobal(
+                                                    context,
+                                                    "No se pudo ejecutar la acción",
+                                                    const Icon(Icons.error));
+                                              }
+                                            } else if (Platform.isIOS) {
+                                              if (await canLaunchUrl(
+                                                  Uri.parse(appStoreUrl))) {
+                                                await launchUrl(
+                                                    Uri.parse(appStoreUrl));
+                                              } else {
+                                                flushBarGlobal(
+                                                    context,
+                                                    "No se pudo ejecutar la acción",
+                                                    const Icon(Icons.error));
+                                              }
+                                            }
                                           }
                                         },
                                         icon: const Icon(Icons.map,

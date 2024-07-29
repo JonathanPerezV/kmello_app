@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/views/inside/home/home_page.dart';
-import 'package:kmello_app/src/views/inside/school/what_sell/view_category.dart';
-import 'package:kmello_app/utils/deviders/divider.dart';
-import 'package:kmello_app/utils/header.dart';
-import 'package:kmello_app/utils/responsive.dart';
+import 'package:abi_praxis/src/views/inside/home/home_page.dart';
+import 'package:abi_praxis/src/views/inside/school/what_sell/view_category.dart';
+import 'package:abi_praxis/utils/deviders/divider.dart';
+import 'package:abi_praxis/utils/header.dart';
+import 'package:abi_praxis/utils/responsive.dart';
 
 import '../../../../utils/buttons.dart';
 

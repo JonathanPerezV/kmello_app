@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:kmello_app/src/controller/dataBase/db.dart';
-import 'package:kmello_app/src/models/calendarEvento/calendar_model.dart';
-import 'package:kmello_app/src/models/calendarEvento/categorias_agenda_model.dart';
-import 'package:kmello_app/src/models/calendarEvento/documentos_model.dart';
-import 'package:kmello_app/src/models/categorias_model.dart';
-import 'package:kmello_app/src/models/correo_model.dart';
-import 'package:kmello_app/src/models/prospectos_model.dart';
-import 'package:kmello_app/src/views/inside/home/consultar/opciones/prospectos/mis_prospectos.dart';
+import 'package:abi_praxis/src/controller/dataBase/db.dart';
+import 'package:abi_praxis/src/models/calendarEvento/calendar_model.dart';
+import 'package:abi_praxis/src/models/calendarEvento/categorias_agenda_model.dart';
+import 'package:abi_praxis/src/models/calendarEvento/documentos_model.dart';
+import 'package:abi_praxis/src/models/categorias_model.dart';
+import 'package:abi_praxis/src/models/correo_model.dart';
+import 'package:abi_praxis/src/models/prospectos_model.dart';
+import 'package:abi_praxis/src/views/inside/home/consultar/opciones/prospectos/prospectos/mis_prospectos.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Operations {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kmello_app/utils/buttons.dart';
-import 'package:kmello_app/utils/deviders/divider.dart';
-import 'package:kmello_app/utils/header.dart';
+import 'package:abi_praxis/utils/buttons.dart';
+import 'package:abi_praxis/utils/deviders/divider.dart';
+import 'package:abi_praxis/utils/header.dart';
 
 class Aproved extends StatefulWidget {
   String asset;

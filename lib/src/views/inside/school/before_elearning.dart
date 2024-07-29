@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/views/inside/school/view_elearning.dart';
-import 'package:kmello_app/utils/buttons.dart';
-import 'package:kmello_app/utils/header.dart';
+import 'package:abi_praxis/src/views/inside/school/view_elearning.dart';
+import 'package:abi_praxis/utils/buttons.dart';
+import 'package:abi_praxis/utils/header.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class BeforeElearning extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/views/inside/home/consultar/opciones/prospectos/mis_clientes.dart';
-import 'package:kmello_app/src/views/inside/home/consultar/opciones/prospectos/mis_prospectos.dart';
-import 'package:kmello_app/utils/header.dart';
+import 'package:abi_praxis/src/views/inside/home/consultar/opciones/prospectos/clientes/mis_clientes.dart';
+import 'package:abi_praxis/src/views/inside/home/consultar/opciones/prospectos/prospectos/mis_prospectos.dart';
+import 'package:abi_praxis/utils/header.dart';
 import 'package:timelines/timelines.dart';
 
 import '../../../../../../../utils/app_bar.dart';

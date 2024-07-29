@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kmello_app/utils/deviders/divider.dart';
+import 'package:abi_praxis/utils/deviders/divider.dart';
 
 Widget footerBaadal() => Column(
       children: [

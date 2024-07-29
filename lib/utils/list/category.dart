@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
+import 'package:abi_praxis/utils/icons/kmello_icons_icons.dart';
 
 List<Map<String, dynamic>> get categoryList => _categoryList;
 List<Map<String, dynamic>> get sponsorsList => _sponsorsList;

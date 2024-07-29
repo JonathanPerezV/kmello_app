@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:kmello_app/src/controller/preferences/user_preferences.dart';
-import 'package:kmello_app/utils/flushbar.dart';
+import 'package:abi_praxis/src/controller/preferences/user_preferences.dart';
+import 'package:abi_praxis/utils/flushbar.dart';
 
 class UploadImageS3 {
   final String _url = dotenv.env["ws_upload"]!;

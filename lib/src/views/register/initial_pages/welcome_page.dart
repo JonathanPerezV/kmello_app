@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/controller/preferences/app_preferences.dart';
-import 'package:kmello_app/src/views/register/login.dart';
-import 'package:kmello_app/utils/buttons.dart';
-import 'package:kmello_app/utils/header_login.dart';
-import 'package:kmello_app/utils/responsive.dart';
+import 'package:abi_praxis/src/controller/preferences/app_preferences.dart';
+import 'package:abi_praxis/src/views/register/login.dart';
+import 'package:abi_praxis/utils/buttons.dart';
+import 'package:abi_praxis/utils/header_login.dart';
+import 'package:abi_praxis/utils/responsive.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});

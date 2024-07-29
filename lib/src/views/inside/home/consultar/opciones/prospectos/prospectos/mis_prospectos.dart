@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:kmello_app/src/controller/dataBase/operations.dart';
-import 'package:kmello_app/src/models/prospectos_model.dart';
-import 'package:kmello_app/src/views/inside/home/consultar/opciones/prospectos/agregar_prospecto.dart';
-import 'package:kmello_app/src/views/inside/home/consultar/opciones/prospectos/info_contacto.dart';
-import 'package:kmello_app/utils/flushbar.dart';
-import 'package:kmello_app/utils/textFields/input_text_fields.dart';
+import 'package:abi_praxis/src/controller/dataBase/operations.dart';
+import 'package:abi_praxis/src/models/prospectos_model.dart';
+import 'package:abi_praxis/src/views/inside/home/consultar/opciones/prospectos/agregar_prospecto.dart';
+import 'package:abi_praxis/src/views/inside/home/consultar/opciones/prospectos/info_contacto.dart';
+import 'package:abi_praxis/utils/flushbar.dart';
+import 'package:abi_praxis/utils/header.dart';
+import 'package:abi_praxis/utils/textFields/input_text_fields.dart';
+import '../../../../../../../../utils/app_bar.dart';
+import '../../../../../../../../utils/icons/kmello_icons_icons.dart';
+import '../../../../../lateralMenu/drawer_menu.dart';
 
 class MisProspectos extends StatefulWidget {
   const MisProspectos({super.key});
@@ -25,6 +29,8 @@ class _MisProspectosState extends State<MisProspectos> {
   List<Contact> phoneContacts = [];
   bool hasPermission = false;
   bool showSector = false;
+
+  final _sckey = GlobalKey<ScaffoldState>();
 
   Future<void> getData() async {
     var data = await op.obtenerProspectos();
@@ -57,33 +63,46 @@ class _MisProspectosState extends State<MisProspectos> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          child: options(),
-        ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Container(
-            margin: const EdgeInsets.only(right: 15, bottom: 15),
-            child: FloatingActionButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100)),
-              onPressed: () async => await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (builder) =>
-                              AgregarEditarProspecto(edit: false)))
-                  .then((_) async => getData()),
-              backgroundColor: Colors.black,
-              child: const Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      key: _sckey,
+      appBar: MyAppBar(key: _sckey).myAppBar(),
+      drawer: drawerMenu(context, inicio: false),
+      body: Column(
+        children: [
+          header("Prospectos", KmelloIcons.prospectos, context: context),
+          Expanded(
+            child: Stack(
+              children: [
+                Container(
+                  child: options(),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 15, bottom: 15),
+                    child: FloatingActionButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100)),
+                      onPressed: () async => await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (builder) =>
+                                      AgregarEditarProspecto(edit: false)))
+                          .then((_) async => getData()),
+                      backgroundColor: Colors.black,
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -117,7 +136,7 @@ class _MisProspectosState extends State<MisProspectos> {
                             startActionPane: ActionPane(
                                 motion: const ScrollMotion(),
                                 children: [
-                                  if (hasPermission)
+                                  /*if (hasPermission)
                                     SlidableAction(
                                       onPressed: (_) async {
                                         List<Contact>? contact = phoneContacts
@@ -203,7 +222,7 @@ class _MisProspectosState extends State<MisProspectos> {
                                       },
                                       icon: Icons.save_alt_rounded,
                                       backgroundColor: Colors.blue,
-                                    ),
+                                    ),*/
                                   SlidableAction(
                                     backgroundColor: Colors.red,
                                     onPressed: (_) async {
@@ -277,7 +296,10 @@ class _MisProspectosState extends State<MisProspectos> {
                                                   left: 15),
                                               child: Text(
                                                 //"${contacts[index].nombres.split(" ")[0]} ${contacts[index].nombres.split(" ")[2]}",
-                                                "${cacheContacts[index].nombres.split(" ")[0]} ${cacheContacts[index].nombres.split(" ")[2]}",
+                                                // "${cacheContacts[index].nombres.split(" ")[0]} ${cacheContacts[index].nombres.split(" ")[2] ?? ""}",
+                                                getNamePros(cacheContacts[index]
+                                                    .nombres
+                                                    .toUpperCase()),
                                                 style: const TextStyle(
                                                     fontSize: 14,
                                                     fontWeight:
@@ -327,6 +349,36 @@ class _MisProspectosState extends State<MisProspectos> {
                       }))
         ],
       );
+
+  String getNamePros(String name) {
+    final list = name.split(" ");
+
+    switch (list.length) {
+      case 5:
+        {
+          return "${list[0]} ${list[1]} ${list[2]}";
+        }
+      case 4:
+        {
+          return "${list[0]} ${list[2]}";
+        }
+      case 3:
+        {
+          return "${list[0]} ${list[2]}";
+        }
+      case 2:
+        {
+          return "${list[0]} ${list[1]}";
+        }
+      case 1:
+        {
+          return list[0];
+        }
+      default:
+        return "";
+    }
+  }
+
   List<ProspectosModel> buildSearchList(String value) {
     List<ProspectosModel> newList = [];
 

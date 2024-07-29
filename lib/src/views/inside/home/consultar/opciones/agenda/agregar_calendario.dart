@@ -8,33 +8,33 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
-import 'package:kmello_app/main.dart';
-import 'package:kmello_app/src/controller/dataBase/operations.dart';
-import 'package:kmello_app/src/models/calendarEvento/calendar_model.dart';
-import 'package:kmello_app/src/models/calendarEvento/categorias_agenda_model.dart';
-import 'package:kmello_app/src/models/correo_model.dart';
-import 'package:kmello_app/src/models/prospectos_model.dart';
-import 'package:kmello_app/src/views/inside/home/consultar/opciones/agenda/agenda.dart';
-import 'package:kmello_app/src/views/inside/home/consultar/opciones/agenda/tabs/info_evento.dart';
-import 'package:kmello_app/src/views/inside/home/consultar/opciones/prospectos/agregar_prospecto.dart';
-import 'package:kmello_app/utils/alerts/and_alert.dart';
-import 'package:kmello_app/utils/alerts/ios_alert.dart';
-import 'package:kmello_app/utils/buttons.dart';
-import 'package:kmello_app/utils/deviders/divider.dart';
-import 'package:kmello_app/utils/flushbar.dart';
-import 'package:kmello_app/utils/loading.dart';
+import 'package:abi_praxis/main.dart';
+import 'package:abi_praxis/src/controller/dataBase/operations.dart';
+import 'package:abi_praxis/src/models/calendarEvento/calendar_model.dart';
+import 'package:abi_praxis/src/models/calendarEvento/categorias_agenda_model.dart';
+import 'package:abi_praxis/src/models/correo_model.dart';
+import 'package:abi_praxis/src/models/prospectos_model.dart';
+import 'package:abi_praxis/src/views/inside/home/consultar/opciones/agenda/agenda.dart';
+import 'package:abi_praxis/src/views/inside/home/consultar/opciones/agenda/tabs/info_evento.dart';
+import 'package:abi_praxis/src/views/inside/home/consultar/opciones/prospectos/agregar_prospecto.dart';
+import 'package:abi_praxis/utils/alerts/and_alert.dart';
+import 'package:abi_praxis/utils/alerts/ios_alert.dart';
+import 'package:abi_praxis/utils/buttons.dart';
+import 'package:abi_praxis/utils/deviders/divider.dart';
+import 'package:abi_praxis/utils/flushbar.dart';
+import 'package:abi_praxis/utils/loading.dart';
 import 'package:mobkit_calendar/mobkit_calendar.dart';
 import '../../../../../../../utils/geolocator/geolocator.dart';
 import '../../../../../../../utils/responsive.dart';
 import '../../../../../../models/calendarEvento/event.dart' as evn;
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:kmello_app/src/views/inside/lateralMenu/drawer_menu.dart';
-import 'package:kmello_app/utils/app_bar.dart';
-import 'package:kmello_app/utils/header.dart';
-import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
-import 'package:kmello_app/utils/textFields/input_text_form_fields.dart';
-import 'package:kmello_app/utils/util_date.dart';
+import 'package:abi_praxis/src/views/inside/lateralMenu/drawer_menu.dart';
+import 'package:abi_praxis/utils/app_bar.dart';
+import 'package:abi_praxis/utils/header.dart';
+import 'package:abi_praxis/utils/icons/kmello_icons_icons.dart';
+import 'package:abi_praxis/utils/textFields/input_text_form_fields.dart';
+import 'package:abi_praxis/utils/util_date.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:textfield_search/textfield_search.dart';
 
@@ -122,6 +122,7 @@ class _EventEditingPageState extends State<EventEditingPage> {
     {"nombre": "Venta", "id": 1},
     {"nombre": "Cobranza", "id": 2},
     {"nombre": "Recolectar documentación", "id": 3},
+    {"nombre": "Renovación", "id": 4},
   ];
   Map<String, dynamic>? gestionSelected;
   int idGestion = 0;
@@ -650,7 +651,9 @@ class _EventEditingPageState extends State<EventEditingPage> {
                                           child: Row(
                                             children: [
                                               Text(
-                                                "${_searchList[i].nombres.split(" ")[0]} ${_searchList[i].nombres.split(" ")[2]}",
+                                                getNamePros(
+                                                        _searchList[i].nombres)
+                                                    .toUpperCase(),
                                                 style: const TextStyle(
                                                     fontSize: 15,
                                                     fontWeight:
@@ -1228,6 +1231,35 @@ class _EventEditingPageState extends State<EventEditingPage> {
         }).then((value) {
       setState(() => txtAditionalMail.clear());
     });
+  }
+
+  String getNamePros(String name) {
+    final list = name.split(" ");
+
+    switch (list.length) {
+      case 5:
+        {
+          return "${list[0]} ${list[1]} ${list[2]}";
+        }
+      case 4:
+        {
+          return "${list[0]} ${list[2]}";
+        }
+      case 3:
+        {
+          return "${list[0]} ${list[2]}";
+        }
+      case 2:
+        {
+          return "${list[0]} ${list[1]}";
+        }
+      case 1:
+        {
+          return list[0];
+        }
+      default:
+        return "";
+    }
   }
 
   void buildSearchList(text) {

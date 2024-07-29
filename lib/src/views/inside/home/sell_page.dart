@@ -2,10 +2,10 @@
 import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_tv/flutter_swiper.dart';
-import 'package:kmello_app/src/models/categorias_model.dart';
-import 'package:kmello_app/utils/list/category.dart';
-import 'package:kmello_app/utils/list/data_list_sell.dart';
-import 'package:kmello_app/utils/textFields/input_text_fields.dart';
+import 'package:abi_praxis/src/models/categorias_model.dart';
+import 'package:abi_praxis/utils/list/category.dart';
+import 'package:abi_praxis/utils/list/data_list_sell.dart';
+import 'package:abi_praxis/utils/textFields/input_text_fields.dart';
 
 import '../../../../utils/responsive.dart';
 

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:kmello_app/src/models/coordenadas_model.dart';
+import 'package:abi_praxis/src/models/coordenadas_model.dart';
 
 class WsCoordenadas {
   final String _url = dotenv.env["ws_coordenadas_prod"]!;

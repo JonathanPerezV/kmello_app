@@ -2,14 +2,14 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/controller/aws/recognition/compare_image_s3.dart';
-import 'package:kmello_app/src/models/user_moderl.dart';
-import 'package:kmello_app/src/views/register/faceValidation/advice.dart';
-import 'package:kmello_app/src/views/register/faceValidation/face_widget.dart';
-import 'package:kmello_app/src/views/register/faceValidation/identity_sucess.dart';
-import 'package:kmello_app/utils/deviders/divider.dart';
-import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
-import 'package:kmello_app/utils/loading.dart';
+import 'package:abi_praxis/src/controller/aws/recognition/compare_image_s3.dart';
+import 'package:abi_praxis/src/models/user_moderl.dart';
+import 'package:abi_praxis/src/views/register/faceValidation/advice.dart';
+import 'package:abi_praxis/src/views/register/faceValidation/face_widget.dart';
+import 'package:abi_praxis/src/views/register/faceValidation/identity_sucess.dart';
+import 'package:abi_praxis/utils/deviders/divider.dart';
+import 'package:abi_praxis/utils/icons/kmello_icons_icons.dart';
+import 'package:abi_praxis/utils/loading.dart';
 import '../../../../utils/flushbar.dart';
 
 class FaceValidation extends StatefulWidget {

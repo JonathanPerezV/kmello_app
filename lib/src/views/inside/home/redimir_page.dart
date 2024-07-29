@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/models/country_model.dart';
-import 'package:kmello_app/utils/list/country_list.dart';
+import 'package:abi_praxis/src/models/country_model.dart';
+import 'package:abi_praxis/utils/list/country_list.dart';
 
 class RedimirPage extends StatefulWidget {
   const RedimirPage({super.key});

@@ -1,8 +1,8 @@
 // ignore_for_file: use_build_context_synchronously, unused_local_variable
 import 'package:flutter/material.dart';
-import 'package:kmello_app/src/models/user_moderl.dart';
-import 'package:kmello_app/utils/deviders/divider.dart';
-import 'package:kmello_app/utils/icons/kmello_icons_icons.dart';
+import 'package:abi_praxis/src/models/user_moderl.dart';
+import 'package:abi_praxis/utils/deviders/divider.dart';
+import 'package:abi_praxis/utils/icons/kmello_icons_icons.dart';
 import 'face_widget.dart';
 
 /// CameraApp is the Main Application.

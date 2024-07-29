@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:kmello_app/utils/flushbar.dart';
+import 'package:abi_praxis/utils/flushbar.dart';
 
 class GeolocatorConfig {
   Future<bool> geolocatorEnable() async {

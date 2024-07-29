@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_carousel/infinite_carousel.dart';
-import 'package:kmello_app/src/views/inside/school/aproved.dart';
-import 'package:kmello_app/utils/buttons.dart';
-import 'package:kmello_app/utils/header.dart';
-import 'package:kmello_app/utils/list/questions.dart';
-import 'package:kmello_app/utils/responsive.dart';
+import 'package:abi_praxis/src/views/inside/school/aproved.dart';
+import 'package:abi_praxis/utils/buttons.dart';
+import 'package:abi_praxis/utils/header.dart';
+import 'package:abi_praxis/utils/list/questions.dart';
+import 'package:abi_praxis/utils/responsive.dart';
 
 class Elearning extends StatefulWidget {
   String asset;
